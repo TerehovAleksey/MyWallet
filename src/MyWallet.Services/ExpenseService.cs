@@ -14,8 +14,16 @@ public class ExpenseService : IExpenseService
         _context = context;
     }
 
-    public ExpenseDto CreateExpense(ExpenseCreateDto expense)
+    public ExpenseDto? CreateExpense(ExpenseCreateDto expense)
     {
+        var category = _context.Categories
+            .FirstOrDefault(x => x.Id == expense.CategoryId);
+
+        if (category is null)
+        {
+            return null;
+        }
+
         var exp = new Expense
         {
             Id = Guid.NewGuid(),
@@ -27,9 +35,6 @@ public class ExpenseService : IExpenseService
 
         _context.Expenses.Add(exp);
         _context.SaveChanges();
-
-        var category = _context.Categories
-            .First(x => x.Id == exp.CategoryId);
 
         return new ExpenseDto(exp.Id, category.Name, exp.Value, exp.DateOfCreation, exp.Description);
     }
