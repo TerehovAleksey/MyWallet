@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWallet.WebApi", "MyWallet.WebApi\MyWallet.WebApi.csproj", "{BEAB5E5D-7268-4E92-B692-90E24ADADE41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyWallet.WebApi", "MyWallet.WebApi\MyWallet.WebApi.csproj", "{BEAB5E5D-7268-4E92-B692-90E24ADADE41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWallet.Core", "MyWallet.Core\MyWallet.Core.csproj", "{BECECEDF-D998-442E-B8D6-2EB54AB7D9B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyWallet.Core", "MyWallet.Core\MyWallet.Core.csproj", "{BECECEDF-D998-442E-B8D6-2EB54AB7D9B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWallet.Services", "MyWallet.Services\MyWallet.Services.csproj", "{864B61A9-79EF-49CA-B240-3A672CA31EC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyWallet.Services", "MyWallet.Services\MyWallet.Services.csproj", "{864B61A9-79EF-49CA-B240-3A672CA31EC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWallet.WpfClient", "MyWallet.WpfClient\MyWallet.WpfClient.csproj", "{3A6B2F67-6BAD-41E3-9175-C6D038224AEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,12 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FE63349E-E42D-4E6D-9407-47D781CEEA74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE63349E-E42D-4E6D-9407-47D781CEEA74}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE63349E-E42D-4E6D-9407-47D781CEEA74}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{FE63349E-E42D-4E6D-9407-47D781CEEA74}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE63349E-E42D-4E6D-9407-47D781CEEA74}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE63349E-E42D-4E6D-9407-47D781CEEA74}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{BEAB5E5D-7268-4E92-B692-90E24ADADE41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BEAB5E5D-7268-4E92-B692-90E24ADADE41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEAB5E5D-7268-4E92-B692-90E24ADADE41}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{864B61A9-79EF-49CA-B240-3A672CA31EC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{864B61A9-79EF-49CA-B240-3A672CA31EC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{864B61A9-79EF-49CA-B240-3A672CA31EC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A6B2F67-6BAD-41E3-9175-C6D038224AEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A6B2F67-6BAD-41E3-9175-C6D038224AEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A6B2F67-6BAD-41E3-9175-C6D038224AEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A6B2F67-6BAD-41E3-9175-C6D038224AEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
