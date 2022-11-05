@@ -21,8 +21,8 @@ namespace MyWallet.WebApi.Controllers
         [HttpPost]
         public Task<CategoryDto> CreateCategory([FromBody] CategoryCreateDto category) => _categoryService.CreateCategoryAsync(category);
 
-        [HttpPut("id:uuid")]
-        public async Task<IActionResult> UpdateCategoryAsync([FromBody] CategoryDto category, Guid id)
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateCategoryAsync([FromBody] CategoryDto category, [FromRoute] Guid id)
         {
             if (category.Id != id)
             {
@@ -39,8 +39,8 @@ namespace MyWallet.WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("id:uuid")]
-        public async Task<IActionResult> DeleteCategory(Guid id)
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteCategory([FromRoute] Guid id)
         {
             var result = await _categoryService.DeleteCategoryAsync(id);
 
