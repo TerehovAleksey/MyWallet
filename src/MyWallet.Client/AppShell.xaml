@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MyWallet.Client.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MyWallet.Client"
+    xmlns:pages="clr-namespace:MyWallet.Client.Pages"
+    xmlns:sys="clr-namespace:System;assembly=netstandard">
+
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid BackgroundColor="Black"
+                  Opacity="0.5"
+                  HeightRequest="100">
+                <Label Text="My Wallet"
+                       TextColor="White"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+
+    <ShellContent Title="Главная"
+                  Icon="home.png"
+                  ContentTemplate="{DataTemplate local:MainPage}" />
+    <ShellContent Title="Настройки"
+                  Icon="cogs.png"
+                  ContentTemplate="{DataTemplate pages:SettingsPage}" />
+    <ShellContent Title="О приложении"
+                  Icon="information.png"
+                  ContentTemplate="{DataTemplate pages:AboutPage}" />
+    
+    <Shell.FlyoutFooterTemplate>
+        <DataTemplate>
+            <StackLayout BindingContext="{x:Static sys:DateTime.Now}">
+                <Label Text="{Binding}"
+                       HorizontalOptions="Center"/>
+            </StackLayout>
+        </DataTemplate>
+    </Shell.FlyoutFooterTemplate>
+
+</Shell>

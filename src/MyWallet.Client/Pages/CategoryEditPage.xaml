@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyWallet.Client.Pages.CategoryEditPage"
+             Title="Редактирование категорий">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="DeleteItem"
+                     IconImageSource="trash.png" 
+                     Clicked="DeleteItem_Clicked"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Margin="5">
+                <Image x:Name="CategoryImage"
+                       HeightRequest="200"
+                       WidthRequest="200"
+                       HorizontalOptions="Center"/>
+                <TableView Margin="5">
+                    <TableRoot>
+                        <TableSection>
+                            <TextCell x:Name="NameCell"
+                                      Text="Название" 
+                                      Tapped="NameCell_Tapped"/>
+                            <SwitchCell Text="Показать" On="True"/>
+                        </TableSection>
+                        <TableSection x:Name="SubGroupSection"
+                                      Title="Подкатегории"/>
+                    </TableRoot>
+                </TableView>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Button x:Name="fabBtn"
+                Text="+"
+                FontSize="30"
+                Margin="0,0,20,20"
+                WidthRequest="60"
+                HeightRequest="60"
+                CornerRadius="30"
+                HorizontalOptions="End"
+                VerticalOptions="End"/>
+    </Grid>
+
+</ContentPage>
