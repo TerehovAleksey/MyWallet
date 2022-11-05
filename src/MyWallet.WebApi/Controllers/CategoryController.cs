@@ -16,9 +16,40 @@ namespace MyWallet.WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CategoryDto> GetCategories() => _categoryService.GetCategories();
+        public Task<IEnumerable<CategoryDto>> GetCategoriesAsync() => _categoryService.GetCategoriesAsync();
 
         [HttpPost]
-        public CategoryDto CreateCategory([FromBody]string name) => _categoryService.CreateCategory(name);
+        public Task<CategoryDto> CreateCategory([FromBody] CategoryCreateDto category) => _categoryService.CreateCategoryAsync(category);
+
+        [HttpPut("id:uuid")]
+        public async Task<IActionResult> UpdateCategoryAsync([FromBody] CategoryDto category, Guid id)
+        {
+            if (category.Id != id)
+            {
+                return BadRequest();
+            }
+
+            var result = await _categoryService.UpdateCategoryAsync(category);
+
+            if (result is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
+        [HttpDelete("id:uuid")]
+        public async Task<IActionResult> DeleteCategory(Guid id)
+        {
+            var result = await _categoryService.DeleteCategoryAsync(id);
+
+            if (result is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
     }
 }
