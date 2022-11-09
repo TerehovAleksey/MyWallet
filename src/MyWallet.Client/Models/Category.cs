@@ -1,8 +1,17 @@
-﻿namespace MyWallet.Client.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-public class Category
+namespace MyWallet.Client.Models;
+
+public partial class Category : ObservableObject
 {
     public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string IconName { get; set; }
+
+    [ObservableProperty]
+    private string name;
+
+    [ObservableProperty]
+    private string iconName;
+
+    [ObservableProperty]
+    private bool isVisible;
 }

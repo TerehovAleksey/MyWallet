@@ -1,6 +1,5 @@
 using MyWallet.Client.DataServices;
 using MyWallet.Client.Models;
-using System.Diagnostics;
 
 namespace MyWallet.Client.Pages;
 

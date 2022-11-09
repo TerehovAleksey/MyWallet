@@ -1,5 +1,4 @@
-﻿using Android.Webkit;
-using MyWallet.Client.Models;
+﻿using MyWallet.Client.Models;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
@@ -23,8 +22,10 @@ public class RestDataService : IDataService
         _jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
     }
 
-    public async Task<Category> CreateCategoryAsync(string name)
+    public async Task<Category> CreateCategoryAsync(string name, string imageName)
     {
+
+
         if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
         {
             Debug.WriteLine("---> No internet access...");
@@ -33,8 +34,8 @@ public class RestDataService : IDataService
 
         try
         {
-            //var json = JsonSerializer.Serialize(name, _jsonSerializerOptions);
-            var content = new StringContent(name, Encoding.UTF8, "application/json");
+            var json = JsonSerializer.Serialize(new CategoryCreate { Name = name, ImageName = imageName }, _jsonSerializerOptions);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync($"{_url}/category", content);
             if (response.IsSuccessStatusCode)
             {
@@ -84,5 +85,11 @@ public class RestDataService : IDataService
         }
 
         return categories;
+    }
+
+    private class CategoryCreate
+    {
+        public string Name { get; set; }
+        public string ImageName { get; set; }
     }
 }

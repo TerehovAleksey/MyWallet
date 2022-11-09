@@ -2,28 +2,30 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyWallet.Client.Pages.CategoryEditPage"
-             Title="Редактирование категорий">
+             Title="{Binding Title}"
+             xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
+             x:DataType="vm:CategoryEditViewModel">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="DeleteItem"
-                     IconImageSource="trash.png" 
-                     Clicked="DeleteItem_Clicked"/>
+        <ToolbarItem IconImageSource="trash.png" 
+                     Command="{Binding DeleteItemCommand}"/>
     </ContentPage.ToolbarItems>
 
     <Grid>
         <ScrollView>
             <VerticalStackLayout Margin="5">
-                <Image x:Name="CategoryImage"
-                       HeightRequest="200"
+                <Image HeightRequest="200"
                        WidthRequest="200"
-                       HorizontalOptions="Center"/>
+                       HorizontalOptions="Center"
+                       Source="{Binding CurrentCategory.IconName}"/>
                 <TableView Margin="5">
                     <TableRoot>
                         <TableSection>
-                            <TextCell x:Name="NameCell"
-                                      Text="Название" 
-                                      Tapped="NameCell_Tapped"/>
-                            <SwitchCell Text="Показать" On="True"/>
+                            <TextCell Text="Название"  
+                                      Detail="{Binding Name, Mode=OneWay}" 
+                                      Command="{Binding ChangeNameCommand}"/>
+                            <SwitchCell Text="Показать" 
+                                        On="{Binding CurrentCategory.IsVisible}"/>
                         </TableSection>
                         <TableSection x:Name="SubGroupSection"
                                       Title="Подкатегории"/>

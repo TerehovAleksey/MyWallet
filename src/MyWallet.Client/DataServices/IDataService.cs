@@ -5,5 +5,5 @@ namespace MyWallet.Client.DataServices;
 public interface IDataService
 {
     public Task<List<Category>> GetAllCategoriesAsync();
-    public Task<Category> CreateCategoryAsync(string name);
+    public Task<Category> CreateCategoryAsync(string name, string imageName);
 }

@@ -1,5 +1,6 @@
 ﻿using MyWallet.Client.DataServices;
 using MyWallet.Client.Pages;
+using MyWallet.Client.ViewModels;
 
 namespace MyWallet.Client;
 
@@ -20,6 +21,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddTransient<CategoryPage>();
         builder.Services.AddTransient<CategoryEditPage>();
+
+        builder.Services.AddTransient<CategoryEditViewModel>();
 
         return builder.Build();
     }
