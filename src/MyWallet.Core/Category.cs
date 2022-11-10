@@ -1,11 +1,18 @@
 ﻿namespace MyWallet.Core;
 
-public class Category
+/// <summary>
+/// Категории
+/// </summary>
+public sealed class Category : BaseCategory
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; } = default!;
-    public bool IsVisible { get; set; } = true;
-    public string? ImageName { get; set; }
+    /// <summary>
+    /// Флаг, означающий, что это категория доходов (true),
+    /// или категория расходов (false) 
+    /// </summary>
+    public bool IsIncome { get; set; }
 
-    public ICollection<Expense> Expenses { get; set; } = new List<Expense>();
+    /// <summary>
+    /// Подкатегории в категории
+    /// </summary>
+    public ICollection<SubCategory> SubCategories { get; set; } = new List<SubCategory>();
 }

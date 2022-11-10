@@ -15,19 +15,19 @@ namespace MyWallet.WebApi.Controllers
             _expenseService = expenseService;
         }
 
-        [HttpPost]
-        public ActionResult CreateExpense([FromBody] ExpenseCreateDto expense)
-        {
-            var result = _expenseService.CreateExpense(expense);
-            return result is null ? BadRequest() : Ok(result);
-        }
+        //[HttpPost]
+        //public ActionResult CreateExpense([FromBody] ExpenseCreateDto expense)
+        //{
+        //    var result = _expenseService.CreateExpense(expense);
+        //    return result is null ? BadRequest() : Ok(result);
+        //}
 
-        [HttpGet("sum")]
-        public decimal GetExpenseSum(int year, int month, int? day, Guid? categoryId) =>
-            _expenseService.GetExpenseSum(year, month, day, categoryId);
+        //[HttpGet("sum")]
+        //public decimal GetExpenseSum(int year, int month, int? day, Guid? categoryId) =>
+        //    _expenseService.GetExpenseSum(year, month, day, categoryId);
 
-        [HttpGet("list")]
-        public IEnumerable<ExpenseDto> GetExpenseList(int year, int month, int? day, Guid? categoryId) =>
-            _expenseService.GetExpenseList(year, month, day, categoryId);
+        //[HttpGet("list")]
+        //public IEnumerable<ExpenseDto> GetExpenseList(int year, int month, int? day, Guid? categoryId) =>
+        //    _expenseService.GetExpenseList(year, month, day, categoryId);
     }
 }

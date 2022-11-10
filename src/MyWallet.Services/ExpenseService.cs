@@ -14,84 +14,84 @@ public class ExpenseService : IExpenseService
         _context = context;
     }
 
-    public ExpenseDto? CreateExpense(ExpenseCreateDto expense)
-    {
-        var category = _context.Categories
-            .FirstOrDefault(x => x.Id == expense.CategoryId);
+    //public ExpenseDto? CreateExpense(ExpenseCreateDto expense)
+    //{
+    //    var category = _context.Categories
+    //        .FirstOrDefault(x => x.Id == expense.CategoryId);
 
-        if (category is null)
-        {
-            return null;
-        }
+    //    if (category is null)
+    //    {
+    //        return null;
+    //    }
 
-        var exp = new Expense
-        {
-            Id = Guid.NewGuid(),
-            CategoryId = expense.CategoryId,
-            DateOfCreation = expense.DateTime ?? DateTime.Now,
-            Description = expense.Description,
-            Value = expense.Value
-        };
+    //    var exp = new Expense
+    //    {
+    //        Id = Guid.NewGuid(),
+    //        CategoryId = expense.CategoryId,
+    //        DateOfCreation = expense.DateTime ?? DateTime.Now,
+    //        Description = expense.Description,
+    //        Value = expense.Value
+    //    };
 
-        _context.Expenses.Add(exp);
-        _context.SaveChanges();
+    //    _context.Expenses.Add(exp);
+    //    _context.SaveChanges();
 
-        return new ExpenseDto(exp.Id, category.Name, exp.Value, exp.DateOfCreation, exp.Description);
-    }
+    //    return new ExpenseDto(exp.Id, category.Name, exp.Value, exp.DateOfCreation, exp.Description);
+    //}
 
-    public IEnumerable<ExpenseDto> GetExpenseList(int year, int month, int? day, Guid? categoryId)
-    {
-        var exp = FilterExpense(year, month, day, categoryId);
+    //public IEnumerable<ExpenseDto> GetExpenseList(int year, int month, int? day, Guid? categoryId)
+    //{
+    //    var exp = FilterExpense(year, month, day, categoryId);
 
-        if (exp is null)
-        {
-            return new List<ExpenseDto>();
-        }
+    //    if (exp is null)
+    //    {
+    //        return new List<ExpenseDto>();
+    //    }
 
-        return exp
-            .OrderBy(x => x.DateOfCreation)
-            .Include(x => x.Category)
-            .Select(x => new ExpenseDto(x.Id, x.Category.Name, x.Value, x.DateOfCreation, x.Description))
-            .ToList();
-    }
+    //    return exp
+    //        .OrderBy(x => x.DateOfCreation)
+    //        .Include(x => x.Category)
+    //        .Select(x => new ExpenseDto(x.Id, x.Category.Name, x.Value, x.DateOfCreation, x.Description))
+    //        .ToList();
+    //}
 
-    public decimal GetExpenseSum(int year, int month, int? day, Guid? categoryId)
-    {
-        decimal result = 0;
+    //public decimal GetExpenseSum(int year, int month, int? day, Guid? categoryId)
+    //{
+    //    decimal result = 0;
 
-        var exp = FilterExpense(year, month, day, categoryId);
+    //    var exp = FilterExpense(year, month, day, categoryId);
 
-        if (exp is null)
-        {
-            return result;
-        }
+    //    if (exp is null)
+    //    {
+    //        return result;
+    //    }
 
-        var sum = exp.Select(x => x.Value).ToList();
-        result = sum.Sum();
+    //    var sum = exp.Select(x => x.Value).ToList();
+    //    result = sum.Sum();
 
-        return result;
-    }
+    //    return result;
+    //}
 
-    private IQueryable<Expense>? FilterExpense(int year, int month, int? day, Guid? categoryId)
-    {
-        if (year == 0 || month == 0)
-        {
-            return null;
-        }
+    //private IQueryable<Expense>? FilterExpense(int year, int month, int? day, Guid? categoryId)
+    //{
+    //    if (year == 0 || month == 0)
+    //    {
+    //        return null;
+    //    }
 
-        var exp = _context.Expenses
-            .Where(x => x.DateOfCreation.Year == year && x.DateOfCreation.Month == month);
+    //    var exp = _context.Expenses
+    //        .Where(x => x.DateOfCreation.Year == year && x.DateOfCreation.Month == month);
 
-        if (day is not null)
-        {
-            exp = exp.Where(x => x.DateOfCreation.Day == day);
-        }
+    //    if (day is not null)
+    //    {
+    //        exp = exp.Where(x => x.DateOfCreation.Day == day);
+    //    }
 
-        if (categoryId is not null)
-        {
-            exp = exp.Where(x => x.CategoryId == categoryId);
-        }
+    //    if (categoryId is not null)
+    //    {
+    //        exp = exp.Where(x => x.CategoryId == categoryId);
+    //    }
 
-        return exp;
-    }
+    //    return exp;
+    //}
 }
