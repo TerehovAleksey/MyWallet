@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MyWallet.Core.Dal;
 
-internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
+public class SubCategoryConfiguration : IEntityTypeConfiguration<SubCategory>
 {
-    public void Configure(EntityTypeBuilder<Category> builder)
+    public void Configure(EntityTypeBuilder<SubCategory> builder)
     {
-        builder.ToTable("Categories")
+        builder.ToTable("Subcategories")
             .HasKey(x => x.Id);
 
         builder.Property(x => x.Id)
@@ -33,10 +33,5 @@ internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .HasColumnType("INTEGER")
             .IsRequired()
             .HasDefaultValue(1);
-
-        builder.Property(x => x.IsIncome)
-            .HasColumnType("INTEGER")
-            .IsRequired()
-            .HasDefaultValue(0);
     }
 }
