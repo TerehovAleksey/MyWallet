@@ -10,6 +10,6 @@ public static class DependencyInjectionExtension
         services.AddAutoMapper(typeof(DomainToDtoMappingProfile), typeof(DtoToDomainMappingProfile));
 
         services.AddTransient<ICategoryService, CategoryService>();
-        services.AddTransient<IExpenseService, ExpenseService>();
+        services.AddTransient<IRecordService, RecordService>();
     }
 }
