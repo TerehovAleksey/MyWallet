@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using MyWallet.Core.Dal;
 using MyWallet.Services;
+using MyWallet.Services.Extensions;
 using MyWallet.WebApi.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //My Services
 builder.Services.AddDatabaseContext(builder.Configuration, builder.Environment);
-builder.Services.AddTransient<ICategoryService, CategoryService>();
-builder.Services.AddTransient<IExpenseService, ExpenseService>();
+builder.Services.AddServices();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
