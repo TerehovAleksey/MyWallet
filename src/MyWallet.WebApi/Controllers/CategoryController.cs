@@ -73,7 +73,7 @@ namespace MyWallet.WebApi.Controllers
         public async Task<IActionResult> CreateCategory([FromBody] CategoryCreateDto category)
         {
             var result = await _categoryService.CreateCategoryAsync(category);
-            return CreatedAtAction($"api/category/{result.Id}", result);
+            return Created($"api/category/{result.Id}", result);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace MyWallet.WebApi.Controllers
         public async Task<IActionResult> CreateSubcategoryAsync([FromRoute] Guid categoryId, [FromBody] BaseCategoryDto category)
         {
             var result = await _categoryService.CreateSubcategoryAsync(categoryId, category);
-            return CreatedAtAction($"api/category/sub?id={result.Id}", result);
+            return Created($"api/category/sub?id={result.Id}", result);
         }
 
         /// <summary>

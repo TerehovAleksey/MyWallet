@@ -42,16 +42,21 @@ public sealed class AppDbContext : DbContext
 
     private void SetCreatedAndModified()
     {
-        var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
+        var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && x.State is EntityState.Added or EntityState.Modified);
 
         foreach (var entity in entities)
         {
-            if (entity.State == EntityState.Added)
-            {
-                ((BaseEntity)entity.Entity).DateOfCreation = DateTime.UtcNow;
-            }
+            var e = (BaseEntity)entity.Entity;
 
-            ((BaseEntity)entity.Entity).DateOfChange = DateTime.UtcNow;
+            switch (entity.State)
+            {
+                case EntityState.Added when e.DateOfCreation == DateTime.MinValue:
+                    e.DateOfCreation = DateTime.UtcNow;
+                    break;
+                case EntityState.Modified when (e.DateOfChange is null || e.DateOfChange == DateTime.MinValue):
+                    e.DateOfChange = DateTime.UtcNow;
+                    break;
+            }
         }
     }
 }

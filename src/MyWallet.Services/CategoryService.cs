@@ -139,14 +139,15 @@ public class CategoryService : ICategoryService
     {
         var result = false;
         var exists = await _context.Subcategories.FindAsync(category.Id);
-        if (exists is not null)
+        if (exists is null)
         {
-            exists.Name = category.Name;
-            exists.IsVisible = category.IsVisible;
-            exists.ImageName = category.ImageName;
-            await _context.SaveChangesAsync();
-            result = true;
+            return result;
         }
+        exists.Name = category.Name;
+        exists.IsVisible = category.IsVisible;
+        exists.ImageName = category.ImageName;
+        await _context.SaveChangesAsync();
+        result = true;
 
         return result;
     }
