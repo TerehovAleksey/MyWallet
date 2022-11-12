@@ -14,6 +14,7 @@ public class DomainToDtoMappingProfile : Profile
 
 		CreateMap<Journal, RecordDto>()
 			.ForMember(dto => dto.Subcategory, opt => opt.MapFrom(p => p.SubCategory.Name))
-			.ForMember(dto => dto.Category, opt => opt.MapFrom(p => p.SubCategory.Category.Name));
+			.ForMember(dto => dto.Category, opt => opt.MapFrom(p => p.SubCategory.Category.Name))
+			.ForMember(dto => dto.IsIncome, opt => opt.MapFrom(p => p.SubCategory.Category.IsIncome));
 	}
 }
