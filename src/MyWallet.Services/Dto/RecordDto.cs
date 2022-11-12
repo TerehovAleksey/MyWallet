@@ -8,6 +8,7 @@ public record RecordDto
     public decimal Value { get; set; }
     public DateTime DateOfCreation { get; set; }
     public string? Description { get; set; }
+    public bool IsIncome { get; set; }
 }
 
 public record RecordCreateDto
