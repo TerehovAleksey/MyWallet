@@ -24,8 +24,6 @@ public class RestDataService : IDataService
 
     public async Task<Category> CreateCategoryAsync(string name, string imageName)
     {
-
-
         if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
         {
             Debug.WriteLine("---> No internet access...");
@@ -87,9 +85,73 @@ public class RestDataService : IDataService
         return categories;
     }
 
+    public async Task<List<Record>> GetRecordsAsync(DateTime startDate, DateTime endDate)
+    {
+        List<Record> records = new();
+
+        if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+        {
+            Debug.WriteLine("---> No internet access...");
+            return records;
+        }
+
+        try
+        {
+            var uri = $"{_url}/journal?startDate={startDate.ToString("yyyy-MM-dd")}&finishDate={endDate.ToString("yyyy-MM-dd")}";
+            var response = await _httpClient.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                records = JsonSerializer.Deserialize<List<Record>>(content, _jsonSerializerOptions);
+            }
+            else
+            {
+                Debug.WriteLine("---> Non Http 2xx response...");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"---> Whoops exception: {ex.Message}");
+        }
+
+        return records;
+    }
+
+    public async Task<Record> CreateRecordAsync(RecordCreate record)
+    {
+        if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+        {
+            Debug.WriteLine("---> No internet access...");
+            return null;
+        }
+
+        try
+        {
+            var json = JsonSerializer.Serialize(record, _jsonSerializerOptions);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync($"{_url}/journal", content);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var result = JsonSerializer.Deserialize<Record>(responseContent, _jsonSerializerOptions);
+                return result;
+            }
+            else
+            {
+                Debug.WriteLine("---> Non Http 2xx response...");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"---> Whoops exception: {ex.Message}");
+        }
+
+        return null;
+    }
+
     private class CategoryCreate
     {
-        public string Name { get; set; }
-        public string ImageName { get; set; }
+        public string Name { get; set; } = default!;
+        public string ImageName { get; set; } = default!;
     }
 }

@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyWallet.Client.Pages.CategoryPage"
-             Title="Категории">
+<ContentPage
+    x:Class="MyWallet.Client.Pages.CategoryPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Категории">
 
     <Grid>
-        <ActivityIndicator x:Name="Loader" 
-                           IsRunning="False"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"/>
+        <ActivityIndicator
+            x:Name="Loader"
+            HorizontalOptions="Center"
+            IsRunning="False"
+            VerticalOptions="Center" />
         <TableView Margin="5,0">
             <TableRoot>
-                <TableSection x:Name="TableSection"/>
+                <TableSection x:Name="TableSection" />
             </TableRoot>
         </TableView>
-        <Button x:Name="fabBtn"
-                Text="+"
-                FontSize="30"
-                Margin="0,0,20,20"
-                WidthRequest="60"
-                HeightRequest="60"
-                CornerRadius="30"
-                HorizontalOptions="End"
-                VerticalOptions="End"
-                Clicked="fabBtn_Clicked"/>
+        <Button
+            x:Name="fabBtn"
+            Margin="0,0,20,20"
+            Clicked="fabBtn_Clicked"
+            CornerRadius="30"
+            FontSize="30"
+            HeightRequest="60"
+            HorizontalOptions="End"
+            Text="+"
+            VerticalOptions="End"
+            WidthRequest="60" />
     </Grid>
 
 </ContentPage>

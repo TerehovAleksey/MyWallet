@@ -2,16 +2,8 @@
 
 namespace MyWallet.Client.Models;
 
-public partial class Category : ObservableObject
+public class Category : BaseCategory
 {
-    public Guid Id { get; set; }
-
-    [ObservableProperty]
-    private string name;
-
-    [ObservableProperty]
-    private string iconName;
-
-    [ObservableProperty]
-    private bool isVisible;
+    public bool IsIncome { get; set; }
+    public List<BaseCategory> Subcategories { get; set; } = new();
 }

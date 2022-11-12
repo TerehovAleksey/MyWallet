@@ -17,7 +17,7 @@ public partial class CategoryEditViewModel : ObservableObject
     private string name = string.Empty;
 
     [ObservableProperty]
-    private Category _currentCategory;
+    private Category? _currentCategory;
 
     public CategoryEditViewModel(IDataService dataService)
 	{

@@ -1,9 +1,20 @@
-﻿namespace MyWallet.Client;
+﻿using MyWallet.Client.ViewModels;
+
+namespace MyWallet.Client;
 
 public partial class MainPage : ContentPage
 {
-    public MainPage()
+    private readonly MainViewModel _vm;
+    public MainPage(MainViewModel vm)
     {
         InitializeComponent();
+        _vm = vm;
+        BindingContext = vm;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _vm.LoadRecordsAsync();
     }
 }

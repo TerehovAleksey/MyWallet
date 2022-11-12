@@ -9,33 +9,37 @@
 
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
-            <Grid BackgroundColor="Black"
-                  Opacity="0.5"
-                  HeightRequest="100">
-                <Label Text="My Wallet"
-                       TextColor="White"
-                       FontAttributes="Bold"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center" />
+            <Grid
+                BackgroundColor="Black"
+                HeightRequest="100"
+                Opacity="0.5">
+                <Label
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
+                    Text="My Wallet"
+                    TextColor="White"
+                    VerticalTextAlignment="Center" />
             </Grid>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>
 
-    <ShellContent Title="Главная"
-                  Icon="home.png"
-                  ContentTemplate="{DataTemplate local:MainPage}" />
-    <ShellContent Title="Настройки"
-                  Icon="cogs.png"
-                  ContentTemplate="{DataTemplate pages:SettingsPage}" />
-    <ShellContent Title="О приложении"
-                  Icon="information.png"
-                  ContentTemplate="{DataTemplate pages:AboutPage}" />
-    
+    <ShellContent
+        Title="Главная"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Icon="home.png" />
+    <ShellContent
+        Title="Настройки"
+        ContentTemplate="{DataTemplate pages:SettingsPage}"
+        Icon="cogs.png" />
+    <ShellContent
+        Title="О приложении"
+        ContentTemplate="{DataTemplate pages:AboutPage}"
+        Icon="information.png" />
+
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
             <StackLayout BindingContext="{x:Static sys:DateTime.Now}">
-                <Label Text="{Binding}"
-                       HorizontalOptions="Center"/>
+                <Label HorizontalOptions="Center" Text="{Binding}" />
             </StackLayout>
         </DataTemplate>
     </Shell.FlyoutFooterTemplate>

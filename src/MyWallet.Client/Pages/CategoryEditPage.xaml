@@ -1,47 +1,48 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyWallet.Client.Pages.CategoryEditPage"
-             Title="{Binding Title}"
-             xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
-             x:DataType="vm:CategoryEditViewModel">
+<ContentPage
+    x:Class="MyWallet.Client.Pages.CategoryEditPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="vm:CategoryEditViewModel">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="trash.png" 
-                     Command="{Binding DeleteItemCommand}"/>
+        <ToolbarItem Command="{Binding DeleteItemCommand}" IconImageSource="trash.png" />
     </ContentPage.ToolbarItems>
 
     <Grid>
         <ScrollView>
             <VerticalStackLayout Margin="5">
-                <Image HeightRequest="200"
-                       WidthRequest="200"
-                       HorizontalOptions="Center"
-                       Source="{Binding CurrentCategory.IconName}"/>
+                <Image
+                    HeightRequest="200"
+                    HorizontalOptions="Center"
+                    Source="{Binding CurrentCategory.IconName}"
+                    WidthRequest="200" />
                 <TableView Margin="5">
                     <TableRoot>
                         <TableSection>
-                            <TextCell Text="Название"  
-                                      Detail="{Binding Name, Mode=OneWay}" 
-                                      Command="{Binding ChangeNameCommand}"/>
-                            <SwitchCell Text="Показать" 
-                                        On="{Binding CurrentCategory.IsVisible}"/>
+                            <TextCell
+                                Command="{Binding ChangeNameCommand}"
+                                Detail="{Binding Name, Mode=OneWay}"
+                                Text="Название" />
+                            <SwitchCell On="{Binding CurrentCategory.IsVisible}" Text="Показать" />
                         </TableSection>
-                        <TableSection x:Name="SubGroupSection"
-                                      Title="Подкатегории"/>
+                        <TableSection x:Name="SubGroupSection" Title="Подкатегории" />
                     </TableRoot>
                 </TableView>
             </VerticalStackLayout>
         </ScrollView>
-        <Button x:Name="fabBtn"
-                Text="+"
-                FontSize="30"
-                Margin="0,0,20,20"
-                WidthRequest="60"
-                HeightRequest="60"
-                CornerRadius="30"
-                HorizontalOptions="End"
-                VerticalOptions="End"/>
+        <Button
+            x:Name="fabBtn"
+            Margin="0,0,20,20"
+            CornerRadius="30"
+            FontSize="30"
+            HeightRequest="60"
+            HorizontalOptions="End"
+            Text="+"
+            VerticalOptions="End"
+            WidthRequest="60" />
     </Grid>
 
 </ContentPage>

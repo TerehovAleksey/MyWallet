@@ -1,14 +1,146 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyWallet.Client.MainPage"
-             Title="My Wallet">
+<ContentPage
+    x:Class="MyWallet.Client.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:m="clr-namespace:MyWallet.Client.Models"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
+    Title="My Wallet"
+    x:DataType="vm:MainViewModel">
 
-    <VerticalStackLayout>
-        <Label 
-            Text="MAIN PAGE"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
-    
+    <Grid BackgroundColor="#eee">
+        <ActivityIndicator
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsLoading}"
+            VerticalOptions="Center" />
+        <ScrollView>
+            <VerticalStackLayout>
+                <Frame
+                    Margin="5"
+                    Padding="10"
+                    CornerRadius="10">
+                    <StackLayout>
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            Text="Последние записи" />
+                        <Grid Margin="0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                FontSize="12"
+                                Text="ПОСЛЕДНИЕ 30 ДНЕЙ"
+                                TextColor="Gray" />
+                            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End">
+                                <Label
+                                    FontSize="12"
+                                    Text="Σ "
+                                    TextColor="Gray" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="12"
+                                    Text="{Binding TotalSum}"
+                                    TextColor="Gray" />
+                                <Label
+                                    FontSize="12"
+                                    Text=" BYN"
+                                    TextColor="Gray" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                        <CollectionView Margin="5,0" ItemsSource="{Binding Records}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="0" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="m:Record">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="AUTO" />
+                                            <RowDefinition Height="AUTO" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="AUTO" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="AUTO" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Margin="5"
+                                            Aspect="AspectFit"
+                                            MaximumHeightRequest="40"
+                                            Source="{Binding Image}" />
+                                        <VerticalStackLayout
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            Margin="10,0,0,0"
+                                            VerticalOptions="Center">
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Header"
+                                                LineBreakMode="TailTruncation"
+                                                Text="{Binding Title}" />
+                                            <Label
+                                                FontSize="Small"
+                                                Text="{Binding CurrencyType}"
+                                                TextColor="Gray" />
+                                        </VerticalStackLayout>
+                                        <VerticalStackLayout
+                                            Grid.Row="0"
+                                            Grid.Column="2"
+                                            Margin="10,0,0,0"
+                                            VerticalOptions="Center">
+                                            <HorizontalStackLayout HorizontalOptions="End">
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="Header"
+                                                    Text="{Binding IsIncome, Converter={StaticResource RecordIncomeOperatorConverter}}"
+                                                    TextColor="{Binding IsIncome, Converter={StaticResource RecordToColorConverter}}" />
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="Header"
+                                                    Text="{Binding Value}"
+                                                    TextColor="{Binding IsIncome, Converter={StaticResource RecordToColorConverter}}" />
+                                                <Label Text=" " />
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="Header"
+                                                    Text="{Binding Currency}"
+                                                    TextColor="{Binding IsIncome, Converter={StaticResource RecordToColorConverter}}" />
+                                            </HorizontalStackLayout>
+                                            <Label
+                                                FontSize="Small"
+                                                HorizontalOptions="End"
+                                                Text="{Binding DateOfRecord, Converter={StaticResource DateTimeToDayConverter}}"
+                                                TextColor="Gray" />
+                                        </VerticalStackLayout>
+                                        <BoxView
+                                            Grid.Row="1"
+                                            Grid.ColumnSpan="3"
+                                            HeightRequest=".5"
+                                            HorizontalOptions="Fill"
+                                            Color="#aaa" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Button
+            Margin="0,0,20,20"
+            Command="{Binding AddRecordCommand}"
+            CornerRadius="30"
+            FontSize="30"
+            HeightRequest="60"
+            HorizontalOptions="End"
+            Text="+"
+            VerticalOptions="End"
+            WidthRequest="60" />
+    </Grid>
+
 </ContentPage>
