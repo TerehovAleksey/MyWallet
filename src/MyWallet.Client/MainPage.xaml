@@ -3,18 +3,17 @@
     x:Class="MyWallet.Client.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MyWallet.Client.Controls"
     xmlns:m="clr-namespace:MyWallet.Client.Models"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
     Title="My Wallet"
     x:DataType="vm:MainViewModel">
 
     <Grid BackgroundColor="#eee">
-        <ActivityIndicator
-            HorizontalOptions="Center"
-            IsRunning="{Binding IsLoading}"
-            VerticalOptions="Center" />
+        <controls:Loader IsRunning="{Binding IsLoading}" />
         <ScrollView>
             <VerticalStackLayout>
+                <controls:AccountsCard />
                 <Frame
                     Margin="5"
                     Padding="10"
@@ -131,16 +130,7 @@
                 </Frame>
             </VerticalStackLayout>
         </ScrollView>
-        <Button
-            Margin="0,0,20,20"
-            Command="{Binding AddRecordCommand}"
-            CornerRadius="30"
-            FontSize="30"
-            HeightRequest="60"
-            HorizontalOptions="End"
-            Text="+"
-            VerticalOptions="End"
-            WidthRequest="60" />
+        <controls:Fab Command="{Binding AddRecordCommand}" />
     </Grid>
 
 </ContentPage>
