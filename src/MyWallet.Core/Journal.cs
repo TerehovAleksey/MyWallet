@@ -24,4 +24,14 @@ public class Journal : BaseEntity
     /// Подкатегория
     /// </summary>
     public SubCategory SubCategory { get; set; } = default!;
+
+    /// <summary>
+    /// ID счёта
+    /// </summary>
+    public Guid? AccountId { get; set; }
+
+    /// <summary>
+    /// Счёт
+    /// </summary>
+    public Account? Account { get; set; }
 }

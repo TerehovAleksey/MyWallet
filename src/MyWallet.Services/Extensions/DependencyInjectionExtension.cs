@@ -9,7 +9,9 @@ public static class DependencyInjectionExtension
     {
         services.AddAutoMapper(typeof(DomainToDtoMappingProfile), typeof(DtoToDomainMappingProfile));
 
+        services.AddTransient<IAccountService, AccountService>();
         services.AddTransient<ICategoryService, CategoryService>();
+        services.AddTransient<ICurrencyService, CurrencyService>();
         services.AddTransient<IRecordService, RecordService>();
     }
 }

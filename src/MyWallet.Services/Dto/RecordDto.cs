@@ -9,6 +9,8 @@ public record RecordDto
     public DateTime DateOfCreation { get; set; }
     public string? Description { get; set; }
     public bool IsIncome { get; set; }
+    public string? CurrencySymbol { get; set; }
+    public string? Account { get; set; }
 }
 
 public record RecordCreateDto
