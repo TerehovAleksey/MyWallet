@@ -8,6 +8,9 @@ public class DtoToDomainMappingProfile : Profile
 {
     public DtoToDomainMappingProfile()
     {
+        CreateMap<AccountCreateDto, Account>()
+            .ForMember(p => p.CurrencySymbol, opt => opt.MapFrom(dto => dto.CurrencySymbol.ToUpperInvariant()));
+
         CreateMap<BaseCategoryDto, SubCategory>()
             .ForMember(p => p.Id, opt => Guid.NewGuid());
 
