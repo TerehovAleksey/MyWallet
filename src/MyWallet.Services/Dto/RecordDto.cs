@@ -16,6 +16,7 @@ public record RecordDto
 public record RecordCreateDto
 {
     public Guid SubcategoryId { get; set; }
+    public Guid AccountId { get; set; }
     public decimal Value { get; set; }
     public string? Description { get; set; }
     public DateTime? DateTime { get; set; }
