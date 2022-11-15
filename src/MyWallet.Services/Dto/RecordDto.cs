@@ -8,11 +8,15 @@ public record RecordDto
     public decimal Value { get; set; }
     public DateTime DateOfCreation { get; set; }
     public string? Description { get; set; }
+    public bool IsIncome { get; set; }
+    public string? CurrencySymbol { get; set; }
+    public string? Account { get; set; }
 }
 
 public record RecordCreateDto
 {
     public Guid SubcategoryId { get; set; }
+    public Guid AccountId { get; set; }
     public decimal Value { get; set; }
     public string? Description { get; set; }
     public DateTime? DateTime { get; set; }

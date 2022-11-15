@@ -3,22 +3,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MyWallet.Core.Dal;
 
-internal class JournalConfiguration : IEntityTypeConfiguration<Journal>
+internal class AccountConfiguration : IEntityTypeConfiguration<Account>
 {
-    public void Configure(EntityTypeBuilder<Journal> builder)
+    public void Configure(EntityTypeBuilder<Account> builder)
     {
-        builder.ToTable("Journals")
-            .HasKey(x => x.Id);
+        builder.ToTable("Accounts")
+           .HasKey(x => x.Id);
 
         builder.Property(x => x.Id)
             .HasColumnType("BLOB");
-
-        builder.Property(x => x.SubCategoryId)
-            .HasColumnType("BLOB")
-            .IsRequired();
-
-        builder.Property(x => x.AccountId)
-           .HasColumnType("BLOB");
 
         builder.Property(x => x.DateOfCreation)
             .HasColumnType("TEXT")
@@ -27,12 +20,18 @@ internal class JournalConfiguration : IEntityTypeConfiguration<Journal>
         builder.Property(x => x.DateOfChange)
             .HasColumnType("TEXT");
 
-        builder.Property(x => x.Description)
+        builder.Property(x => x.Name)
             .HasColumnType("TEXT")
-            .HasMaxLength(250);
+            .IsRequired()
+            .HasMaxLength(50);
 
-        builder.Property(x => x.Value)
+        builder.Property(x => x.Balance)
             .HasColumnType("REAL")
             .IsRequired();
+
+        builder.Property(x => x.CurrencySymbol)
+            .HasColumnType("TEXT")
+            .IsRequired()
+            .HasMaxLength(10);
     }
 }

@@ -13,6 +13,7 @@ public sealed class AppDbContext : DbContext
 	{
 		base.OnModelCreating(modelBuilder);
 
+        modelBuilder.ApplyConfiguration(new AccountConfiguration());
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         modelBuilder.ApplyConfiguration(new SubCategoryConfiguration());
         modelBuilder.ApplyConfiguration(new JournalConfiguration());
@@ -36,6 +37,7 @@ public sealed class AppDbContext : DbContext
         return base.SaveChangesAsync(cancellationToken);
     }
 
+    public DbSet<Account> Accounts => Set<Account>();
     public DbSet<Category> Categories => Set<Category>();
 	public DbSet<SubCategory> Subcategories => Set<SubCategory>();
     public DbSet<Journal> Journals => Set<Journal>();

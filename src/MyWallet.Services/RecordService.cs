@@ -25,14 +25,43 @@ public class RecordService : IRecordService
             .FirstOrDefaultAsync(x => x.Id == record.SubcategoryId);
 
         var journal = _mapper.Map<Journal>(record);
-        
+
         if (subCategory is null || journal is null)
         {
             return null;
         }
-        
-        await _context.Journals.AddAsync(journal);
-        await _context.SaveChangesAsync();
+
+        var isIncome = await _context.Subcategories
+            .AsNoTracking()
+            .Where(x => x.Id == record.SubcategoryId)
+            .Select(x => x.Category.IsIncome)
+            .FirstAsync();
+
+        var account = await _context.Accounts
+            .Where(x => x.Id == record.AccountId)
+            .FirstOrDefaultAsync();
+
+        if (account is null)
+        {
+            return null;
+        }
+
+        using var transaction = _context.Database.BeginTransaction();
+        try
+        {
+            await _context.Journals.AddAsync(journal);
+            await _context.SaveChangesAsync();
+
+            account.Balance = isIncome ? account.Balance += record.Value : account.Balance -= record.Value;
+            await _context.SaveChangesAsync();
+
+            transaction.Commit();
+        }
+        catch
+        {
+            transaction.Rollback();
+            return null;
+        }
 
         var result = _mapper.Map<RecordDto>(journal);
         result = result with { Category = subCategory.CategoryName, Subcategory = subCategory.Name };

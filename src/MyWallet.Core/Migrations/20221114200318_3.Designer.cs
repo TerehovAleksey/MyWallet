@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyWallet.Core.Dal;
 
@@ -10,9 +11,10 @@ using MyWallet.Core.Dal;
 namespace MyWallet.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221114200318_3")]
+    partial class _3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.11");
@@ -89,9 +91,6 @@ namespace MyWallet.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BLOB");
 
-                    b.Property<Guid?>("AccountId")
-                        .HasColumnType("BLOB");
-
                     b.Property<DateTime?>("DateOfChange")
                         .HasColumnType("TEXT");
 
@@ -109,8 +108,6 @@ namespace MyWallet.Core.Migrations
                         .HasColumnType("REAL");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
 
                     b.HasIndex("SubCategoryId");
 
@@ -155,17 +152,11 @@ namespace MyWallet.Core.Migrations
 
             modelBuilder.Entity("MyWallet.Core.Journal", b =>
                 {
-                    b.HasOne("MyWallet.Core.Account", "Account")
-                        .WithMany("Journals")
-                        .HasForeignKey("AccountId");
-
                     b.HasOne("MyWallet.Core.SubCategory", "SubCategory")
                         .WithMany("Journals")
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Account");
 
                     b.Navigation("SubCategory");
                 });
@@ -179,11 +170,6 @@ namespace MyWallet.Core.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("MyWallet.Core.Account", b =>
-                {
-                    b.Navigation("Journals");
                 });
 
             modelBuilder.Entity("MyWallet.Core.Category", b =>
