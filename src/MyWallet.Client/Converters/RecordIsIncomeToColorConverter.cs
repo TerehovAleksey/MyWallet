@@ -1,16 +1,12 @@
 ﻿namespace MyWallet.Client.Converters;
 
-public class DateTimeToDayConverter : IValueConverter
+public class RecordIsIncomeToColorConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        DateTime dateTime = (DateTime)value;
-        return (DateTime.Today - dateTime.Date).TotalDays switch
-        {
-            0 => "Сегодня",
-            1 => "Вчера",
-            _ => dateTime.ToString("dd.MM.yyyy")
-        };
+        var isIncome = (bool)value;
+
+        return isIncome ? Colors.Green : Colors.Red;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

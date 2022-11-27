@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:ViewBase
+    x:Class="MyWallet.Client.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
+    xmlns:commonControls="clr-namespace:MyWallet.Client.ViewControls.Common"
+    xmlns:controls="clr-namespace:MyWallet.Client.ViewControls"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
+    x:DataType="vm:MainPageViewModel"
+    x:TypeArguments="vm:MainPageViewModel"
+    PageMode="Menu"
+    PageTitle="{Binding Title}">
+
+    <base:ViewBase.PageIcons>
+
+        <ImageButton
+            Command="{Binding OpenNotificationsPageCommand}"
+            Source="notifications.png"
+            Style="{StaticResource IconButtonStyle}" />
+
+    </base:ViewBase.PageIcons>
+
+    <base:ViewBase.PageContent>
+
+        <ScrollView>
+            <VerticalStackLayout>
+                <controls:MainAccounts />
+                <controls:MainLastRecords />
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </base:ViewBase.PageContent>
+
+</base:ViewBase>

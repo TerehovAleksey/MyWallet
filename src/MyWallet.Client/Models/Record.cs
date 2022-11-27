@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace MyWallet.Client.Models;
+﻿namespace MyWallet.Client.Models;
 
 public class Record
 {
@@ -18,4 +16,15 @@ public class Record
     public DateTime DateOfRecord { get; set; }
     public string? Description { get; set; }
     public bool IsIncome { get; set; }
+
+    public override string ToString() =>
+        $"{(IsIncome ? string.Empty : "-")}{Value} {CurrencyType?.ToUpperInvariant()}";
+}
+
+public class RecordCreate
+{
+    public Guid SubcategoryId { get; set; }
+    public decimal Value { get; set; }
+    public string? Description { get; set; }
+    public DateTime? DateTime { get; set; }
 }

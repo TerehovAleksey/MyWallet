@@ -1,16 +1,11 @@
 ﻿namespace MyWallet.Client.Converters;
 
-public class DateTimeToDayConverter : IValueConverter
+public class CountOneToBoolConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        DateTime dateTime = (DateTime)value;
-        return (DateTime.Today - dateTime.Date).TotalDays switch
-        {
-            0 => "Сегодня",
-            1 => "Вчера",
-            _ => dateTime.ToString("dd.MM.yyyy")
-        };
+        var count = (int)value;
+        return count == 1;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

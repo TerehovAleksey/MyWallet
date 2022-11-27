@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!--  Border for card style  -->
+    <Style x:Key="CardStyle" TargetType="Border">
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="BackgroundColor" Value="{StaticResource BackgroundLightColor}" />
+        <Setter Property="Stroke" Value="{StaticResource GrayDarkColor}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+        <Setter Property="StrokeThickness" Value=".5" />
+    </Style>
+</ResourceDictionary>

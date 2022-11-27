@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Grid
+    x:Class="MyWallet.Client.ViewControls.MainAccounts"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:MyWallet.Client.Converters"
+    xmlns:m="clr-namespace:MyWallet.Client.Models"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
+    Padding="10"
+    x:DataType="vm:MainPageViewModel"
+    BackgroundColor="{StaticResource BackgroundLightColor}"
+    VerticalOptions="Start">
+
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <!--  Title  -->
+    <Grid Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Label
+            Grid.Column="0"
+            Style="{StaticResource CaptionTextStyle}"
+            Text="Список счетов" />
+        <ImageButton
+            Grid.Column="1"
+            Command="{Binding OpenAccountsPageCommand}"
+            Source="cog.png"
+            Style="{StaticResource AccentIconButtonStyle}" />
+    </Grid>
+
+    <!--  Accounts  -->
+    <CollectionView
+        Grid.Row="1"
+        Margin="0,15,0,0"
+        ItemsSource="{Binding Accounts}"
+        SelectedItems="{Binding SelectedAccounts, Mode=TwoWay}"
+        SelectionMode="Multiple">
+        <CollectionView.ItemsLayout>
+
+            <LinearItemsLayout ItemSpacing="4" Orientation="Horizontal" />
+
+            <!--<GridItemsLayout
+                HorizontalItemSpacing="4"
+                Orientation="Horizontal"
+                Span="2"
+                VerticalItemSpacing="4" />-->
+
+            <!--<OnPlatform x:TypeArguments="ItemsLayout">
+                <On Platform="Android">
+                    <On.Value>
+                        <GridItemsLayout
+                            HorizontalItemSpacing="4"
+                            Orientation="Horizontal"
+                            SnapPointsAlignment="Center"
+                            Span="2"
+                            VerticalItemSpacing="4" />
+                    </On.Value>
+                </On>
+                <On Platform="WinUI">
+                    <On.Value>
+                        <HorizontalStackLayout Spacing="4" />
+                    </On.Value>
+                </On>
+            </OnPlatform>-->
+
+        </CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="m:Account">
+                <Border
+                    Padding="20,5"
+                    HeightRequest="50"
+                    StrokeShape="RoundRectangle 10"
+                    StrokeThickness="0"
+                    WidthRequest="184">
+                    <VerticalStackLayout>
+                        <Label Style="{StaticResource RegularLight12TextStyle}" Text="{Binding Name}" />
+                        <HorizontalStackLayout>
+                            <Label Style="{StaticResource MediumLight14TextStyle}" Text="{Binding Balance}" />
+                            <Label Style="{StaticResource MediumLight14TextStyle}" Text=" " />
+                            <Label Style="{StaticResource MediumLight14TextStyle}" Text="{Binding CurrencySymbol}" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource GrayDarkColor}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{Binding Color}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </Border>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+
+    <!--  Dynamic content  -->
+    <Button
+        Grid.Row="2"
+        Margin="0,15,0,0"
+        HorizontalOptions="Center"
+        IsVisible="{Binding SelectedAccounts.Count, Converter={converters:AccountsCounterVisibilityConverter}}"
+        Style="{StaticResource AccentButton}"
+        Text="{Binding SelectedAccounts.Count, Converter={converters:AccountsCountToStringConverter}}" />
+
+    <!--  Footer  -->
+    <Grid Grid.Row="3" Margin="0,15,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Button
+            Grid.Column="0"
+            HorizontalOptions="Start"
+            IsVisible="{Binding SelectedAccounts.Count, Converter={converters:CountOneToBoolConverter}}"
+            Style="{StaticResource RegularButton}"
+            Text="Корректировка баланса" />
+        <Button
+            Grid.Column="1"
+            HorizontalOptions="End"
+            Style="{StaticResource RegularButton}"
+            Text="Записи" />
+    </Grid>
+
+</Grid>

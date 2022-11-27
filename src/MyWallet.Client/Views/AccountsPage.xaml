@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<base:ViewBase
+    x:Class="MyWallet.Client.Views.AccountsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
+    xmlns:m="clr-namespace:MyWallet.Client.Models"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
+    x:DataType="vm:AccountsPageViewModel"
+    x:TypeArguments="vm:AccountsPageViewModel"
+    PageMode="Navigate"
+    PageTitle="{Binding Title}">
+
+    <base:ViewBase.PageContent>
+
+        <Grid>
+            <ScrollView>
+                <CollectionView
+                    EmptyView="Нет элементов для отображения"
+                    ItemsSource="{Binding Accounts}"
+                    SelectedItem="{Binding SelectedAccount}"
+                    SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="m:Account">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="AUTO" />
+                                    <RowDefinition Height="AUTO" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="AUTO" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Border
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="10"
+                                    Padding="12"
+                                    BackgroundColor="{Binding Color}"
+                                    HeightRequest="50"
+                                    StrokeShape="RoundRectangle 5"
+                                    StrokeThickness="0"
+                                    WidthRequest="50">
+                                    <Image Aspect="AspectFill" Source="coins.png" />
+                                </Border>
+                                <VerticalStackLayout
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    VerticalOptions="Center">
+                                    <Label Style="{StaticResource MediumDark14TextStyle}" Text="{Binding Name}" />
+                                    <Label Style="{StaticResource RegularDark12TextStyle}" Text="{Binding CurrencySymbol}" />
+                                </VerticalStackLayout>
+                                <BoxView
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    Style="{StaticResource SeparatorStyle}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+            <Button Command="{Binding OpenAccountPageCommand}" Style="{StaticResource FabButtonStyle}" />
+        </Grid>
+
+    </base:ViewBase.PageContent>
+
+</base:ViewBase>

@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace MyWallet.Client.Models;
+﻿namespace MyWallet.Client.Models;
 
 public class Category : BaseCategory
 {

@@ -1,7 +1,5 @@
-﻿using MyWallet.Client.DataServices;
-using MyWallet.Client.Pages;
-using MyWallet.Client.ViewModels;
-using CommunityToolkit.Maui;
+﻿using MonkeyCache;
+using MonkeyCache.FileStore;
 
 namespace MyWallet.Client;
 
@@ -12,23 +10,52 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseMauiCompatibility()
             .ConfigureFonts(fonts =>
             {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            }).UseMauiCommunityToolkit();
+                fonts.AddFont("FiraSans-Light.ttf", "RegularFont");
+                fonts.AddFont("FiraSans-Medium.ttf", "MediumFont");
+                fonts.AddFont("FiraSans-Regular.ttf", "RegularFont");
+            })
+            .ConfigureLifecycleEvents(events =>
+            {
+#if ANDROID
+            events.AddAndroid(android => android.OnCreate((activity, bundle) => 
+            {
+                activity.Window.SetFlags(Android.Views.WindowManagerFlags.LayoutNoLimits, Android.Views.WindowManagerFlags.LayoutNoLimits);
+                activity.Window.ClearFlags(Android.Views.WindowManagerFlags.TranslucentStatus);
+                activity.Window.SetStatusBarColor(Android.Graphics.Color.Transparent);
+            }));
+#endif
+            })
+            .UseMauiCommunityToolkit();
 
-        builder.Services.AddHttpClient<IDataService, RestDataService>();
+#if DEBUG
+        builder.Logging.AddDebug();
+#endif
 
-        builder.Services.AddSingleton<MainPage>();
-        builder.Services.AddTransient<RecordPage>();
-        builder.Services.AddTransient<CategoryPage>();
-        builder.Services.AddTransient<CategoryEditPage>();
-
-        builder.Services.AddSingleton<MainViewModel>();
-        builder.Services.AddTransient<RecordPageViewModel>();
-        builder.Services.AddTransient<CategoryEditViewModel>();
+        //Register Services
+        RegisterAppServices(builder.Services);
 
         return builder.Build();
     }
+
+    private static void RegisterAppServices(IServiceCollection services)
+    {
+        //Add Platform specific Dependencies
+        services.AddSingleton<IConnectivity>(Connectivity.Current);
+
+        //Register Cache Barrel
+        Barrel.ApplicationId = Constants.ApplicationId;
+        services.AddSingleton<IBarrel>(Barrel.Current);
+
+        //Register API Service
+        services.AddHttpClient<IDataService, RestDataService>();
+
+        //Register View Models
+        services.AddSingleton<MainPageViewModel>();
+        services.AddTransient<AccountPageViewModel>();
+        services.AddTransient<AccountsPageViewModel>();
+    }
+
 }

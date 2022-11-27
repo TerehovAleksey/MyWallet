@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyWallet.Core", "MyWallet.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyWallet.Services", "MyWallet.Services\MyWallet.Services.csproj", "{864B61A9-79EF-49CA-B240-3A672CA31EC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWallet.Client", "MyWallet.Client\MyWallet.Client.csproj", "{FE763241-BC4E-4B59-BB64-99D483034758}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWallet.Client", "MyWallet.Client\MyWallet.Client.csproj", "{9298A77E-EF56-47E6-BAFF-E2EE68265483}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,12 +29,12 @@ Global
 		{864B61A9-79EF-49CA-B240-3A672CA31EC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{864B61A9-79EF-49CA-B240-3A672CA31EC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{864B61A9-79EF-49CA-B240-3A672CA31EC8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE763241-BC4E-4B59-BB64-99D483034758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE763241-BC4E-4B59-BB64-99D483034758}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE763241-BC4E-4B59-BB64-99D483034758}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{FE763241-BC4E-4B59-BB64-99D483034758}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE763241-BC4E-4B59-BB64-99D483034758}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE763241-BC4E-4B59-BB64-99D483034758}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9298A77E-EF56-47E6-BAFF-E2EE68265483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9298A77E-EF56-47E6-BAFF-E2EE68265483}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9298A77E-EF56-47E6-BAFF-E2EE68265483}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9298A77E-EF56-47E6-BAFF-E2EE68265483}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9298A77E-EF56-47E6-BAFF-E2EE68265483}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9298A77E-EF56-47E6-BAFF-E2EE68265483}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

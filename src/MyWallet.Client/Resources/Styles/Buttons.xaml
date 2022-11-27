@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Style x:Key="FabButtonStyle" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource AccentColor}" />
+        <Setter Property="HeightRequest" Value="60" />
+        <Setter Property="WidthRequest" Value="60" />
+        <Setter Property="CornerRadius" Value="30" />
+        <Setter Property="HorizontalOptions" Value="End" />
+        <Setter Property="VerticalOptions" Value="End" />
+        <Setter Property="Text" Value="+" />
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="Margin" Value="0,0,20,20" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow
+                    Brush="Black"
+                    Opacity="0.8"
+                    Offset="10,10" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Buttons Styles  -->
+    <Style x:Key="RegularButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderWidth" Value="1.1" />
+        <Setter Property="BorderColor" Value="{StaticResource GrayColor}" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
+        <Setter Property="TextTransform" Value="Uppercase" />
+        <Setter Property="FontFamily" Value="MediumFont" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+
+    <Style x:Key="AccentButton" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource AccentColor}" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+
+    <!--  Icon Styles  -->
+    <Style x:Key="IconButtonStyle" TargetType="ImageButton">
+        <Setter Property="HeightRequest" Value="42" />
+        <Setter Property="WidthRequest" Value="42" />
+        <Setter Property="Padding" Value="{OnPlatform Android=4, Default=6}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="Margin" Value="12,3" />
+        <Setter Property="Aspect" Value="AspectFit" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="1" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="0.5" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style
+        x:Key="AccentIconButtonStyle"
+        BasedOn="{StaticResource IconButtonStyle}"
+        TargetType="ImageButton">
+        <Setter Property="BorderWidth" Value="1.1" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="BorderColor" Value="{StaticResource GrayColor}" />
+
+    </Style>
+</ResourceDictionary>

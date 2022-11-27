@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MyWallet.Client.Views.Base.PageBase"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MyWallet.Client.ViewControls.Common"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.Base"
+    x:DataType="vm:AppViewModelBase">
+
+    <Grid IgnoreSafeArea="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{OnPlatform Android=28, iOS=36, Default=0}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  Top margin  -->
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource PrimaryDarkColor}" />
+
+        <!--  Header  -->
+        <Grid
+            Grid.Row="1"
+            Margin="0"
+            BackgroundColor="{StaticResource PrimaryColor}"
+            ColumnDefinitions="56,*,56"
+            IgnoreSafeArea="True"
+            MinimumHeightRequest="56">
+
+            <!--  Icons for Left Side  -->
+            <ImageButton
+                x:Name="HamburgerButton"
+                Grid.Column="0"
+                HorizontalOptions="Start"
+                Source="menu.png"
+                Style="{StaticResource IconButtonStyle}"
+                VerticalOptions="Center" />
+
+            <ImageButton
+                x:Name="NavigateBackButton"
+                Grid.Column="0"
+                Command="{Binding NavigateBackCommand, Mode=OneWay}"
+                HorizontalOptions="Start"
+                Source="back.png"
+                Style="{StaticResource IconButtonStyle}"
+                VerticalOptions="Center" />
+
+            <ImageButton
+                x:Name="CloseButton"
+                Grid.Column="0"
+                Command="{Binding CloseModalCommand, Mode=OneWay}"
+                HorizontalOptions="Start"
+                Source="close.png"
+                Style="{StaticResource IconButtonStyle}"
+                VerticalOptions="Center" />
+
+            <!--  Page Header Label  -->
+            <Label
+                x:Name="TitleLabel"
+                Grid.Column="1"
+                Margin="20,0,6,0"
+                HorizontalOptions="Fill"
+                HorizontalTextAlignment="Start"
+                IsVisible="False"
+                Style="{StaticResource PageHeaderTextStyle}"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center" />
+
+            <!--  Icons for Right Side  -->
+            <Grid
+                x:Name="PageIconsGrid"
+                Grid.Column="2"
+                Margin="0,4"
+                HorizontalOptions="End"
+                VerticalOptions="Center" />
+
+        </Grid>
+
+        <!--  Content  -->
+        <Grid
+            x:Name="PageContentGrid"
+            Grid.Row="2"
+            IgnoreSafeArea="True" />
+
+        <!--  Indicators  -->
+        <controls:ErrorIndicator
+            Grid.Row="2"
+            ErrorImage="{Binding ErrorImage}"
+            ErrorText="{Binding ErrorMessage}"
+            HorizontalOptions="Fill"
+            IsError="{Binding IsErrorState}"
+            VerticalOptions="Fill" />
+
+        <controls:LoadingIndicator
+            Grid.Row="2"
+            HorizontalOptions="Fill"
+            IsBusy="{Binding IsBusy}"
+            LoadingText="{Binding LoadingText}"
+            VerticalOptions="Fill" />
+
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Grid
+    x:Class="MyWallet.Client.ViewControls.Common.ErrorIndicator"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="{StaticResource BackgroundColor}"
+    HorizontalOptions="Fill"
+    IsVisible="False"
+    VerticalOptions="Fill">
+
+    <VerticalStackLayout
+        Padding="48,12"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <Frame
+            BackgroundColor="{StaticResource BackgroundLightColor}"
+            CornerRadius="80"
+            HasShadow="False"
+            HeightRequest="160"
+            WidthRequest="160">
+            <Image
+                x:Name="ErrorIcon"
+                Aspect="AspectFit"
+                HeightRequest="86"
+                HorizontalOptions="Center"
+                WidthRequest="86" />
+        </Frame>
+
+        <Label
+            Margin="0,12,0,0"
+            FontSize="18"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            Style="{StaticResource BaseMediumLabelTextStyle}"
+            Text="Uh-Oh!"
+            TextColor="{StaticResource DarkTextColor}" />
+
+        <Label
+            x:Name="ErrorTextLabel"
+            FontSize="14"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            LineBreakMode="WordWrap"
+            Style="{StaticResource BaseRegularLabelTextStyle}"
+            TextColor="{StaticResource GrayTextColor}" />
+    </VerticalStackLayout>
+
+</Grid>
