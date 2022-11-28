@@ -9,13 +9,11 @@ public class AccountTypeController : ControllerBase
 
     private readonly IAccountTypeService _accountTypeService;
     private readonly IMemoryCache _cache;
-    private readonly ILogger<AccountTypeController> _logger;
 
-    public AccountTypeController(IAccountTypeService accountTypeService, IMemoryCache cache, ILogger<AccountTypeController> logger)
+    public AccountTypeController(IAccountTypeService accountTypeService, IMemoryCache cache)
     {
         _accountTypeService = accountTypeService ?? throw new ArgumentNullException(nameof(accountTypeService));
         _cache = cache ?? throw new ArgumentNullException(nameof(cache));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     /// <summary>
@@ -24,7 +22,7 @@ public class AccountTypeController : ControllerBase
     /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<AccountTypeDto>), StatusCodes.Status200OK)]
-    public async Task<IEnumerable<AccountTypeDto>> GetAllAccountsAsync()
+    public async Task<IEnumerable<AccountTypeDto>> GetAllAccountTypesAsync()
     {
         if (_cache.TryGetValue(CacheKey, out List<AccountTypeDto> result))
         {
@@ -51,7 +49,7 @@ public class AccountTypeController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAccountAsync([FromRoute] Guid id)
     {
-        var types = await GetAllAccountsAsync();
+        var types = await GetAllAccountTypesAsync();
         var result = types.FirstOrDefault(x => x.Id == id);
         return result == null ? NotFound() : Ok(result);
     }
