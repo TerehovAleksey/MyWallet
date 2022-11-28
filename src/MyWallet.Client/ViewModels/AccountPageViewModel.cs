@@ -11,7 +11,7 @@ public partial class AccountPageViewModel : AppViewModelBase
     private string _accountName = string.Empty;
 
     [ObservableProperty]
-    private string _accountType = string.Empty;
+    private AccountType _accountType;
 
     [ObservableProperty]
     private string _accountNumber = string.Empty;
@@ -31,13 +31,13 @@ public partial class AccountPageViewModel : AppViewModelBase
         get => _account;
         set
         {
-           if(SetProperty(ref _account, value))
+            if (SetProperty(ref _account, value))
             {
                 AccountName = value.Name;
                 AccountNumber = "";
                 AccountValue = value.Balance;
                 AccountCurrencyType = value.CurrencySymbol;
-                AccountType = null;
+                AccountType = AccountTypes.FirstOrDefault(x => x.Name == value.AccountType);
             }
             else
             {
@@ -46,19 +46,22 @@ public partial class AccountPageViewModel : AppViewModelBase
         }
     }
 
-    public List<string> AccountTypes { get; }
-    public List<Currency> Currencies { get; }
+    [ObservableProperty]
+    private List<AccountType> _accountTypes;
+
+    [ObservableProperty]
+    private List<Currency> _currencies;
 
     public AccountPageViewModel(IDataService dataService) : base(dataService)
     {
         Title = "Новый счёт";
-
-        AccountTypes = DataService.GetAccountTypes().ToList();
-        Currencies = DataService.GetCurrentCurrencies();
     }
 
-    public override void OnNavigatedTo(object parameters)
+    public override async void OnNavigatedTo(object parameters)
     {
+        AccountTypes = await DataService.GetAccountTypesAsync();
+        Currencies = DataService.GetCurrentCurrencies();
+
         Account = parameters as Account;
         IsNewAccount = Account == null;
         Title = IsNewAccount ? "Новый счёт" : "Изменить счёт";
@@ -70,7 +73,7 @@ public partial class AccountPageViewModel : AppViewModelBase
         SetDataLodingIndicators(true);
 
         //Save
-        await Task.Delay(2000);
+        await DataService.CreateAccountAsync(new AccountCreate(AccountName, AccountNumber, AccountType.Id, AccountValue, CurrentCurrency.Symbol, "#ad1457"));
 
         SetDataLodingIndicators(false);
 

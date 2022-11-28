@@ -1,4 +1,5 @@
 ﻿using MonkeyCache;
+using System.Text;
 
 namespace MyWallet.Client.DataService;
 
@@ -31,6 +32,39 @@ public abstract class RestServiceBase
 
         //Return the result
         return JsonSerializer.Deserialize<T>(json, _jsonSerializerOptions);
+    }
+
+    protected async Task<HttpResponseMessage> PostAsync<T>(string uri, T payload)
+    {
+        var dataToPost = JsonSerializer.Serialize(payload, _jsonSerializerOptions);
+        var content = new StringContent(dataToPost, Encoding.UTF8, "application/json");
+
+        var response = await _httpClient.PostAsync(uri, content);
+
+        response.EnsureSuccessStatusCode();
+
+        return response;
+    }
+
+    protected async Task<HttpResponseMessage> PutAsync<T>(string uri, T payload)
+    {
+        var dataToPost = JsonSerializer.Serialize(payload, _jsonSerializerOptions);
+        var content = new StringContent(dataToPost, Encoding.UTF8, "application/json");
+
+        var response = await _httpClient.PutAsync(uri, content);
+
+        response.EnsureSuccessStatusCode();
+
+        return response;
+    }
+
+    protected async Task<HttpResponseMessage> DeleteAsync(string uri)
+    {
+        HttpResponseMessage response = await _httpClient.DeleteAsync(new Uri(_httpClient.BaseAddress, uri));
+
+        response.EnsureSuccessStatusCode();
+
+        return response;
     }
 
     private async Task<string> GetJsonAsync(string resource, int cacheDuration = 24)

@@ -10,7 +10,7 @@ public class RestDataService : RestServiceBase, IDataService
 
     #region Currency, Account
 
-    public Task<List<Currency>> GetCurrenciesAsync() => GetAsync<List<Currency>>($"currency");
+    public Task<List<Currency>> GetCurrenciesAsync() => GetAsync<List<Currency>>("currency");
 
     public List<Currency> GetCurrentCurrencies()
     {
@@ -21,16 +21,13 @@ public class RestDataService : RestServiceBase, IDataService
         };
     }
 
-    public Task<List<AccountType>> GetAccountTypes() => GetAsync<List<AccountType>>($"account/types");
+    public Task<List<AccountType>> GetAccountTypesAsync() => GetAsync<List<AccountType>>("type");
 
-    public Task<List<Account>> GetAccountsAsync() => GetAsync<List<Account>>($"account");
+    public Task<List<Account>> GetAccountsAsync() => GetAsync<List<Account>>("account", 0);
+
+    public Task CreateAccountAsync(AccountCreate account) => PostAsync("account", account);
 
     #endregion
-
-    public Task<Account> CreateAccountAsync(AccountCreate account)
-    {
-        throw new NotImplementedException();
-    }
 
     public Task<Category> CreateCategoryAsync(string name, string imageName)
     {

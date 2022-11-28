@@ -19,11 +19,16 @@ public record AccountType(Guid Id, string Name)
 /// <param name="AccountType">Тип счёта</param>
 /// <param name="Balance">Теукщий баланс на счёте</param>
 /// <param name="CurrencySymbol">Валюта (BYN, USD, etc.)</param>
-/// <param name="ColorString">Цвет в HEX-формате</param>
 /// <param name="IsDisable">Исключён из статистики</param>
 /// <param name="IsArhived">В архиве</param>
-public record Account(Guid Id, string Name, string AccountType, decimal Balance, string CurrencySymbol, Color ColorString, bool IsDisable, bool IsArhived)
+public record Account(Guid Id, string Name, string AccountType, decimal Balance, string CurrencySymbol, bool IsDisable, bool IsArhived)
 {
+    /// <summary>
+    /// Цвет в HEX-формате
+    /// </summary>
+    [JsonPropertyName("color")]
+    public string ColorString { get; set; }
+
     /// <summary>
     /// Статус (тип счёта | исключено | исключено, архивировано)
     /// </summary>
@@ -46,6 +51,9 @@ public record Account(Guid Id, string Name, string AccountType, decimal Balance,
             return AccountType;
         }
     }
+
+    [JsonIgnore]
+    public Color Color => Color.FromArgb(ColorString);
 }
 
 /// <summary>

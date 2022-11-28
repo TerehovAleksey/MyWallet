@@ -1,8 +1,6 @@
 ﻿namespace MyWallet.Client.ViewModels;
 public partial class MainPageViewModel : AppViewModelBase
 {
-    private readonly IDataService _dataService;
-
     public ObservableCollection<Account> Accounts { get; } = new();
     public ObservableCollection<object> SelectedAccounts { get; }
 
@@ -13,13 +11,11 @@ public partial class MainPageViewModel : AppViewModelBase
 
     public MainPageViewModel(IDataService dataService) : base(dataService)
     {
-        _dataService = dataService;
-
         Title = "Главная";
 
-        Accounts.Add(new Account { Id = Guid.NewGuid(), Name = "Карта", Balance = -80, Color = Color.FromArgb("#ad1457"), CurrencySymbol = "BYN" });
-        Accounts.Add(new Account { Id = Guid.NewGuid(), Name = "Наличные", Balance = 158.40M, Color = Color.FromArgb("#039be5"), CurrencySymbol = "BYN" });
-        Accounts.Add(new Account { Id = Guid.NewGuid(), Name = "Наличные (USD)", Balance = 0, Color = Color.FromArgb("#43a047"), CurrencySymbol = "USD" });
+        //Accounts.Add(new Account { Id = Guid.NewGuid(), Name = "Карта", Balance = -80, Color = Color.FromArgb("#ad1457"), CurrencySymbol = "BYN" });
+        //Accounts.Add(new Account { Id = Guid.NewGuid(), Name = "Наличные", Balance = 158.40M, Color = Color.FromArgb("#039be5"), CurrencySymbol = "BYN" });
+        //Accounts.Add(new Account { Id = Guid.NewGuid(), Name = "Наличные (USD)", Balance = 0, Color = Color.FromArgb("#43a047"), CurrencySymbol = "USD" });
 
         SelectedAccounts = new ObservableCollection<object>(Accounts);
     }
@@ -32,6 +28,8 @@ public partial class MainPageViewModel : AppViewModelBase
 
         try
         {
+            var accounts = await DataService.GetAccountsAsync();
+            Accounts.AddRange(accounts);
            // var records = await _dataService.GetRecordsAsync(new DateTime(2020, 1, 1), new DateTime(2023, 1, 1));
            // Records.AddRange(records);
         }

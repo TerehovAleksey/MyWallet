@@ -21,13 +21,16 @@ public partial class AccountsPageViewModel : AppViewModelBase
 	{
         Title = "Настройки счетов";
 
-        Accounts.Add(new Account { Id = Guid.NewGuid(), Name = "Карта", Balance = -80, Color = Color.FromArgb("#ad1457"), CurrencySymbol = "BYN" });
-        Accounts.Add(new Account { Id = Guid.NewGuid(), Name = "Наличные", Balance = 158.40M, Color = Color.FromArgb("#039be5"), CurrencySymbol = "BYN" });
-        Accounts.Add(new Account { Id = Guid.NewGuid(), Name = "Наличные (USD)", Balance = 0, Color = Color.FromArgb("#43a047"), CurrencySymbol = "USD" });
+        //Accounts.Add(new Account { Id = Guid.NewGuid(), Name = "Карта", Balance = -80, Color = Color.FromArgb("#ad1457"), CurrencySymbol = "BYN" });
+        //Accounts.Add(new Account { Id = Guid.NewGuid(), Name = "Наличные", Balance = 158.40M, Color = Color.FromArgb("#039be5"), CurrencySymbol = "BYN" });
+        //Accounts.Add(new Account { Id = Guid.NewGuid(), Name = "Наличные (USD)", Balance = 0, Color = Color.FromArgb("#43a047"), CurrencySymbol = "USD" });
     }
 
-    public override void OnNavigatedTo(object parameters)
+    public override async void OnNavigatedTo(object parameters)
     {
+        var accounts = await DataService.GetAccountsAsync();
+        Accounts.AddRange(accounts);
+
         SelectedAccount = null;
     }
 

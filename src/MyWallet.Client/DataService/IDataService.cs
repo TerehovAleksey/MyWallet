@@ -20,7 +20,7 @@ public interface IDataService
     /// Получение списка типов счетов
     /// </summary>
     /// <returns></returns>
-    public Task<List<AccountType>> GetAccountTypes();
+    public Task<List<AccountType>> GetAccountTypesAsync();
 
     /// <summary>
     /// Получение всех счетов пользователя
@@ -28,9 +28,15 @@ public interface IDataService
     /// <returns></returns>
     public Task<List<Account>> GetAccountsAsync();
 
+    /// <summary>
+    /// Создание счёта пользователя
+    /// </summary>
+    /// <param name="account"></param>
+    /// <returns></returns>
+    public Task CreateAccountAsync(AccountCreate account);
+
     #endregion
 
-    public Task<Account?> CreateAccountAsync(AccountCreate account);
     public Task<bool> DeleteAccountAsync(Guid id);
 
     
