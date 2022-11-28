@@ -1,9 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using MyWallet.Core.Dal;
-using MyWallet.Services;
-using MyWallet.Services.Extensions;
-using MyWallet.WebApi.Configurations;
-
 var builder = WebApplication.CreateBuilder(args);
 
 //My Services
@@ -13,6 +7,8 @@ builder.Services.AddServices();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 
@@ -26,8 +22,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
+else
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 

@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace MyWallet.Core.Dal;
+﻿namespace MyWallet.Core.Dal;
 
 internal class JournalConfiguration : IEntityTypeConfiguration<Journal>
 {

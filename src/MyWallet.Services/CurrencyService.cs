@@ -2,7 +2,7 @@
 
 public class CurrencyService : ICurrencyService
 {
-    public Dictionary<string, string> GetAllSimbolsWithDescription()
+    public Dictionary<string, string> GetAllSymbolsWithDescription()
     {
         return new Dictionary<string, string>()
         {

@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace MyWallet.Core.Dal;
+﻿namespace MyWallet.Core.Dal;
 
 public sealed class AppDbContext : DbContext
 {
@@ -14,6 +12,7 @@ public sealed class AppDbContext : DbContext
 		base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new AccountConfiguration());
+        modelBuilder.ApplyConfiguration(new AccountTypeConfigurations());
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         modelBuilder.ApplyConfiguration(new SubCategoryConfiguration());
         modelBuilder.ApplyConfiguration(new JournalConfiguration());
@@ -38,6 +37,7 @@ public sealed class AppDbContext : DbContext
     }
 
     public DbSet<Account> Accounts => Set<Account>();
+    public DbSet<AccountType> AccountTypes => Set<AccountType>();
     public DbSet<Category> Categories => Set<Category>();
 	public DbSet<SubCategory> Subcategories => Set<SubCategory>();
     public DbSet<Journal> Journals => Set<Journal>();

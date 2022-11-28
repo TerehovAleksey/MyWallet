@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MyWallet.Services;
-using MyWallet.Services.Dto;
-
-namespace MyWallet.WebApi.Controllers
+﻿namespace MyWallet.WebApi.Controllers
 {
-    [Route("api/currency")]
     [ApiController]
+    [Route("api/currency")]
+    [Produces(MediaTypeNames.Application.Json)]
     public class CurrencyController : ControllerBase
     {
         private readonly ICurrencyService _currencyService;
@@ -16,9 +13,10 @@ namespace MyWallet.WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CurrencyDto> GetCurrencySymols()
+        [ProducesResponseType(typeof(IEnumerable<CurrencyDto>), StatusCodes.Status200OK)]
+        public IEnumerable<CurrencyDto> GetCurrencySymbols()
         {
-            return _currencyService.GetAllSimbolsWithDescription()
+            return _currencyService.GetAllSymbolsWithDescription()
                 .Select(x => new CurrencyDto(x.Key, x.Value));
         }
     }
