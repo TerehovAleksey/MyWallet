@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using MyWallet.Core;
-using MyWallet.Services.Dto;
-
-namespace MyWallet.Services.Mapper;
+﻿namespace MyWallet.Services.Mapper;
 
 public class DtoToDomainMappingProfile : Profile
 {
@@ -10,6 +6,9 @@ public class DtoToDomainMappingProfile : Profile
     {
         CreateMap<AccountCreateDto, Account>()
             .ForMember(p => p.CurrencySymbol, opt => opt.MapFrom(dto => dto.CurrencySymbol.ToUpperInvariant()));
+
+        CreateMap<AccountTypeCreateDto, AccountType>()
+            .ForMember(p => p.Id, opt => Guid.NewGuid());
 
         CreateMap<BaseCategoryDto, SubCategory>()
             .ForMember(p => p.Id, opt => Guid.NewGuid());

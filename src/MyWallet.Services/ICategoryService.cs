@@ -1,6 +1,4 @@
-﻿using MyWallet.Services.Dto;
-
-namespace MyWallet.Services;
+﻿namespace MyWallet.Services;
 
 public interface ICategoryService
 {

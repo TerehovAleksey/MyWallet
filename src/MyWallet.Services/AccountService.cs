@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using MyWallet.Core;
-using MyWallet.Core.Dal;
-using MyWallet.Services.Dto;
-
-namespace MyWallet.Services;
+﻿namespace MyWallet.Services;
 
 public class AccountService : IAccountService
 {
@@ -54,7 +48,8 @@ public class AccountService : IAccountService
              .AsNoTracking()
              .OrderBy(c => c.Name);
 
-        return await _mapper.ProjectTo<AccountDto>(result).ToListAsync();
+        var accounts = await _mapper.ProjectTo<AccountDto>(result).ToListAsync();
+        return accounts;
     }
 
     public async Task<AccountDto?> GetAccountAsync(Guid id)
@@ -66,15 +61,18 @@ public class AccountService : IAccountService
         return await _mapper.ProjectTo<AccountDto>(result).FirstOrDefaultAsync();
     }
 
-    public async Task<bool> UpdateAccountAsync(AccountDto account)
+    public async Task<bool> UpdateAccountAsync(AccountUpdateDto account)
     {
         var result = false;
         var exists = await _context.Accounts.FindAsync(account.Id);
         if (exists is not null)
         {
             exists.Name = account.Name;
-            exists.CurrencySymbol = account.CurrencySymbol.ToUpperInvariant();
-            exists.Balance = account.Balance;
+            exists.AccountTypeId = account.AccountTypeId;
+            exists.Color = account.Color;
+            exists.Number = account.Number;
+            exists.IsArchived = account.IsArchived;
+            exists.IsDisabled = account.IsDisabled;
             await _context.SaveChangesAsync();
             result = true;
         }
