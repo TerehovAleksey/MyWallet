@@ -2,16 +2,16 @@
 
 public partial class AccountPageViewModel : AppViewModelBase
 {
-    private Account _account;
+    private Account? _account;
 
     [ObservableProperty]
-    private bool _isNewAccount = false;
+    private bool _isNewAccount;
 
     [ObservableProperty]
     private string _accountName = string.Empty;
 
     [ObservableProperty]
-    private AccountType _accountType;
+    private AccountType? _accountType;
 
     [ObservableProperty]
     private string _accountNumber = string.Empty;
@@ -23,15 +23,15 @@ public partial class AccountPageViewModel : AppViewModelBase
     private string _accountCurrencyType = string.Empty;
 
     [ObservableProperty]
-    private Currency _currentCurrency;
+    private Currency? _currentCurrency;
 
 
-    public Account Account
+    public Account? Account
     {
         get => _account;
         set
         {
-            if (SetProperty(ref _account, value))
+            if (value is not null && SetProperty(ref _account, value))
             {
                 AccountName = value.Name;
                 AccountNumber = "";
@@ -47,17 +47,17 @@ public partial class AccountPageViewModel : AppViewModelBase
     }
 
     [ObservableProperty]
-    private List<AccountType> _accountTypes;
+    private List<AccountType> _accountTypes = new();
 
     [ObservableProperty]
-    private List<Currency> _currencies;
+    private List<Currency> _currencies = new();
 
     public AccountPageViewModel(IDataService dataService) : base(dataService)
     {
         Title = "Новый счёт";
     }
 
-    public override async void OnNavigatedTo(object parameters)
+    public override async void OnNavigatedTo(object? parameters)
     {
         AccountTypes = await DataService.GetAccountTypesAsync();
         Currencies = DataService.GetCurrentCurrencies();
@@ -70,12 +70,12 @@ public partial class AccountPageViewModel : AppViewModelBase
     [RelayCommand]
     private async Task SaveAndReturn()
     {
-        SetDataLodingIndicators(true);
+        SetDataLoadingIndicators(true);
 
         //Save
         await DataService.CreateAccountAsync(new AccountCreate(AccountName, AccountNumber, AccountType.Id, AccountValue, CurrentCurrency.Symbol, "#ad1457"));
 
-        SetDataLodingIndicators(false);
+        SetDataLoadingIndicators(false);
 
         //Return
         await NavigationService.PopAsync();

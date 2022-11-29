@@ -20,14 +20,14 @@ public record AccountType(Guid Id, string Name)
 /// <param name="Balance">Теукщий баланс на счёте</param>
 /// <param name="CurrencySymbol">Валюта (BYN, USD, etc.)</param>
 /// <param name="IsDisable">Исключён из статистики</param>
-/// <param name="IsArhived">В архиве</param>
-public record Account(Guid Id, string Name, string AccountType, decimal Balance, string CurrencySymbol, bool IsDisable, bool IsArhived)
+/// <param name="IsArchived">В архиве</param>
+public record Account(Guid Id, string Name, string AccountType, decimal Balance, string CurrencySymbol, bool IsDisable, bool IsArchived)
 {
     /// <summary>
     /// Цвет в HEX-формате
     /// </summary>
     [JsonPropertyName("color")]
-    public string ColorString { get; set; }
+    public string ColorString { get; set; } = default!;
 
     /// <summary>
     /// Статус (тип счёта | исключено | исключено, архивировано)
@@ -36,19 +36,12 @@ public record Account(Guid Id, string Name, string AccountType, decimal Balance,
     {
         get
         {
-            if (IsDisable && IsArhived)
+            return IsDisable switch
             {
-                return "Исключено, Архивировано";
-            }
-            if (IsDisable)
-            {
-                return "Исключено";
-            }
-            if (IsArhived)
-            {
-                return "Архивировано";
-            }
-            return AccountType;
+                true when IsArchived => "Исключено, Архивировано",
+                true => "Исключено",
+                _ => IsArchived ? "Архивировано" : AccountType
+            };
         }
     }
 
@@ -72,8 +65,8 @@ public record AccountCreate(string Name, string Number, Guid AccountTypeId, deci
 /// </summary>
 /// <param name="Name">Название</param>
 /// <param name="Number">Номер банковского счёта</param>
-/// <param name="AccountTypeId">ID типа счётаparam>
+/// <param name="AccountTypeId">ID типа счётаparam</param>
 /// <param name="Color">Цвет в HEX-формате</param>
 /// <param name="IsDisable">Исключён из статистики</param>
-/// <param name="IsArhived">В архиве</param>
-public record AccountUpdate(string Name, string Number, Guid AccountTypeId, string Color, bool IsDisable, bool IsArhived);
+/// <param name="IsArchived">В архиве</param>
+public record AccountUpdate(string Name, string Number, Guid AccountTypeId, string Color, bool IsDisable, bool IsArchived);

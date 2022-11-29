@@ -29,7 +29,7 @@ public partial class PageBase : ContentPage
 
     private static void OnPageTitleChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        if (bindable != null && bindable is PageBase basePage)
+        if (bindable is PageBase basePage)
         {
             basePage.TitleLabel.Text = (string)newValue;
             basePage.TitleLabel.IsVisible = true;
@@ -52,8 +52,10 @@ public partial class PageBase : ContentPage
 
     private static void OnPageModePropertyChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        if (bindable != null && bindable is PageBase basePage)
+        if (bindable is PageBase basePage)
+        {
             basePage.SetPageMode((PageMode)newValue);
+        }
     }
 
     private void SetPageMode(PageMode pageMode)
@@ -84,42 +86,43 @@ public partial class PageBase : ContentPage
     }
 
 
-    //public static readonly BindableProperty ContentDisplayModeProperty = BindableProperty.Create(
-    //    nameof(ContentDisplayMode),
-    //    typeof(ContentDisplayMode),
-    //    typeof(PageBase),
-    //    ContentDisplayMode.NoNavigationBar,
-    //    propertyChanged: OnContentDisplayModePropertyChanged);
+    public static readonly BindableProperty DisplayModeProperty = BindableProperty.Create(
+        nameof(DisplayMode),
+        typeof(DisplayMode),
+        typeof(PageBase),
+        DisplayMode.NoNavigationBar,
+        propertyChanged: OnContentDisplayModePropertyChanged);
 
-    //public ContentDisplayMode ContentDisplayMode
-    //{
-    //    get => (ContentDisplayMode)GetValue(ContentDisplayModeProperty);
-    //    set => SetValue(ContentDisplayModeProperty, value);
-    //}
+    public DisplayMode DisplayMode
+    {
+        get => (DisplayMode)GetValue(DisplayModeProperty);
+        set => SetValue(DisplayModeProperty, value);
+    }
 
-    //private static void OnContentDisplayModePropertyChanged(BindableObject bindable, object oldValue, object newValue)
-    //{
-    //    if (bindable != null && bindable is PageBase basePage)
-    //        basePage.SetContentDisplayMode((ContentDisplayMode)newValue);
-    //}
+    private static void OnContentDisplayModePropertyChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is PageBase basePage)
+        {
+            basePage.SetContentDisplayMode((DisplayMode)newValue);
+        }
+    }
 
-    //private void SetContentDisplayMode(ContentDisplayMode contentDisplayMode)
-    //{
-    //    switch (contentDisplayMode)
-    //    {
-    //        case ContentDisplayMode.NavigationBar:
-    //            Grid.SetRow(PageContentGrid, 2);
-    //            Grid.SetRowSpan(PageContentGrid, 1);
-    //            break;
-    //        case ContentDisplayMode.NoNavigationBar:
-    //            Grid.SetRow(PageContentGrid, 0);
-    //            Grid.SetRowSpan(PageContentGrid, 3);
-    //            break;
-    //        default:
-    //            //Do Nothing
-    //            break;
-    //    }
-    //}
+    private void SetContentDisplayMode(DisplayMode displayMode)
+    {
+        switch (displayMode)
+        {
+            case DisplayMode.NavigationBar:
+                HeaderGrid.IsVisible = true;
+                Grid.SetRow(PageContentGrid, 2);
+                Grid.SetRowSpan(PageContentGrid, 1);
+                break;
+            case DisplayMode.NoNavigationBar:
+                HeaderGrid.IsVisible = false;
+                Grid.SetRow(PageContentGrid, 1);
+                Grid.SetRowSpan(PageContentGrid, 2);
+                break;
+        }
+    }
 
     #endregion
 
@@ -134,7 +137,19 @@ public partial class PageBase : ContentPage
         //Set Page Mode
         SetPageMode(PageMode.None);
 
-        //Set Content Display Mode
-        //SetContentDisplayMode(ContentDisplayMode.NoNavigationBar);
+        //Set Display Mode
+        SetContentDisplayMode(DisplayMode.NoNavigationBar);
+    }
+
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+
+#if ANDROID
+        // только так работает цвет стаусбара (в других случаях падает в релизе)
+        // https://github.com/MicrosoftDocs/CommunityToolkit/blob/main/docs/maui/behaviors/statusbar-behavior.md
+        CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(Color.FromArgb("#21cb87"));
+        CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(StatusBarStyle.LightContent);
+#endif
     }
 }

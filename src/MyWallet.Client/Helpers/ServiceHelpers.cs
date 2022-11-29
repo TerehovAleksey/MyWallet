@@ -3,7 +3,7 @@
 public static class ServiceHelpers
 {
 
-    public static TService GetService<TService>() => Current.GetService<TService>();
+    public static TService GetService<TService>() => Current.GetService<TService>() ?? throw new NotImplementedException(nameof(TService));
 
     private static IServiceProvider Current =>
 #if WINDOWS10_0_17763_0_OR_GREATER

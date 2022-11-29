@@ -23,6 +23,7 @@
     </Style>
 
     <!--  Buttons Styles  -->
+
     <Style x:Key="RegularButton" TargetType="Button">
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="BorderWidth" Value="1.1" />
@@ -39,8 +40,43 @@
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="BorderWidth" Value="0" />
         <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="FontFamily" Value="MediumFont" />
         <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
         <Setter Property="FontSize" Value="12" />
+    </Style>
+
+    <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+        <Setter Property="TextTransform" Value="Uppercase" />
+        <Setter Property="HeightRequest" Value="46" />
+        <Setter Property="FontFamily" Value="MediumFont" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="1" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="0.5" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TransparentButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HeightRequest" Value="46" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
     </Style>
 
     <!--  Icon Styles  -->
@@ -49,9 +85,11 @@
         <Setter Property="WidthRequest" Value="42" />
         <Setter Property="Padding" Value="{OnPlatform Android=4, Default=6}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderColor" Value="Transparent" />
         <Setter Property="Margin" Value="12,3" />
         <Setter Property="Aspect" Value="AspectFit" />
         <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="BorderWidth" Value="0" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">

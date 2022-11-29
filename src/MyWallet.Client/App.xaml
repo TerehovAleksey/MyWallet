@@ -2,25 +2,25 @@
 <Application
     x:Class="MyWallet.Client.App"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:MyWallet.Client">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Layouts.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Texts.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Buttons.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Borders.xaml" />
 
                 <ResourceDictionary>
 
-                    <!--  Content Page Style  -->
-                    <Style ApplyToDerivedTypes="True" TargetType="ContentPage">
-                        <Setter Property="NavigationPage.HasNavigationBar" Value="False" />
-                        <Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}" />
-                        <Setter Property="Padding" Value="0" />
+                    <!-- Images -->
+                    <Style TargetType="Image">
+                        <Setter Property="Aspect" Value="AspectFill"/>
+                        <Setter Property="HorizontalOptions" Value="Center"/>
+                        <Setter Property="VerticalOptions" Value="Center"/>
                     </Style>
-
+                    
                     <!--  Separator  -->
                     <Style x:Key="SeparatorStyle" TargetType="BoxView">
                         <Setter Property="HeightRequest" Value=".5" />

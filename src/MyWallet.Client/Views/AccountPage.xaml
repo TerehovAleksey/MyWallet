@@ -10,6 +10,7 @@
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
     x:DataType="vm:AccountPageViewModel"
     x:TypeArguments="vm:AccountPageViewModel"
+    DisplayMode="NavigationBar"
     PageMode="Navigate"
     PageTitle="{Binding Title}">
 

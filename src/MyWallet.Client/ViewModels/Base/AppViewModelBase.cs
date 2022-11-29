@@ -7,7 +7,7 @@ public partial class AppViewModelBase : ViewModelBase
 
     protected IDataService DataService { get; set; }
 
-    public AppViewModelBase(IDataService dataService) : base()
+    protected AppViewModelBase(IDataService dataService) : base()
     {
         DataService = dataService;
     }

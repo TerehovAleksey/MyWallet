@@ -28,6 +28,14 @@ public partial class InputText : VerticalStackLayout
         set => SetValue(ValueProperty, value);
     }
 
+    public static readonly BindableProperty IsPasswordProperty = BindableProperty.Create(nameof(IsPassword), typeof(bool), typeof(InputText), false, BindingMode.OneWay, propertyChanged: OnIsPasswordChanged);
+
+    public bool IsPassword
+    {
+        get => (bool)GetValue(IsPasswordProperty);
+        set => SetValue(IsPasswordProperty, value);
+    }
+
     #endregion
 
     public InputText()
@@ -39,25 +47,39 @@ public partial class InputText : VerticalStackLayout
 
     private static void OnTitleChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        var input = bindable as InputText;
-        input.TitleLabel.Text = (string)newValue;
+        if (bindable is InputText input)
+        {
+            input.TitleLabel.Text = (string)newValue;
+        }
     }
 
     private static void OnPlaceholderChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        var input = bindable as InputText;
-        input.Entry.Placeholder = (string)newValue;
+        if (bindable is InputText input)
+        {
+            input.Entry.Placeholder = (string)newValue;
+        }
     }
 
     private static void OnValueChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        var input = bindable as InputText;
-        input.Entry.Text = (string)newValue;
+        if (bindable is InputText input)
+        {
+            input.Entry.Text = (string)newValue;
+        }
+    }
+
+    private static void OnIsPasswordChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is InputText input)
+        {
+            input.Entry.IsPassword = (bool)newValue;
+        }
     }
 
     private void Entry_TextChanged(object sender, TextChangedEventArgs e)
     {
-        Value = (sender as Entry).Text;
+        Value = (sender as Entry)?.Text ?? string.Empty;
     }
 
     #endregion
@@ -84,11 +106,11 @@ public class InputTextValidationBehavior : Behavior<InputText>
         set => SetValue(MaximumLengthProperty, value);
     }
 
-    Entry entry = null;
-    Label caption = null;
-    Grid footer = null;
-    Color entryDefaultColor;
-    Color captionDefaultColor;
+    private Entry? _entry;
+    private Label? _caption;
+    private Grid? _footer;
+    private Color? _entryDefaultColor;
+    private Color? _captionDefaultColor;
 
     #region Bindable properties
 
@@ -96,26 +118,29 @@ public class InputTextValidationBehavior : Behavior<InputText>
 
     protected override void OnAttachedTo(InputText inputText)
     {
-        entry = (Entry)inputText.FindByName("Entry");
-        caption = (Label)inputText.FindByName("TitleLabel");
-        footer = (Grid)inputText.FindByName("ErrorFooter");
-        entryDefaultColor = entry.TextColor;
-        captionDefaultColor = caption.TextColor;
+        _entry = (Entry)inputText.FindByName("Entry");
+        _caption = (Label)inputText.FindByName("TitleLabel");
+        _footer = (Grid)inputText.FindByName("ErrorFooter");
+        _entryDefaultColor = _entry.TextColor;
+        _captionDefaultColor = _caption.TextColor;
 
-        entry.TextChanged += Entry_TextChanged;
+        _entry.TextChanged += Entry_TextChanged;
 
-        Validate(entry.Text ?? string.Empty);
+        Validate(_entry.Text ?? string.Empty);
 
         base.OnAttachedTo(inputText);
     }
 
     protected override void OnDetachingFrom(InputText inputText)
     {
-        entry.TextChanged -= Entry_TextChanged;
+        if (_entry != null)
+        {
+            _entry.TextChanged -= Entry_TextChanged;
+        }
         base.OnDetachingFrom(inputText);
     }
 
-    private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+    private void Entry_TextChanged(object? sender, TextChangedEventArgs e)
     {
         Validate(e.NewTextValue);
     }
@@ -124,15 +149,15 @@ public class InputTextValidationBehavior : Behavior<InputText>
     {
         if (text.Length > 5)
         {
-            footer.IsVisible = true;
-            entry.TextColor = Colors.Red;
-            caption.TextColor = Colors.Red;
+            _footer.IsVisible = true;
+            _entry.TextColor = Colors.Red;
+            _caption.TextColor = Colors.Red;
         }
         else
         {
-            footer.IsVisible = false;
-            entry.TextColor = entryDefaultColor;
-            caption.TextColor = captionDefaultColor;
+            _footer.IsVisible = false;
+            _entry.TextColor = _entryDefaultColor;
+            _caption.TextColor = _captionDefaultColor;
         }
     }
 

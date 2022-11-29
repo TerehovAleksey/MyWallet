@@ -17,9 +17,13 @@ public partial class ErrorIndicator : Grid
         set => SetValue(IsErrorProperty, value);
     }
 
-    private static void SetIsError(BindableObject bindable, object oldValue, object newValue) =>
-        (bindable as ErrorIndicator).IsVisible = (bool)newValue;
-
+    private static void SetIsError(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is ErrorIndicator control)
+        {
+            control.IsVisible = (bool)newValue;
+        }
+    }
 
     public static readonly BindableProperty ErrorTextProperty = BindableProperty.Create(
         nameof(ErrorText),
@@ -36,9 +40,13 @@ public partial class ErrorIndicator : Grid
         set => SetValue(ErrorTextProperty, value);
     }
 
-    private static void SetErrorText(BindableObject bindable, object oldValue, object newValue) =>
-        (bindable as ErrorIndicator).ErrorTextLabel.Text = (string)newValue;
-
+    private static void SetErrorText(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is ErrorIndicator control)
+        {
+            control.ErrorTextLabel.Text = (string)newValue;
+        }
+    }
 
     public static readonly BindableProperty ErrorImageProperty = BindableProperty.Create(
         nameof(ErrorImage),
@@ -55,9 +63,13 @@ public partial class ErrorIndicator : Grid
         set => SetValue(ErrorImageProperty, value);
     }
 
-    private static void SetErrorImage(BindableObject bindable, object oldValue, object newValue) =>
-        (bindable as ErrorIndicator).ErrorIcon.Source = (ImageSource)newValue;
-
+    private static void SetErrorImage(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is ErrorIndicator control)
+        {
+            control.ErrorIcon.Source = (ImageSource)newValue;
+        }
+    }
 
     public ErrorIndicator()
     {

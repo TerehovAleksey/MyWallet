@@ -19,10 +19,11 @@ public partial class LoadingIndicator : Grid
 
     private static void SetIsBusy(BindableObject bindable, object oldValue, object newValue)
     {
-        LoadingIndicator control = bindable as LoadingIndicator;
-
-        control.IsVisible = (bool)newValue;
-        control.Indicator.IsRunning = (bool)newValue;
+        if (bindable is LoadingIndicator control)
+        {
+            control.IsVisible = (bool)newValue;
+            control.Indicator.IsRunning = (bool)newValue;
+        }
     }
 
 
@@ -41,8 +42,13 @@ public partial class LoadingIndicator : Grid
         set => SetValue(LoadingTextProperty, value);
     }
 
-    private static void SetLoadingText(BindableObject bindable, object oldValue, object newValue) =>
-        (bindable as LoadingIndicator).LoadingTextLabel.Text = (string)newValue;
+    private static void SetLoadingText(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is LoadingIndicator control)
+        {
+            control.LoadingTextLabel.Text = (string)newValue;
+        }
+    }
 
     public LoadingIndicator()
     {

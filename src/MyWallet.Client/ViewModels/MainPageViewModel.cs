@@ -3,11 +3,10 @@ public partial class MainPageViewModel : AppViewModelBase
 {
     public ObservableCollection<Account> Accounts { get; } = new();
     public ObservableCollection<object> SelectedAccounts { get; }
-
     public ObservableCollection<Record> Records { get; } = new();
 
     [ObservableProperty]
-    private Account _selectedAccount = null;
+    private Account? _selectedAccount;
 
     public MainPageViewModel(IDataService dataService) : base(dataService)
     {
@@ -20,9 +19,9 @@ public partial class MainPageViewModel : AppViewModelBase
         SelectedAccounts = new ObservableCollection<object>(Accounts);
     }
 
-    public override async void OnNavigatedTo(object parameters)
+    public override async void OnNavigatedTo(object? parameters)
     {
-        SetDataLodingIndicators(true);
+        SetDataLoadingIndicators();
 
         LoadingText = "Hold on...";
 
@@ -36,18 +35,19 @@ public partial class MainPageViewModel : AppViewModelBase
         catch (InternetConnectionException)
         {
             IsErrorState = true;
-            ErrorMessage = "Slow or no internet connection." + Environment.NewLine + "Please check you internet connection and try again.";
+            ErrorMessage = $"Slow or no internet connection.{Environment.NewLine}Please check you internet connection and try again.";
             ErrorImage = "nointernet.png";
         }
         catch (Exception ex)
         {
             IsErrorState = true;
-            ErrorMessage = $"Something went wrong. If the problem persists, plz contact support at email with the error message:" + Environment.NewLine + Environment.NewLine + ex.Message;
+            ErrorMessage =
+                $"Something went wrong. If the problem persists, plz contact support at email with the error message:{Environment.NewLine}{Environment.NewLine}{ex.Message}";
             ErrorImage = "error.png";
         }
         finally
         {
-            SetDataLodingIndicators(false);
+            SetDataLoadingIndicators(false);
         }
     }
 

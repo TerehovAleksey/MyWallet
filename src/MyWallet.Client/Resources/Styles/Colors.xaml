@@ -5,13 +5,18 @@
     <Color x:Key="BackgroundColor">#f0f0f0</Color>
     <Color x:Key="BackgroundLightColor">#ffffff</Color>
     <Color x:Key="PrimaryColor">#00aa70</Color>
+    <Color x:Key="PrimaryLightColor">#21cb87</Color>
+    <Color x:Key="PrimaryLightestColor">#3fda74</Color>
     <Color x:Key="PrimaryDarkColor">#008859</Color>
     <Color x:Key="AccentColor">#0076ff</Color>
     <Color x:Key="GrayColor">#e0e0e0</Color>
     <Color x:Key="GrayDarkColor">#a3a3a3</Color>
+    <Color x:Key="FacebookColor">#3F51B5</Color>
+    <Color x:Key="GoogleColor">#4285f4</Color>
 
     <Color x:Key="LightTextColor">#ffffff</Color>
     <Color x:Key="DarkTextColor">#1f1f1f</Color>
     <Color x:Key="GrayTextColor">#848484</Color>
+    <Color x:Key="LinkTextColor">#2b8dff</Color>
 
 </ResourceDictionary>

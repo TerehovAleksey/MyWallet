@@ -23,13 +23,13 @@ public partial class ViewModelBase : ObservableObject
     [ObservableProperty]
     private string _errorImage = string.Empty;
 
-    public ViewModelBase() => IsErrorState = false;
+    protected ViewModelBase() => IsErrorState = false;
 
     //Called on Page Appearing
-    public virtual async void OnNavigatedTo(object parameters) => await Task.CompletedTask;
+    public virtual async void OnNavigatedTo(object? parameters) => await Task.CompletedTask;
 
     //Set Loading Indicators for Page
-    protected void SetDataLodingIndicators(bool isStaring = true)
+    protected void SetDataLoadingIndicators(bool isStaring = true)
     {
         if (isStaring)
         {

@@ -1,7 +1,4 @@
-﻿using MonkeyCache;
-using System.Text;
-
-namespace MyWallet.Client.DataService;
+﻿namespace MyWallet.Client.DataService.Base;
 
 public abstract class RestServiceBase
 {
@@ -10,7 +7,7 @@ public abstract class RestServiceBase
     private readonly IConnectivity _connectivity;
     private readonly IBarrel _cacheBarrel;
 
-    public RestServiceBase(HttpClient httpClient, IConnectivity connectivity, IBarrel cacheBarrel)
+    protected RestServiceBase(HttpClient httpClient, IConnectivity connectivity, IBarrel cacheBarrel)
     {
         _httpClient = httpClient;
         _httpClient.BaseAddress = new Uri(Constants.ApiServiceUrl);
@@ -25,7 +22,7 @@ public abstract class RestServiceBase
 
     protected void AddHttpHeader(string key, string value) => _httpClient.DefaultRequestHeaders.Add(key, value);
 
-    protected async Task<T> GetAsync<T>(string resource, int cacheDuration = 24)
+    protected async Task<T> GetAsync<T>(string resource, int cacheDuration = 0)
     {
         //Get Json data (from Cache or Web)
         var json = await GetJsonAsync(resource, cacheDuration);
@@ -34,40 +31,49 @@ public abstract class RestServiceBase
         return JsonSerializer.Deserialize<T>(json, _jsonSerializerOptions);
     }
 
-    protected async Task<HttpResponseMessage> PostAsync<T>(string uri, T payload)
+    protected async Task<HttpResponseMessage> PostAsync<T>(string resource, T payload)
     {
         var dataToPost = JsonSerializer.Serialize(payload, _jsonSerializerOptions);
         var content = new StringContent(dataToPost, Encoding.UTF8, "application/json");
 
-        var response = await _httpClient.PostAsync(uri, content);
+        var response = await _httpClient.PostAsync(resource, content);
 
         response.EnsureSuccessStatusCode();
 
         return response;
     }
 
-    protected async Task<HttpResponseMessage> PutAsync<T>(string uri, T payload)
+    protected async Task<HttpResponseMessage> PutAsync<T>(string resource, T payload)
     {
         var dataToPost = JsonSerializer.Serialize(payload, _jsonSerializerOptions);
         var content = new StringContent(dataToPost, Encoding.UTF8, "application/json");
 
-        var response = await _httpClient.PutAsync(uri, content);
+        var response = await _httpClient.PutAsync(resource, content);
 
         response.EnsureSuccessStatusCode();
 
         return response;
     }
 
-    protected async Task<HttpResponseMessage> DeleteAsync(string uri)
+    protected async Task<HttpResponseMessage> DeleteAsync(string resource)
     {
-        HttpResponseMessage response = await _httpClient.DeleteAsync(new Uri(_httpClient.BaseAddress, uri));
+        HttpResponseMessage response = await _httpClient.DeleteAsync(resource);
 
         response.EnsureSuccessStatusCode();
 
         return response;
     }
 
-    private async Task<string> GetJsonAsync(string resource, int cacheDuration = 24)
+    protected void RemoveFromCache(string resource)
+    {
+        if (_cacheBarrel is not null)
+        {
+            _cacheBarrel.Empty(resource);
+            _cacheBarrel.EmptyExpired();
+        }
+    }
+
+    private async Task<string> GetJsonAsync(string resource, int cacheDuration = 0)
     {
         var cleanCacheKey = resource.CleanCacheKey();
 
@@ -85,7 +91,7 @@ public abstract class RestServiceBase
             //Check for internet connection and return cached data if possible
             if (_connectivity.NetworkAccess != NetworkAccess.Internet)
             {
-                return cachedData is not null ? cachedData : throw new InternetConnectionException();
+                return cachedData ?? throw new InternetConnectionException();
             }
         }
 

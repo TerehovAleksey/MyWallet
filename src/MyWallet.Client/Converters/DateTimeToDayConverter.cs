@@ -4,7 +4,7 @@ public class DateTimeToDayConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        DateTime dateTime = (DateTime)value;
+        var dateTime = (DateTime)value;
         return (DateTime.Today - dateTime.Date).TotalDays switch
         {
             0 => "Сегодня",

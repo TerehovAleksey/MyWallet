@@ -1,6 +1,4 @@
-﻿using MonkeyCache;
-
-namespace MyWallet.Client.DataService;
+﻿namespace MyWallet.Client.DataService.Rest;
 
 public class RestDataService : RestServiceBase, IDataService
 {
@@ -16,8 +14,8 @@ public class RestDataService : RestServiceBase, IDataService
     {
         return new List<Currency>
         {
-            new Currency("BYN", "Belarussian Ruble"),
-            new Currency("USD", "United States Dollar")
+            new("BYN", "Belarussian Ruble"),
+            new("USD", "United States Dollar")
         };
     }
 

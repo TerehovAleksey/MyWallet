@@ -2,18 +2,18 @@
 
 public class ViewBase<TViewModel> : PageBase where TViewModel : AppViewModelBase
 {
-    protected bool _isLoaded = false;
+    private bool _isLoaded;
 
-    protected TViewModel ViewModel { get; set; }
-    protected object ViewModelParameters { get; set; }
+    protected TViewModel? ViewModel { get; set; }
+    protected object? ViewModelParameters { get; set; }
 
-    protected event EventHandler ViewModelInitialized;
+    protected event EventHandler? ViewModelInitialized;
 
-    public ViewBase() : base()
+    protected ViewBase() : base()
     {
     }
 
-    public ViewBase(object initParameters) : base() =>
+    protected ViewBase(object initParameters) : base() =>
         ViewModelParameters = initParameters;
 
     protected override void OnAppearing()
@@ -29,7 +29,7 @@ public class ViewBase<TViewModel> : PageBase where TViewModel : AppViewModelBase
             ViewModel.PageService = this;
 
             //Raise Event to notify that ViewModel has been Initialized
-            ViewModelInitialized?.Invoke(this, new EventArgs());
+            ViewModelInitialized?.Invoke(this, EventArgs.Empty);
 
             //Navigate to View Model's OnNavigatedTo method
             ViewModel.OnNavigatedTo(ViewModelParameters);
