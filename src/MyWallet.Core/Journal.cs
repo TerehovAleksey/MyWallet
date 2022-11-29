@@ -28,10 +28,10 @@ public class Journal : BaseEntity
     /// <summary>
     /// ID счёта
     /// </summary>
-    public Guid? AccountId { get; set; }
+    public Guid AccountId { get; set; }
 
     /// <summary>
     /// Счёт
     /// </summary>
-    public Account? Account { get; set; }
+    public Account Account { get; set; } = default!;
 }

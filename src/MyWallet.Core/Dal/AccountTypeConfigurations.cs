@@ -1,11 +1,11 @@
 ﻿namespace MyWallet.Core.Dal;
 
-internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
+internal class AccountTypeConfigurations : IEntityTypeConfiguration<AccountType>
 {
-    public void Configure(EntityTypeBuilder<Category> builder)
+    public void Configure(EntityTypeBuilder<AccountType> builder)
     {
-        builder.ToTable("Categories")
-            .HasKey(x => x.Id);
+        builder.ToTable("AccountTypes")
+           .HasKey(x => x.Id);
 
         builder.Property(x => x.Id)
             .HasColumnType("BLOB");
@@ -22,15 +22,7 @@ internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.Property(x => x.ImageName)
-            .HasColumnType("TEXT")
-            .HasMaxLength(100);
-
-        builder.Property(x => x.IsVisible)
-            .HasColumnType("INTEGER")
-            .IsRequired();
-
-        builder.Property(x => x.IsIncome)
+        builder.Property(x => x.Order)
             .HasColumnType("INTEGER")
             .IsRequired();
     }

@@ -1,0 +1,11 @@
+﻿global using Serilog;
+global using Serilog.Events;
+global using System.Net.Mime;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.Extensions.Caching.Memory;
+global using Microsoft.EntityFrameworkCore;
+global using MyWallet.Core.Dal;
+global using MyWallet.Services;
+global using MyWallet.Services.Dto;
+global using MyWallet.Services.Extensions;
+global using MyWallet.WebApi.Configurations;

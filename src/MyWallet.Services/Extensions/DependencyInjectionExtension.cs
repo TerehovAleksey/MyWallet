@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using MyWallet.Services.Mapper;
-
-namespace MyWallet.Services.Extensions;
+﻿namespace MyWallet.Services.Extensions;
 
 public static class DependencyInjectionExtension
 {
@@ -10,6 +7,7 @@ public static class DependencyInjectionExtension
         services.AddAutoMapper(typeof(DomainToDtoMappingProfile), typeof(DtoToDomainMappingProfile));
 
         services.AddTransient<IAccountService, AccountService>();
+        services.AddTransient<IAccountTypeService, AccountTypeService>();
         services.AddTransient<ICategoryService, CategoryService>();
         services.AddTransient<ICurrencyService, CurrencyService>();
         services.AddTransient<IRecordService, RecordService>();

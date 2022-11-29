@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using MyWallet.Core;
-using MyWallet.Core.Dal;
-using MyWallet.Services.Dto;
-
-namespace MyWallet.Services;
+﻿namespace MyWallet.Services;
 
 public class RecordService : IRecordService
 {

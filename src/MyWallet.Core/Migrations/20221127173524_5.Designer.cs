@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyWallet.Core.Dal;
 
@@ -10,9 +11,10 @@ using MyWallet.Core.Dal;
 namespace MyWallet.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221127173524_5")]
+    partial class _5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.11");
@@ -23,7 +25,7 @@ namespace MyWallet.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BLOB");
 
-                    b.Property<Guid>("AccountTypeId")
+                    b.Property<Guid?>("AccountTypeId")
                         .HasColumnType("BLOB");
 
                     b.Property<decimal>("Balance")
@@ -109,10 +111,14 @@ namespace MyWallet.Core.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsIncome")
-                        .HasColumnType("INTEGER");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(false);
 
                     b.Property<bool>("IsVisible")
-                        .HasColumnType("INTEGER");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -130,7 +136,7 @@ namespace MyWallet.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BLOB");
 
-                    b.Property<Guid>("AccountId")
+                    b.Property<Guid?>("AccountId")
                         .HasColumnType("BLOB");
 
                     b.Property<DateTime?>("DateOfChange")
@@ -178,7 +184,9 @@ namespace MyWallet.Core.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsVisible")
-                        .HasColumnType("INTEGER");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -196,9 +204,7 @@ namespace MyWallet.Core.Migrations
                 {
                     b.HasOne("MyWallet.Core.AccountType", "AccountType")
                         .WithMany("Accounts")
-                        .HasForeignKey("AccountTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountTypeId");
 
                     b.Navigation("AccountType");
                 });
@@ -207,9 +213,7 @@ namespace MyWallet.Core.Migrations
                 {
                     b.HasOne("MyWallet.Core.Account", "Account")
                         .WithMany("Journals")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountId");
 
                     b.HasOne("MyWallet.Core.SubCategory", "SubCategory")
                         .WithMany("Journals")

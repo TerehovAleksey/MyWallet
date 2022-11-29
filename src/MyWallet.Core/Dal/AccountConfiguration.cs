@@ -1,14 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace MyWallet.Core.Dal;
+﻿namespace MyWallet.Core.Dal;
 
 internal class AccountConfiguration : IEntityTypeConfiguration<Account>
 {
     public void Configure(EntityTypeBuilder<Account> builder)
     {
         builder.ToTable("Accounts")
-           .HasKey(x => x.Id);
+            .HasKey(x => x.Id);
 
         builder.Property(x => x.Id)
             .HasColumnType("BLOB");
@@ -25,6 +22,10 @@ internal class AccountConfiguration : IEntityTypeConfiguration<Account>
             .IsRequired()
             .HasMaxLength(50);
 
+        builder.Property(x => x.Number)
+            .HasColumnType("TEXT")
+            .HasMaxLength(50);
+
         builder.Property(x => x.Balance)
             .HasColumnType("REAL")
             .IsRequired();
@@ -33,5 +34,22 @@ internal class AccountConfiguration : IEntityTypeConfiguration<Account>
             .HasColumnType("TEXT")
             .IsRequired()
             .HasMaxLength(10);
+
+        builder.Property(x => x.AccountTypeId)
+            .HasColumnType("BLOB")
+            .IsRequired();
+
+        builder.Property(x => x.Color)
+            .HasColumnType("TEXT")
+            .IsRequired()
+            .HasMaxLength(10);
+
+        builder.Property(x => x.IsDisabled)
+            .HasColumnType("INTEGER")
+            .IsRequired();
+
+        builder.Property(x => x.IsArchived)
+            .HasColumnType("INTEGER")
+            .IsRequired();
     }
 }

@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MyWallet.Services;
-using MyWallet.Services.Dto;
-
-namespace MyWallet.WebApi.Controllers
+﻿namespace MyWallet.WebApi.Controllers
 {
     [Route("api/category")]
     [ApiController]

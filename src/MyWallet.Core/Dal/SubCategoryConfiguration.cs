@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace MyWallet.Core.Dal;
+﻿namespace MyWallet.Core.Dal;
 
 public class SubCategoryConfiguration : IEntityTypeConfiguration<SubCategory>
 {
@@ -31,7 +28,6 @@ public class SubCategoryConfiguration : IEntityTypeConfiguration<SubCategory>
 
         builder.Property(x => x.IsVisible)
             .HasColumnType("INTEGER")
-            .IsRequired()
-            .HasDefaultValue(1);
+            .IsRequired();
     }
 }

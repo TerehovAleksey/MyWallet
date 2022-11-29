@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MyWallet.Services;
-using MyWallet.Services.Dto;
+﻿namespace MyWallet.WebApi.Controllers;
 
-namespace MyWallet.WebApi.Controllers;
-
-[Route("api/account")]
 [ApiController]
+[Route("api/account")]
+[Produces(MediaTypeNames.Application.Json)]
 public class AccountController : ControllerBase
 {
     private readonly IAccountService _accountService;
@@ -22,6 +19,7 @@ public class AccountController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<AccountDto>), StatusCodes.Status200OK)]
     public Task<IEnumerable<AccountDto>> GetAllAccountsAsync() =>
         _accountService.GetAccountsAsync();
 
@@ -30,6 +28,8 @@ public class AccountController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(IEnumerable<AccountDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAccountAsync([FromRoute]Guid id)
     {
         var result = await _accountService.GetAccountAsync(id);
@@ -39,16 +39,19 @@ public class AccountController : ControllerBase
     /// <summary>
     /// Добавление счёта
     /// </summary>
-    /// <param name="account"></param>
     /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(AccountTypeDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateAccountAsync([FromBody] AccountCreateDto account)
     {
-        var currency = _currencyService.GetAllSimbolsWithDescription().FirstOrDefault(x => x.Key == account.CurrencySymbol.ToUpperInvariant());
+        // проверка вылюты
+        var currency = _currencyService.GetAllSymbolsWithDescription().FirstOrDefault(x => x.Key == account.CurrencySymbol.ToUpperInvariant());
         if (string.IsNullOrEmpty(currency.Value))
         {
             return BadRequest();
         }
+        
         var result = await _accountService.CreateAccountAsync(account);
         return Created($"api/account/{result.Id}", result);
     }
@@ -56,19 +59,14 @@ public class AccountController : ControllerBase
     /// <summary>
     /// Изменение счёта
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="account"></param>
     /// <returns></returns>
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateAccountAsync([FromRoute] Guid id, [FromBody] AccountDto account)
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateAccountAsync([FromRoute] Guid id, [FromBody] AccountUpdateDto account)
     {
         if (account.Id != id)
-        {
-            return BadRequest();
-        }
-
-        var currency = _currencyService.GetAllSimbolsWithDescription().FirstOrDefault(x => x.Key == account.CurrencySymbol.ToUpperInvariant());
-        if (string.IsNullOrEmpty(currency.Value))
         {
             return BadRequest();
         }
@@ -86,9 +84,10 @@ public class AccountController : ControllerBase
     /// <summary>
     /// Удаление счёта
     /// </summary>
-    /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAccountAsync([FromRoute] Guid id)
     {
         var result = await _accountService.DeleteAccountAsync(id);

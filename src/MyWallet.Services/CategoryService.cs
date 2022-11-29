@@ -1,10 +1,4 @@
-﻿using MyWallet.Services.Dto;
-using MyWallet.Core.Dal;
-using Microsoft.EntityFrameworkCore;
-using MyWallet.Core;
-using AutoMapper;
-
-namespace MyWallet.Services;
+﻿namespace MyWallet.Services;
 
 public class CategoryService : ICategoryService
 {
@@ -61,6 +55,7 @@ public class CategoryService : ICategoryService
 
         if (category is not null)
         {
+            category.IsVisible = true;
             await _context.Categories.AddAsync(category);
             await _context.SaveChangesAsync();
         }
@@ -75,6 +70,7 @@ public class CategoryService : ICategoryService
 
         if (subCategory is not null)
         {
+            subCategory.IsVisible = true;
             subCategory.CategoryId = categoryId;
             await _context.Subcategories.AddAsync(subCategory);
             await _context.SaveChangesAsync();

@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyWallet.Core.Dal;
-
-namespace MyWallet.WebApi.Configurations
+﻿namespace MyWallet.WebApi.Configurations
 {
     public static class RepositoryConfiguration
     {
