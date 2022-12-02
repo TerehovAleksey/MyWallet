@@ -1,7 +1,9 @@
 ﻿global using AutoMapper;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
-global using MyWallet.Core;
+global using MyWallet.Common.Dto;
 global using MyWallet.Core.Dal;
-global using MyWallet.Services.Dto;
+global using MyWallet.Core.Models;
+global using MyWallet.Services.Implementations;
+global using MyWallet.Services.Interfaces;
 global using MyWallet.Services.Mapper;
