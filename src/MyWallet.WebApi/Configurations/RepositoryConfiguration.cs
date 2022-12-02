@@ -13,6 +13,9 @@
             }
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlite(connectionString));
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
         }
     }
 }

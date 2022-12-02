@@ -1,6 +1,6 @@
 ﻿namespace MyWallet.Core.Dal;
 
-public sealed class AppDbContext : DbContext
+public sealed partial class AppDbContext : IdentityDbContext<User, Role, Guid>
 {
 	public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
 	{
@@ -10,12 +10,30 @@ public sealed class AppDbContext : DbContext
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		base.OnModelCreating(modelBuilder);
+        
+        #region Identity
+        
+        modelBuilder.ApplyConfiguration(new UserClaimConfiguration());
+        modelBuilder.ApplyConfiguration(new UserLoginConfiguration());
+        modelBuilder.ApplyConfiguration(new UserTokenConfiguration());
+        modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+        modelBuilder.ApplyConfiguration(new RoleClaimConfiguration());
+        modelBuilder.ApplyConfiguration(new RoleConfiguration());
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+
+        #endregion Identity
+        
+        #region Configurations
 
         modelBuilder.ApplyConfiguration(new AccountConfiguration());
         modelBuilder.ApplyConfiguration(new AccountTypeConfigurations());
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-        modelBuilder.ApplyConfiguration(new SubCategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new CategoryTypeConfiguration());
         modelBuilder.ApplyConfiguration(new JournalConfiguration());
+        modelBuilder.ApplyConfiguration(new SubCategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new UserCurrencyConfiguration());
+        
+        #endregion Configurations
     }
 
     public override int SaveChanges()
@@ -35,13 +53,7 @@ public sealed class AppDbContext : DbContext
         SetCreatedAndModified();
         return base.SaveChangesAsync(cancellationToken);
     }
-
-    public DbSet<Account> Accounts => Set<Account>();
-    public DbSet<AccountType> AccountTypes => Set<AccountType>();
-    public DbSet<Category> Categories => Set<Category>();
-	public DbSet<SubCategory> Subcategories => Set<SubCategory>();
-    public DbSet<Journal> Journals => Set<Journal>();
-
+    
     private void SetCreatedAndModified()
     {
         var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && x.State is EntityState.Added or EntityState.Modified);
