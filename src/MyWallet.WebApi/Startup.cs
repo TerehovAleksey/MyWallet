@@ -1,4 +1,7 @@
-﻿namespace MyWallet.WebApi;
+﻿using FluentValidation.AspNetCore;
+using Azure.Identity;
+
+namespace MyWallet.WebApi;
 
 public class Startup
 {
@@ -13,21 +16,29 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddApiVersion();
+        services.ConfigureIdentity();
+
+        services.AddValidation();
+        services.AddFluentValidationAutoValidation();
+        services.AddControllers();      
+        services.AddSwagger();
+
+        services.AddLocalization(options => options.ResourcesPath = "Resources");
+        services.AddJwt(_configuration);
+        services.AddMemoryCache();
+
         //My Services
+        services.AddScoped<ITokenService, TokenService>();
         services.AddDatabaseContext(_configuration, _environment);
         services.AddServices();
-        
-        services.AddControllers();
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
-        
-        services.AddMemoryCache();
     }
 
     public void Configure(IApplicationBuilder app)
     {
         if (_environment.IsDevelopment())
         {
+           // app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI();
         }
@@ -35,13 +46,14 @@ public class Startup
         {
             app.UseHttpsRedirection();
         }
-        
+
+        app.UseDeveloperExceptionPage();
+
         app.UseSerilogRequestLogging();
-        app.UseRouting();
-        
-        //app.UseAuthentication();
-        //app.UseAuthorization();
-        
+        app.UseStaticFiles();
+        app.UseRouting();   
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.UseEndpoints(endpoints => endpoints.MapControllers());
     }
 }

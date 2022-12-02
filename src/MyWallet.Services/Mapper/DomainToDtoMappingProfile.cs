@@ -1,4 +1,7 @@
-﻿namespace MyWallet.Services.Mapper;
+﻿using MyWallet.Common.Dto;
+using MyWallet.Core.Models;
+
+namespace MyWallet.Services.Mapper;
 
 public class DomainToDtoMappingProfile : Profile
 {

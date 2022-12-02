@@ -1,8 +1,12 @@
+using Azure.Security.KeyVault.Secrets;
+using Azure.Identity;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
+
 namespace  MyWallet.WebApi;
 
 public class Program
 {
-    public static int Main(string[] args)
+    public static async Task<int> Main(string[] args)
     {
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -13,14 +17,14 @@ public class Program
         try
         {
             Log.Information("Starting web host");
-            var app = CreateHostBuilder(args).Build();
+
+            var app = CreateHostBuilder(args).Build();       
             
-            //DB Migration
-            using var scope = app.Services.CreateScope();
-            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            db.Database.Migrate();
-            
-            app.Run();
+            await app.DatabaseMigrate();
+            await app.DatabaseSeedInitData();
+
+            await app.RunAsync();
+
             return 0;
         }
         catch (Exception ex)
@@ -37,6 +41,19 @@ public class Program
     private static IHostBuilder CreateHostBuilder(string[] args)
     {
         return Host.CreateDefaultBuilder(args)
+
+            //Azure Key-Value
+            .ConfigureAppConfiguration((context, config) =>
+            {
+                if (context.HostingEnvironment.IsProduction())
+                {
+                    var builtConfig = config.Build();
+                    var secretClient = new SecretClient(
+                        new Uri($"https://{builtConfig["KeyVaultName"]}.vault.azure.net/"),
+                        new DefaultAzureCredential());
+                    config.AddAzureKeyVault(secretClient, new KeyVaultSecretManager());
+                }
+            })
             .UseSerilog((context, services, configuration) => configuration
                 .ReadFrom.Configuration(context.Configuration)
                 .ReadFrom.Services(services)
