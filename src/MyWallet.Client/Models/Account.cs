@@ -21,8 +21,44 @@ public record AccountType(Guid Id, string Name)
 /// <param name="CurrencySymbol">Валюта (BYN, USD, etc.)</param>
 /// <param name="IsDisable">Исключён из статистики</param>
 /// <param name="IsArchived">В архиве</param>
-public record Account(Guid Id, string Name, string AccountType, decimal Balance, string CurrencySymbol, bool IsDisable, bool IsArchived)
+//public record Account(Guid Id, string Name, string AccountType, decimal Balance, string CurrencySymbol, bool IsDisable, bool IsArchived)
+public record Account
 {
+    /// <summary>
+    /// ID
+    /// </summary>
+    public Guid Id { get; set; }
+
+    /// <summary>
+    /// Название
+    /// </summary>
+    public string Name { get; set; } = default!;
+
+    /// <summary>
+    /// Тип счёта
+    /// </summary>
+    public string AccountType { get; set; } = default!;
+
+    /// <summary>
+    /// Теукщий баланс на счёте
+    /// </summary>
+    public decimal Balance { get; set; }
+
+    /// <summary>
+    /// Валюта (BYN, USD, etc.)
+    /// </summary>
+    public string CurrencySymbol { get; set; } = default!;
+
+    /// <summary>
+    /// Исключён из статистики
+    /// </summary>
+    public bool IsDisable { get; set; }
+
+    /// <summary>
+    /// В архиве
+    /// </summary>
+    public bool IsArchived { get; set; }
+
     /// <summary>
     /// Цвет в HEX-формате
     /// </summary>
@@ -32,6 +68,7 @@ public record Account(Guid Id, string Name, string AccountType, decimal Balance,
     /// <summary>
     /// Статус (тип счёта | исключено | исключено, архивировано)
     /// </summary>
+    [JsonIgnore]
     public string Status
     {
         get
@@ -47,6 +84,11 @@ public record Account(Guid Id, string Name, string AccountType, decimal Balance,
 
     [JsonIgnore]
     public Color Color => Color.FromArgb(ColorString);
+
+    public Account()
+    {
+
+    }
 }
 
 /// <summary>

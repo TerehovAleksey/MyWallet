@@ -5,14 +5,6 @@ public partial class AppViewModelBase : ViewModelBase
     public INavigation NavigationService { get; set; }
     public Page PageService { get; set; }
 
-    [Obsolete("Избавиться, создаёт сервис даже на страницах, где этого не требуется")]
-    protected IDataService DataService { get; set; }
-
-    protected AppViewModelBase(IDataService dataService) : base()
-    {
-        DataService = dataService;
-    }
-
     protected async Task HandleServiceResponseErrorsAsync(IResponse response)
     {
         switch (response.State)

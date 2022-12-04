@@ -2,6 +2,8 @@
 
 public partial class AccountPageViewModel : AppViewModelBase
 {
+    private readonly IDataService _dataService;
+    
     private Account? _account;
 
     [ObservableProperty]
@@ -52,15 +54,16 @@ public partial class AccountPageViewModel : AppViewModelBase
     [ObservableProperty]
     private List<Currency> _currencies = new();
 
-    public AccountPageViewModel(IDataService dataService) : base(dataService)
+    public AccountPageViewModel(IDataService dataService)
     {
+        _dataService = dataService;
         Title = "Новый счёт";
     }
 
     public override async void OnNavigatedTo(object? parameters)
     {
-        AccountTypes = await DataService.GetAccountTypesAsync();
-        Currencies = DataService.GetCurrentCurrencies();
+        AccountTypes = await _dataService.GetAccountTypesAsync();
+        Currencies = _dataService.GetCurrentCurrencies();
 
         Account = parameters as Account;
         IsNewAccount = Account == null;
@@ -73,7 +76,7 @@ public partial class AccountPageViewModel : AppViewModelBase
         SetDataLoadingIndicators(true);
 
         //Save
-        await DataService.CreateAccountAsync(new AccountCreate(AccountName, AccountNumber, AccountType.Id, AccountValue, CurrentCurrency.Symbol, "#ad1457"));
+        await _dataService.CreateAccountAsync(new AccountCreate(AccountName, AccountNumber, AccountType.Id, AccountValue, CurrentCurrency.Symbol, "#ad1457"));
 
         SetDataLoadingIndicators(false);
 

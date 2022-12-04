@@ -2,11 +2,6 @@
 
 public partial class EntryPageViewModel : AppViewModelBase
 {
-    public EntryPageViewModel(IDataService dataService) : base(dataService)
-    {
-       
-    }
-
     [RelayCommand]
     private async Task GoogleRegister()
     {

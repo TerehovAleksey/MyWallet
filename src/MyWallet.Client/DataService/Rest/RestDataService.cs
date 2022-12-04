@@ -29,11 +29,7 @@ public class RestDataService : RestServiceBase, IDataService
         //GetAsync<List<AccountType>>("type");
     }
 
-    public Task<List<Account>> GetAccountsAsync()
-    {
-        throw new NotImplementedException();
-        //GetAsync<List<Account>>("account", 0);
-    }
+    public Task<Response<List<Account>>> GetAccountsAsync() => GetAsync<List<Account>>("account", 24);
 
     public Task CreateAccountAsync(AccountCreate account)
     {

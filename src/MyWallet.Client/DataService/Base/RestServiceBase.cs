@@ -5,9 +5,6 @@ namespace MyWallet.Client.DataService.Base;
 
 public abstract class RestServiceBase
 {
-    private const string TOKEN_KEY = "token";
-    private const string REFRESH_TOKEN_KEY = "refreshToken";
-
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _jsonSerializerOptions;
     private readonly IConnectivity _connectivity;
@@ -18,13 +15,13 @@ public abstract class RestServiceBase
         _httpClient = httpClient;
         _httpClient.BaseAddress = new Uri(Constants.ApiServiceUrl);
         _httpClient.DefaultRequestHeaders.Accept.Clear();
-        _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
         _jsonSerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
         _connectivity = connectivity;
         _cacheBarrel = cacheBarrel;
-        
+
         AddDeviceInfoHeader();
     }
 
@@ -39,8 +36,7 @@ public abstract class RestServiceBase
 
     private void TryAddAuthHeader(string resource)
     {
-        if (resource is not null && !resource.Contains("token") && !resource.Contains("logout") && !resource.Contains("registration") && !resource.Contains("login") &&
-            _httpClient.DefaultRequestHeaders.Authorization is null)
+        if (!resource.Contains("token") && !resource.Contains("logout") && !resource.Contains("registration") && !resource.Contains("login"))
         {
             var token = GetTokenFromCache();
             if (!string.IsNullOrEmpty(token))
@@ -52,7 +48,7 @@ public abstract class RestServiceBase
 
     #region Http CRUD methods
 
-    protected async Task<Response<T>> GetAsync<T>(string resource, int cacheDuration = 0, CancellationToken token = default) where T : class
+    protected async Task<Response<T>> GetAsync<T>(string resource, int cacheDuration = 0, bool tryRefresh = true, CancellationToken token = default) where T : class
     {
         //Проверка данных в кэше
         if (cacheDuration > 0)
@@ -78,14 +74,24 @@ public abstract class RestServiceBase
         //Сохранение в кэш
         if (result.State == State.Success)
         {
-            SaveToCache(result, resource, cacheDuration);
+            SaveToCache(resource, result, cacheDuration);
+        }
+
+        //Если Unauthorized, то попытка обновить токен
+        if (tryRefresh && result.State == State.Unauthorized)
+        {
+            var refreshSuccess = await TryRefreshTokenAsync();
+            if (refreshSuccess)
+            {
+                return await GetAsync<T>(resource, cacheDuration, false, token);
+            }
         }
 
         return result;
     }
 
     protected async Task<Response<T>> SendAsync<T, TRequest>(string resource, TRequest data, SendType type = SendType.Post,
-        CancellationToken token = default)
+         bool tryRefresh = true, CancellationToken token = default)
         where T : class
     {
         //Проверка наличия интернет соединения
@@ -96,11 +102,23 @@ public abstract class RestServiceBase
 
         TryAddAuthHeader(resource);
         var httpResponse = await PostOrPutAsync(resource, data, type, token);
-        return await ToResponse<T>(httpResponse, token);
+        var result = await ToResponse<T>(httpResponse, token);
+
+        //Если Unauthorized, то попытка обновить токен
+        if (tryRefresh && !resource.Contains("refresh") && result.State == State.Unauthorized)
+        {
+            var refreshSuccess = await TryRefreshTokenAsync();
+            if (refreshSuccess)
+            {
+                return await SendAsync<T, TRequest>(resource, data, type, false, token);
+            }
+        }
+
+        return result;
     }
 
     protected async Task<IResponse> SendAsync<TRequest>(string resource, TRequest data, SendType type = SendType.Post,
-        CancellationToken token = default)
+        bool tryRefresh = true, CancellationToken token = default)
     {
         //Проверка наличия интернет соединения
         if (_connectivity.NetworkAccess != NetworkAccess.Internet)
@@ -110,7 +128,19 @@ public abstract class RestServiceBase
 
         TryAddAuthHeader(resource);
         var httpResponse = await PostOrPutAsync(resource, data, type, token);
-        return await ToResponse(httpResponse, token);
+        var result = await ToResponse(httpResponse, token);
+
+        //Если Unauthorized, то попытка обновить токен
+        if (tryRefresh && result.State == State.Unauthorized)
+        {
+            var refreshSuccess = await TryRefreshTokenAsync();
+            if (refreshSuccess)
+            {
+                return await SendAsync(resource, data, type, false, token);
+            }
+        }
+
+        return result;
     }
 
     protected async Task<IResponse> DeleteAsync(string resource, CancellationToken token = default)
@@ -128,36 +158,40 @@ public abstract class RestServiceBase
 
     #endregion
 
-    protected void SaveTokensToCache(string token, string refreshToken)
+    protected void SaveTokensToCache(string token, string refreshToken, DateTime tokenExpiresDate)
     {
-        if (!string.IsNullOrEmpty(token))
+        if (!string.IsNullOrEmpty(token) && !string.IsNullOrEmpty(refreshToken))
         {
-            SaveToCache(TOKEN_KEY, token, int.MaxValue);
-        }
-        if (!string.IsNullOrEmpty(refreshToken))
-        {
-            SaveToCache(REFRESH_TOKEN_KEY, refreshToken, int.MaxValue);
+            SaveToCache(Constants.TOKEN_KEY, token, int.MaxValue);
+            SaveToCache(Constants.TOKEN_EXPIRES_KEY, tokenExpiresDate, int.MaxValue);
+            SaveToCache(Constants.REFRESH_TOKEN_KEY, refreshToken, int.MaxValue);
         }
     }
-    protected string GetTokenFromCache() => _cacheBarrel.Get<string>(TOKEN_KEY);
-    protected string GetRefreshTokenFromCache() => _cacheBarrel.Get<string>(REFRESH_TOKEN_KEY);
+    protected string GetTokenFromCache() => _cacheBarrel.Get<string>(Constants.TOKEN_KEY);
+    protected string GetRefreshTokenFromCache() => _cacheBarrel.Get<string>(Constants.REFRESH_TOKEN_KEY);
     protected void DeleteTokensFromCache()
     {
-        _cacheBarrel.Empty(TOKEN_KEY);
-        _cacheBarrel.Empty(REFRESH_TOKEN_KEY);
+        _cacheBarrel.Empty(Constants.TOKEN_KEY);
+        _cacheBarrel.Empty(Constants.REFRESH_TOKEN_KEY);
         _cacheBarrel.EmptyExpired();
     }
 
     #region Private cache methods
 
-    private void SaveToCache<T>(T data, string resource, int cacheDuration)
+    private void SaveToCache<T>(string resource, T data, int cacheDuration)
     {
         if (cacheDuration > 0)
         {
+            // максимум месяц
+            if (cacheDuration > 720)
+            {
+                cacheDuration = 720;
+            }
+
             try
             {
                 var cleanCacheKey = resource.CleanCacheKey();
-                _cacheBarrel.Add(cleanCacheKey, data, TimeSpan.FromHours(cacheDuration));
+                _cacheBarrel.Add(cleanCacheKey, data, TimeSpan.FromHours(cacheDuration), _jsonSerializerOptions);
             }
             catch
             {
@@ -168,8 +202,21 @@ public abstract class RestServiceBase
 
     private T? GetFromCache<T>(string resource)
     {
+        //TODO: чё за фигня?
         var cleanCacheKey = resource.CleanCacheKey();
-        return !_cacheBarrel.IsExpired(cleanCacheKey) ? _cacheBarrel.Get<T>(cleanCacheKey) : default;
+        if (!_cacheBarrel.IsExpired(cleanCacheKey))
+        {
+            try
+            {
+                return _cacheBarrel.Get<T>(cleanCacheKey, _jsonSerializerOptions);
+            }
+            catch
+            {
+                //ignore
+            }
+
+        }
+        return default;
     }
 
     private void RemoveFromCache(string resource)
@@ -195,6 +242,22 @@ public abstract class RestServiceBase
         }
 
         return await _httpClient.PostAsync(url, content, token);
+    }
+
+    private async Task<bool> TryRefreshTokenAsync()
+    {
+        var token = GetTokenFromCache();
+        var refreshToken = GetRefreshTokenFromCache();
+
+        var result = await SendAsync<AuthResponse, RefreshTokenRequest>("user/refresh", new RefreshTokenRequest(token, refreshToken));
+        if (result.State == State.Success && result.Item != null)
+        {
+            SaveTokensToCache(result.Item.Token, result.Item.RefreshToken, result.Item.TokenExpiresDate);
+            return true;
+        }
+
+        DeleteTokensFromCache();
+        return false;
     }
 
     private async Task<Response<T>> ToResponse<T>(HttpResponseMessage? httpResponse, CancellationToken token = default)

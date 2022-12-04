@@ -38,7 +38,12 @@ public class RestUserService : RestServiceBase, IUserService
         DeleteTokensFromCache();
     }
 
-    public Task<IResponse> RegisterUserAsync(UserRegisterData registerData) => SendAsync("user/registration", registerData);
+    public async Task<IResponse> RegisterUserAsync(UserRegisterData registerData)
+    {
+        var result = await SendAsync<AuthResponse, UserRegisterData>("user/registration", registerData);
+        await SaveTokenOrLogout(result, false);
+        return result;
+    }
 
     public Task UpdateUserDataAsync()
     {
@@ -49,7 +54,7 @@ public class RestUserService : RestServiceBase, IUserService
     {
         if (response.State == State.Success && !string.IsNullOrEmpty(response.Item?.Token) && !string.IsNullOrEmpty(response.Item?.RefreshToken))
         {
-            SaveTokensToCache(response.Item.Token, response.Item.Token);
+            SaveTokensToCache(response.Item.Token, response.Item.RefreshToken, response.Item.TokenExpiresDate);
         }
         else
         {

@@ -26,7 +26,7 @@ public interface IDataService
     /// Получение всех счетов пользователя
     /// </summary>
     /// <returns></returns>
-    public Task<List<Account>> GetAccountsAsync();
+    public Task<Response<List<Account>>> GetAccountsAsync();
 
     /// <summary>
     /// Создание счёта пользователя
