@@ -13,6 +13,7 @@ public static class ServiceExtensions
 
         //Register API Service
         services.AddHttpClient<IDataService, RestDataService>();
+        services.AddHttpClient<IUserService, RestUserService>();
 
         //Register View Models
         services.AddSingleton<MainPageViewModel>();

@@ -8,7 +8,11 @@ public class RestDataService : RestServiceBase, IDataService
 
     #region Currency, Account
 
-    public Task<List<Currency>> GetCurrenciesAsync() => GetAsync<List<Currency>>("currency");
+    public Task<List<Currency>> GetCurrenciesAsync()
+    {
+        throw new NotImplementedException();
+        //GetAsync<List<Currency>>("currency");
+    }
 
     public List<Currency> GetCurrentCurrencies()
     {
@@ -19,11 +23,23 @@ public class RestDataService : RestServiceBase, IDataService
         };
     }
 
-    public Task<List<AccountType>> GetAccountTypesAsync() => GetAsync<List<AccountType>>("type");
+    public Task<List<AccountType>> GetAccountTypesAsync()
+    {
+        throw new NotImplementedException();
+        //GetAsync<List<AccountType>>("type");
+    }
 
-    public Task<List<Account>> GetAccountsAsync() => GetAsync<List<Account>>("account", 0);
+    public Task<List<Account>> GetAccountsAsync()
+    {
+        throw new NotImplementedException();
+        //GetAsync<List<Account>>("account", 0);
+    }
 
-    public Task CreateAccountAsync(AccountCreate account) => PostAsync("account", account);
+    public Task CreateAccountAsync(AccountCreate account)
+    {
+        throw new NotImplementedException();
+        //PostAsync("account", account);
+    }
 
     #endregion
 
@@ -47,6 +63,9 @@ public class RestDataService : RestServiceBase, IDataService
         throw new NotImplementedException();
     }
 
-    public Task<List<Record>> GetRecordsAsync(DateTime startDate, DateTime endDate) =>
-        GetAsync<List<Record>>($"journal?startDate={startDate:yyyy-MM-dd}&finishDate={endDate:yyyy-MM-dd}");
+    public Task<List<Record>> GetRecordsAsync(DateTime startDate, DateTime endDate)
+    {
+        throw new NotImplementedException();
+        //GetAsync<List<Record>>($"journal?startDate={startDate:yyyy-MM-dd}&finishDate={endDate:yyyy-MM-dd}");
+    }
 }

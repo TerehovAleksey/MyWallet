@@ -63,10 +63,14 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#00aa70" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.png" Color="#00aa70" />
+		<MauiSplashScreen Include="Resources\AppIcon\appiconfg.png">
+		  <Color>#ffffff</Color>
+		  <BaseSize>128,128</BaseSize>
+		</MauiSplashScreen>
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#00aa70" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.png" Color="#ffffff" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -80,6 +84,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\AppIcon\appiconfg.png" />
 	  <None Remove="Resources\Fonts\FiraSans-Light.ttf" />
 	  <None Remove="Resources\Fonts\FiraSans-Medium.ttf" />
 	  <None Remove="Resources\Fonts\FiraSans-Regular.ttf" />

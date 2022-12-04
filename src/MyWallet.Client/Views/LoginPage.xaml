@@ -14,9 +14,9 @@
     DisplayMode="NoNavigationBar">
 
     <base:ViewBase.Resources>
-       <converters:BoolInvertConverter x:Key="BoolInvertConverter"/>
+        <converters:BoolInvertConverter x:Key="BoolInvertConverter" />
     </base:ViewBase.Resources>
-    
+
     <base:ViewBase.PageContent>
         <Grid>
             <Grid.RowDefinitions>
@@ -28,11 +28,11 @@
                 Command="{Binding NavigateBackCommand, Mode=OneWay}"
                 HeightRequest="42"
                 HorizontalOptions="Start"
+                IsVisible="{OnPlatform WinUI=false}"
                 Source="back_dark.png"
                 Style="{StaticResource IconButtonStyle}"
                 VerticalOptions="Center"
-                WidthRequest="42" 
-                IsVisible="{OnPlatform WinUI=false}"/>
+                WidthRequest="42" />
             <ScrollView Grid.Row="1">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -56,16 +56,21 @@
                                 WidthRequest="64" />
                         </Border>
                         <Label Style="{StaticResource CaptionTextStyle}" Text="{Binding Caption}" />
-                        <common:InputText Title="Email" Placeholder="Введите email..." />
+                        <common:InputText
+                            Title="Email"
+                            Placeholder="Введите email..."
+                            Value="{Binding Email}" />
                         <common:InputText
                             Title="Пароль"
                             IsPassword="true"
-                            Placeholder="Минимум 6 символов" />
+                            Placeholder="Минимум 6 символов"
+                            Value="{Binding Password}" />
                         <common:InputText
                             Title="Подтверждение пароля"
                             IsPassword="true"
                             IsVisible="{Binding IsRegister}"
-                            Placeholder="Минимум 6 символов" />
+                            Placeholder="Минимум 6 символов"
+                            Value="{Binding PasswordConfirm}" />
                         <Button
                             Command="{Binding LoginCommand}"
                             Style="{StaticResource PrimaryButton}"

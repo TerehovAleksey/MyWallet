@@ -21,23 +21,39 @@ public class RestUserService : RestServiceBase, IUserService
         throw new NotImplementedException();
     }
 
-    public Task LoginAsync()
+    public async Task<IResponse> LoginAsync(UserAuthData authData)
     {
-        throw new NotImplementedException();
+        var result = await SendAsync<AuthResponse, UserAuthData>("user/login", authData);
+        await SaveTokenOrLogout(result, false);
+        return result;
     }
 
-    public Task LogoutAsync()
+    public async Task LogoutAsync(bool serverLogout = true)
     {
-        throw new NotImplementedException();
+        if (serverLogout)
+        {
+            await GetAsync<string>("user/logout");
+        }
+
+        DeleteTokensFromCache();
     }
 
-    public Task RegisterUserAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public Task<IResponse> RegisterUserAsync(UserRegisterData registerData) => SendAsync("user/registration", registerData);
 
     public Task UpdateUserDataAsync()
     {
         throw new NotImplementedException();
+    }
+
+    private async Task SaveTokenOrLogout(Response<AuthResponse> response, bool serverLogout = true)
+    {
+        if (response.State == State.Success && !string.IsNullOrEmpty(response.Item?.Token) && !string.IsNullOrEmpty(response.Item?.RefreshToken))
+        {
+            SaveTokensToCache(response.Item.Token, response.Item.Token);
+        }
+        else
+        {
+            await LogoutAsync(serverLogout);
+        }
     }
 }

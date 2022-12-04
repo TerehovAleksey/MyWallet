@@ -29,7 +29,7 @@ public partial class ViewModelBase : ObservableObject
     public virtual async void OnNavigatedTo(object? parameters) => await Task.CompletedTask;
 
     //Set Loading Indicators for Page
-    protected void SetDataLoadingIndicators(bool isStaring = true)
+    protected void SetDataLoadingIndicators(bool isStaring = true, string loadingText = "Loading...")
     {
         if (isStaring)
         {
@@ -38,6 +38,7 @@ public partial class ViewModelBase : ObservableObject
             IsErrorState = false;
             ErrorMessage = string.Empty;
             ErrorImage = string.Empty;
+            LoadingText = loadingText;
         }
         else
         {
