@@ -1,7 +1,9 @@
 ﻿namespace MyWallet.WebApi.Controllers
 {
-    [Route("api/journal")]
     [ApiController]
+    [Authorize]
+    [Route("api/journal")]
+    [Produces(MediaTypeNames.Application.Json)]
     public class JournalController : ControllerBase
     {
         private readonly IRecordService _recordService;

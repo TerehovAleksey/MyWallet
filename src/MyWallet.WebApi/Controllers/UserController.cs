@@ -72,6 +72,7 @@ public class UserController : ControllerBase
         // если всё успешно, генерируем токен
         var token = await _tokenService.GenerateToken(user);
         var refreshToken = _tokenService.GenerateRefreshToken();
+        var accessTokenExpiryTime = DateTime.UtcNow.AddMinutes(_tokenService.AccessTokenExpiration);
         var refreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(_tokenService.RefreshTokenExpiration);
 
         await _userService.UpdateOrCreateDeviceAsync(user.Id, clientInfo.DeviceName, clientInfo.Ip, refreshToken, refreshTokenExpiryTime);
@@ -79,18 +80,19 @@ public class UserController : ControllerBase
         await _userManager.UpdateAsync(user);
         await _userManager.ResetAccessFailedCountAsync(user);
 
-        return Ok(new AuthResponseDto(token, refreshToken));
+        return Ok(new AuthResponseDto(token, refreshToken, accessTokenExpiryTime));
     }
 
     [HttpPost("registration")]
     [AllowAnonymous]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(AuthResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorMessage), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto userForRegistration)
     {
         //TODO: проверка по email и LockoutEnabled = false после проверки, сейчас true
         //TODO: изменить потом в IdentityConfigurations => options.Lockout.AllowedForNewUsers = false;
-        var user = new User { UserName = userForRegistration.Email, Email = userForRegistration.Email };
+        //TODO: тут убрать EmailConfirmed = true
+        var user = new User { UserName = userForRegistration.Email, Email = userForRegistration.Email, EmailConfirmed = true };
 
         var result = await _userManager.CreateAsync(user, userForRegistration.Password);
         if (!result.Succeeded)
@@ -125,7 +127,8 @@ public class UserController : ControllerBase
         // категории и подкатегории
         await _categoryService.InitCategoriesForUser(user.Id);
 
-        return Ok();
+        //TODO: пока сразу логиним, потом логику изменим
+        return await Login(new UserForAuthDto(userForRegistration.Email, userForRegistration.Password));
     }
 
     [HttpGet("logout")]
@@ -133,10 +136,10 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Logout()
     {
         var user = await GetUserByClaims();
-        var clientInfo = GetClientInfo();
-        if (user != null && !string.IsNullOrEmpty(clientInfo.DeviceName))
+        var (DeviceName, _) = GetClientInfo();
+        if (user != null && !string.IsNullOrEmpty(DeviceName))
         {
-            await _userService.DeleteDeviceAsync(user.Id, clientInfo.DeviceName);
+            await _userService.DeleteDeviceAsync(user.Id, DeviceName);
         }
 
         return Ok();
@@ -206,10 +209,11 @@ public class UserController : ControllerBase
         var token = await _tokenService.GenerateToken(user);
         var refreshToken = _tokenService.GenerateRefreshToken();
         var refreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(_tokenService.RefreshTokenExpiration);
+        var accessTokenExpiryTime = DateTime.UtcNow.AddMinutes(_tokenService.AccessTokenExpiration);
 
         await _userService.UpdateOrCreateDeviceAsync(user.Id, clientInfo.DeviceName, clientInfo.Ip, refreshToken, refreshTokenExpiryTime);
 
-        return Ok(new AuthResponseDto(token, refreshToken));
+        return Ok(new AuthResponseDto(token, refreshToken, accessTokenExpiryTime));
     }
 
     [HttpGet("profile")]

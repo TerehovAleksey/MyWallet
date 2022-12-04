@@ -11,9 +11,10 @@ public class CategoryService : ICategoryService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<CategoryResponseDto>> GetAllCategoriesAsync()
+    public async Task<IEnumerable<CategoryResponseDto>> GetAllCategoriesAsync(Guid userId)
     {
         var result = _context.Categories
+            .Where(c => c.UserId == userId)
             .AsNoTracking()
             .OrderBy(c => c.Name);
 

@@ -1,4 +1,8 @@
-﻿global using Serilog;
+﻿global using Azure.Extensions.AspNetCore.Configuration.Secrets;
+global using Azure.Identity;
+global using Azure.Security.KeyVault.Secrets;
+global using FluentValidation.AspNetCore;
+global using Serilog;
 global using Serilog.Events;
 global using System.Text;
 global using System.Text.Json.Serialization;
@@ -22,6 +26,7 @@ global using MyWallet.Resources;
 global using MyWallet.Services;
 global using MyWallet.Services.Interfaces;
 global using MyWallet.WebApi.Configurations;
+global using MyWallet.WebApi.Controllers.Base;
 global using MyWallet.WebApi.Helpers;
 global using MyWallet.WebApi.Models;
 global using MyWallet.WebApi.Services;

@@ -1,7 +1,4 @@
-﻿using FluentValidation.AspNetCore;
-using Azure.Identity;
-
-namespace MyWallet.WebApi;
+﻿namespace MyWallet.WebApi;
 
 public class Startup
 {
@@ -16,6 +13,11 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        //AddIdentity должен стоять выше AddJwtBearer, иначе редирект при 401, 403
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddDatabaseContext(_configuration, _environment);
+        services.AddServices();
+
         services.AddApiVersion();
         services.ConfigureIdentity();
 
@@ -27,18 +29,13 @@ public class Startup
         services.AddLocalization(options => options.ResourcesPath = "Resources");
         services.AddJwt(_configuration);
         services.AddMemoryCache();
-
-        //My Services
-        services.AddScoped<ITokenService, TokenService>();
-        services.AddDatabaseContext(_configuration, _environment);
-        services.AddServices();
     }
 
     public void Configure(IApplicationBuilder app)
     {
         if (_environment.IsDevelopment())
         {
-           // app.UseDeveloperExceptionPage();
+            app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI();
         }
@@ -47,11 +44,9 @@ public class Startup
             app.UseHttpsRedirection();
         }
 
-        app.UseDeveloperExceptionPage();
-
         app.UseSerilogRequestLogging();
         app.UseStaticFiles();
-        app.UseRouting();   
+        app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseEndpoints(endpoints => endpoints.MapControllers());
