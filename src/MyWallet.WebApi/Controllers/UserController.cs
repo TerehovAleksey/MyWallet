@@ -91,7 +91,8 @@ public class UserController : ControllerBase
     {
         //TODO: проверка по email и LockoutEnabled = false после проверки, сейчас true
         //TODO: изменить потом в IdentityConfigurations => options.Lockout.AllowedForNewUsers = false;
-        var user = new User { UserName = userForRegistration.Email, Email = userForRegistration.Email };
+        //TODO: тут убрать EmailConfirmed = true
+        var user = new User { UserName = userForRegistration.Email, Email = userForRegistration.Email, EmailConfirmed = true };
 
         var result = await _userManager.CreateAsync(user, userForRegistration.Password);
         if (!result.Succeeded)
