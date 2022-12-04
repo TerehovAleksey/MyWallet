@@ -57,7 +57,7 @@ public class UserService : IUserService
         var device = await _context.UserDevices.FirstOrDefaultAsync(x => x.UserId == userId && x.DeviceName == deviceName);
         if (device is not null)
         {
-            if (device.RefreshToken == refreshToken && device.RefreshTokenExpiryTime <= DateTime.UtcNow)
+            if (device.RefreshToken == refreshToken && device.RefreshTokenExpiryTime > DateTime.UtcNow)
             {
                 return true;
             }

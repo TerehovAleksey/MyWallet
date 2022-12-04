@@ -193,13 +193,13 @@ public class UserController : ControllerBase
         }
 
         // получение устройства пользователя
-        var clientInfo = GetClientInfo();
-        if (string.IsNullOrWhiteSpace(clientInfo.DeviceName))
+        var (DeviceName, Ip) = GetClientInfo();
+        if (string.IsNullOrWhiteSpace(DeviceName))
         {
             return Unauthorized();
         }
 
-        var isRefreshTokenValid = await _userService.CheckTokenAsync(user.Id, clientInfo.DeviceName, tokenDto.RefreshToken);
+        var isRefreshTokenValid = await _userService.CheckTokenAsync(user.Id, DeviceName, tokenDto.RefreshToken);
 
         if (!isRefreshTokenValid)
         {
@@ -211,7 +211,7 @@ public class UserController : ControllerBase
         var refreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(_tokenService.RefreshTokenExpiration);
         var accessTokenExpiryTime = DateTime.UtcNow.AddMinutes(_tokenService.AccessTokenExpiration);
 
-        await _userService.UpdateOrCreateDeviceAsync(user.Id, clientInfo.DeviceName, clientInfo.Ip, refreshToken, refreshTokenExpiryTime);
+        await _userService.UpdateOrCreateDeviceAsync(user.Id, DeviceName, Ip, refreshToken, refreshTokenExpiryTime);
 
         return Ok(new AuthResponseDto(token, refreshToken, accessTokenExpiryTime));
     }
