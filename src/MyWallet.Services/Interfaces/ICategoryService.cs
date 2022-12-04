@@ -2,7 +2,7 @@
 
 public interface ICategoryService
 {
-    public Task<IEnumerable<CategoryResponseDto>> GetAllCategoriesAsync();
+    public Task<IEnumerable<CategoryResponseDto>> GetAllCategoriesAsync(Guid userId);
     public Task<CategoryResponseDto?> GetCategoryByIdAsync(Guid id);
     public Task<IEnumerable<CategoryDto>> GetSubcategoryByCategoryId(Guid id);
     public Task<CategoryDto?> GetSubcategoryById(Guid id);

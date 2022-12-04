@@ -1,7 +1,4 @@
-﻿using FluentValidation.AspNetCore;
-using Azure.Identity;
-
-namespace MyWallet.WebApi;
+﻿namespace MyWallet.WebApi;
 
 public class Startup
 {
@@ -38,7 +35,7 @@ public class Startup
     {
         if (_environment.IsDevelopment())
         {
-           // app.UseDeveloperExceptionPage();
+            app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI();
         }
@@ -46,8 +43,6 @@ public class Startup
         {
             app.UseHttpsRedirection();
         }
-
-        app.UseDeveloperExceptionPage();
 
         app.UseSerilogRequestLogging();
         app.UseStaticFiles();

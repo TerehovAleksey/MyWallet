@@ -1,6 +1,7 @@
 ﻿namespace MyWallet.WebApi.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/currency")]
     [Produces(MediaTypeNames.Application.Json)]
     public class CurrencyController : ControllerBase
