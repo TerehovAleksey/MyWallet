@@ -14,6 +14,7 @@ public class CategoryDto : BaseCategoryDto
 
 public class CategoryCreateDto : BaseCategoryDto
 {
+    public Guid UserId { get; set; }
     public bool IsIncome { get; set; }
     public IEnumerable<BaseCategoryDto>? Subcategories { get; set; }
 }

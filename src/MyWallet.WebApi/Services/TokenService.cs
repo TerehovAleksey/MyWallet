@@ -8,6 +8,7 @@ public class TokenService : ITokenService
     private readonly UserManager<User> _userManager;
     private readonly JwtTokenConfig _tokenConfig;
 
+    public int AccessTokenExpiration => _tokenConfig.AccessTokenExpiration;
     public int RefreshTokenExpiration => _tokenConfig.RefreshTokenExpiration;
 
     public TokenService(UserManager<User> userManager, IOptions<JwtTokenConfig> tokenConfig)

@@ -1,12 +1,14 @@
 ﻿namespace MyWallet.WebApi.Controllers
 {
+    [ApiController]   
+    [Authorize]
     [Route("api/category")]
-    [ApiController]
-    public class CategoryController : ControllerBase
+    [Produces(MediaTypeNames.Application.Json)]
+    public class CategoryController : BaseApiController
     {
         private readonly ICategoryService _categoryService;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService, UserManager<User> userManager) : base(userManager)
         {
             _categoryService = categoryService;
         }
@@ -16,9 +18,17 @@
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public Task<IEnumerable<CategoryResponseDto>> GetCategoriesAsync()
+        [ProducesResponseType(typeof(IEnumerable<CategoryResponseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> GetCategoriesAsync()
         {
-           return _categoryService.GetAllCategoriesAsync();
+            var user = await GetUserAsync();
+            if (user is not null)
+            {
+                var result = _categoryService.GetAllCategoriesAsync(user.Id);
+                return Ok(result);
+            }
+            return Unauthorized();
         }
 
         /// <summary>
@@ -26,6 +36,9 @@
         /// </summary>
         /// <returns></returns>
         [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(IEnumerable<CategoryResponseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetCategoryByIdAsync([FromRoute] Guid id)
         {
             var result = await _categoryService.GetCategoryByIdAsync(id);
@@ -43,6 +56,8 @@
         /// <param name="categoryId"></param>
         /// <returns></returns>
         [HttpGet("sub/{categoryId:guid}")]
+        [ProducesResponseType(typeof(IEnumerable<CategoryDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public Task<IEnumerable<CategoryDto>> GetSubcategoryByCategoryId([FromRoute] Guid categoryId)
         {
             return _categoryService.GetSubcategoryByCategoryId(categoryId);
@@ -54,6 +69,9 @@
         /// <param name="categoryId"></param>
         /// <returns></returns>
         [HttpGet("sub")]
+        [ProducesResponseType(typeof(CategoryDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetSubcategoryById([FromQuery] Guid id)
         {
             var result = await _categoryService.GetSubcategoryById(id);
@@ -66,6 +84,9 @@
         /// <param name="category"></param>
         /// <returns></returns>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateCategory([FromBody] CategoryCreateDto category)
         {
             var result = await _categoryService.CreateCategoryAsync(category);
@@ -77,6 +98,9 @@
         /// </summary>
         /// <returns></returns>
         [HttpPost("sub/{categoryId:guid}")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateSubcategoryAsync([FromRoute] Guid categoryId, [FromBody] BaseCategoryDto category)
         {
             var result = await _categoryService.CreateSubcategoryAsync(categoryId, category);
@@ -90,6 +114,10 @@
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPut("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateCategoryAsync([FromRoute] Guid id, [FromBody] CategoryUpdateDto category)
         {
             if (category.Id != id)
@@ -112,6 +140,10 @@
         /// </summary>
         /// <returns></returns>
         [HttpPut("sub/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateSubcategoryAsync([FromRoute] Guid id, [FromBody] CategoryDto category)
         {
             if (category.Id != id)
@@ -135,6 +167,8 @@
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteCategory([FromRoute] Guid id)
         {
             var result = await _categoryService.DeleteCategoryAsync(id);
@@ -153,6 +187,8 @@
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("sub/{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteSubcategoryAsync([FromRoute] Guid id)
         {
             var result = await _categoryService.DeleteSubcategoryAsync(id);

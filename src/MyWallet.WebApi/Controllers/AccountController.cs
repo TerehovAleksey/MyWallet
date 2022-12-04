@@ -1,6 +1,7 @@
 ﻿namespace MyWallet.WebApi.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/account")]
 [Produces(MediaTypeNames.Application.Json)]
 public class AccountController : ControllerBase
@@ -20,6 +21,7 @@ public class AccountController : ControllerBase
     /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<AccountDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public Task<IEnumerable<AccountDto>> GetAllAccountsAsync() =>
         _accountService.GetAccountsAsync();
 
@@ -29,6 +31,7 @@ public class AccountController : ControllerBase
     /// <returns></returns>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(IEnumerable<AccountDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAccountAsync([FromRoute]Guid id)
     {
@@ -43,6 +46,7 @@ public class AccountController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(AccountTypeDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> CreateAccountAsync([FromBody] AccountCreateDto account)
     {
         // проверка вылюты
@@ -63,6 +67,7 @@ public class AccountController : ControllerBase
     [HttpPut("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateAccountAsync([FromRoute] Guid id, [FromBody] AccountUpdateDto account)
     {
@@ -87,6 +92,7 @@ public class AccountController : ControllerBase
     /// <returns></returns>
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAccountAsync([FromRoute] Guid id)
     {
