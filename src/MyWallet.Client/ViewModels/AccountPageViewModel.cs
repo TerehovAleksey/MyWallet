@@ -48,11 +48,8 @@ public partial class AccountPageViewModel : AppViewModelBase
         }
     }
 
-    [ObservableProperty]
-    private List<AccountType> _accountTypes = new();
-
-    [ObservableProperty]
-    private List<Currency> _currencies = new();
+    public ObservableCollection<AccountType> AccountTypes { get; } = new();
+    public ObservableCollection<Currency> Currencies { get; } = new();
 
     public AccountPageViewModel(IDataService dataService)
     {
@@ -62,8 +59,17 @@ public partial class AccountPageViewModel : AppViewModelBase
 
     public override async void OnNavigatedTo(object? parameters)
     {
-        AccountTypes = await _dataService.GetAccountTypesAsync();
-        Currencies = _dataService.GetCurrentCurrencies();
+        SetDataLoadingIndicators();
+
+        var typesResponse = await _dataService.GetAccountTypesAsync();
+        await HandleServiceResponseErrorsAsync(typesResponse);
+        AccountTypes.AddRange(typesResponse.Item);
+
+        //var currencyResponse = await _dataService.GetUserCurrencies();
+        //await HandleServiceResponseErrorsAsync(currencyResponse);
+        //Currencies.AddRange(currencyResponse.Item);
+
+        SetDataLoadingIndicators(false);
 
         Account = parameters as Account;
         IsNewAccount = Account == null;

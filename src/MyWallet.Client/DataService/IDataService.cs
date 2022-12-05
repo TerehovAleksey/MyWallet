@@ -8,19 +8,19 @@ public interface IDataService
     /// Получение списка всех валют
     /// </summary>
     /// <returns></returns>
-    public Task<List<Currency>> GetCurrenciesAsync();
+    public Task<Response<List<Currency>>> GetCurrenciesAsync();
 
     /// <summary>
     /// Получение валют пользователя
     /// </summary>
     /// <returns></returns>
-    public List<Currency> GetCurrentCurrencies();
+    public Task<Response<List<Currency>>> GetUserCurrencies();
 
     /// <summary>
     /// Получение списка типов счетов
     /// </summary>
     /// <returns></returns>
-    public Task<List<AccountType>> GetAccountTypesAsync();
+    public Task<Response<List<AccountType>>> GetAccountTypesAsync();
 
     /// <summary>
     /// Получение всех счетов пользователя

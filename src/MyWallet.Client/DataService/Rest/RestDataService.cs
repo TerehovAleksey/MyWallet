@@ -8,26 +8,11 @@ public class RestDataService : RestServiceBase, IDataService
 
     #region Currency, Account
 
-    public Task<List<Currency>> GetCurrenciesAsync()
-    {
-        throw new NotImplementedException();
-        //GetAsync<List<Currency>>("currency");
-    }
+    public Task<Response<List<Currency>>> GetCurrenciesAsync() => GetAsync<List<Currency>>("currency", 24);
 
-    public List<Currency> GetCurrentCurrencies()
-    {
-        return new List<Currency>
-        {
-            new("BYN", "Belarussian Ruble"),
-            new("USD", "United States Dollar")
-        };
-    }
+    public Task<Response<List<Currency>>> GetUserCurrencies() => GetAsync<List<Currency>>("currency/user", 24);
 
-    public Task<List<AccountType>> GetAccountTypesAsync()
-    {
-        throw new NotImplementedException();
-        //GetAsync<List<AccountType>>("type");
-    }
+    public Task<Response<List<AccountType>>> GetAccountTypesAsync() => GetAsync<List<AccountType>>("type", 24);
 
     public Task<Response<List<Account>>> GetAccountsAsync() => GetAsync<List<Account>>("account", 24);
 

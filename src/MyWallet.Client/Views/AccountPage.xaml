@@ -62,11 +62,11 @@
                 <BoxView Style="{StaticResource SeparatorStyle}" />
 
                 <!--  Account type  -->
-                <VerticalStackLayout>
+                <VerticalStackLayout Padding="0" HorizontalOptions="FillAndExpand">
                     <Label Margin="0,0,0,5" Text="Тип" />
                     <Picker
-                        Title="Выберете тип счёта"
-                        HorizontalOptions="Fill"
+                        Title="{OnPlatform Android=Выберете тип счёта}"
+                        HorizontalOptions="FillAndExpand"
                         ItemsSource="{Binding AccountTypes}"
                         SelectedItem="{Binding AccountType}" />
                 </VerticalStackLayout>
@@ -81,11 +81,10 @@
                 <BoxView IsVisible="{Binding IsNewAccount}" Style="{StaticResource SeparatorStyle}" />
 
                 <!--  Account currency  -->
-                <VerticalStackLayout>
+                <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
                     <Label Margin="0,0,0,5" Text="Валюта" />
                     <Picker
-                        Title="Выберете валюту счёта"
-                        HorizontalOptions="Fill"
+                        Title="{OnPlatform Android=Выберете валюту счёта}"
                         ItemsSource="{Binding Currencies}"
                         SelectedItem="{Binding CurrentCurrency}" />
                 </VerticalStackLayout>

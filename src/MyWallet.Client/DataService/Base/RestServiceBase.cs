@@ -105,7 +105,7 @@ public abstract class RestServiceBase
         var result = await ToResponse<T>(httpResponse, token);
 
         //Если Unauthorized, то попытка обновить токен
-        if (tryRefresh && !resource.Contains("refresh") && result.State == State.Unauthorized)
+        if (tryRefresh && !resource.Contains("refresh") && !resource.Contains("registration") && !resource.Contains("login") && result.State == State.Unauthorized)
         {
             var refreshSuccess = await TryRefreshTokenAsync();
             if (refreshSuccess)
@@ -131,7 +131,7 @@ public abstract class RestServiceBase
         var result = await ToResponse(httpResponse, token);
 
         //Если Unauthorized, то попытка обновить токен
-        if (tryRefresh && result.State == State.Unauthorized)
+        if (tryRefresh && !resource.Contains("refresh") && !resource.Contains("registration") && !resource.Contains("login") && result.State == State.Unauthorized)
         {
             var refreshSuccess = await TryRefreshTokenAsync();
             if (refreshSuccess)

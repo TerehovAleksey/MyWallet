@@ -50,6 +50,7 @@
                                 <VerticalStackLayout
                                     Grid.Row="0"
                                     Grid.Column="1"
+                                    HorizontalOptions="Start"
                                     VerticalOptions="Center">
                                     <Label Style="{StaticResource MediumDark14TextStyle}" Text="{Binding Name}" />
                                     <Label Style="{StaticResource RegularDark12TextStyle}" Text="{Binding CurrencySymbol}" />

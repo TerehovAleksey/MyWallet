@@ -6,6 +6,11 @@ public class Response<T> : IResponse
     public IReadOnlyList<string> Errors { get; set; } = new List<string>();
     public State State { get; set; } = State.Success;
 
+    public Response()
+    {
+
+    }
+
     public Response(T? item)
     {
         Item = item;
