@@ -88,6 +88,17 @@
 	  <None Remove="Resources\Fonts\FiraSans-Light.ttf" />
 	  <None Remove="Resources\Fonts\FiraSans-Medium.ttf" />
 	  <None Remove="Resources\Fonts\FiraSans-Regular.ttf" />
+	  <None Remove="Resources\Images\account_type_01_general.png" />
+	  <None Remove="Resources\Images\account_type_02_cash.png" />
+	  <None Remove="Resources\Images\account_type_03_current_account.png" />
+	  <None Remove="Resources\Images\account_type_04_credit_card.png" />
+	  <None Remove="Resources\Images\account_type_05_saving_account.png" />
+	  <None Remove="Resources\Images\account_type_06_bonus.png" />
+	  <None Remove="Resources\Images\account_type_07_insurance.png" />
+	  <None Remove="Resources\Images\account_type_08_investment.png" />
+	  <None Remove="Resources\Images\account_type_09_loan.png" />
+	  <None Remove="Resources\Images\account_type_10_mortgage.png" />
+	  <None Remove="Resources\Images\account_type_11_account_with_overdraft.png" />
 	  <None Remove="Resources\Images\back.png" />
 	  <None Remove="Resources\Images\back_dark.png" />
 	  <None Remove="Resources\Images\check.png" />
@@ -102,6 +113,7 @@
 	  <None Remove="Resources\Images\guard_wallet.png" />
 	  <None Remove="Resources\Images\mail.png" />
 	  <None Remove="Resources\Images\mail_gray.png" />
+	  <None Remove="Resources\Images\mail_wallet.png" />
 	  <None Remove="Resources\Images\menu.png" />
 	  <None Remove="Resources\Images\nointernet.png" />
 	  <None Remove="Resources\Images\notifications.png" />

@@ -16,7 +16,7 @@ public partial class AccountPageViewModel : AppViewModelBase
     private AccountType? _accountType;
 
     [ObservableProperty]
-    private string _accountNumber = string.Empty;
+    private string? _accountNumber;
 
     [ObservableProperty]
     private decimal _accountValue = 0;
@@ -27,6 +27,18 @@ public partial class AccountPageViewModel : AppViewModelBase
     [ObservableProperty]
     private Currency? _accountCurrency;
 
+    [ObservableProperty]
+    private bool _accountDisabled = false;
+
+    [ObservableProperty]
+    private bool _accountArchived = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(AccountColor))]
+    private string? _accountColorString = "#a2a2a2";
+
+    public Color AccountColor => Color.FromArgb(_accountColorString ?? "#a2a2a2");
+
 
     public Account? Account
     {
@@ -36,11 +48,14 @@ public partial class AccountPageViewModel : AppViewModelBase
             if (value is not null && SetProperty(ref _account, value))
             {
                 AccountName = value.Name;
-                AccountNumber = "";
+                AccountNumber = value.Number;
                 AccountValue = value.Balance;
                 AccountCurrencyType = value.CurrencySymbol;
+                AccountArchived = value.IsArchived;
+                AccountDisabled = value.IsDisable;
                 AccountType = AccountTypes.FirstOrDefault(x => x.Name == value.AccountType);
                 AccountCurrency = Currencies.FirstOrDefault(x => x.Symbol == value.CurrencySymbol);
+                AccountColorString = Colors.FirstOrDefault(x => x == value.ColorString);
             }
             else
             {
@@ -51,6 +66,7 @@ public partial class AccountPageViewModel : AppViewModelBase
 
     public ObservableCollection<AccountType> AccountTypes { get; } = new();
     public ObservableCollection<Currency> Currencies { get; } = new();
+    public ObservableCollection<string> Colors { get; } = new();
 
     public AccountPageViewModel(IDataService dataService)
     {
@@ -58,8 +74,13 @@ public partial class AccountPageViewModel : AppViewModelBase
         Title = "Новый счёт";
     }
 
-    public override async void OnNavigatedTo(object? parameters)
+    public override async void OnNavigatedTo(object? parameters, bool reload)
     {
+        if (reload)
+        {
+            return;
+        }
+
         SetDataLoadingIndicators();
 
         var typesResponse = await _dataService.GetAccountTypesAsync();
@@ -72,6 +93,8 @@ public partial class AccountPageViewModel : AppViewModelBase
 
         SetDataLoadingIndicators(false);
 
+        Colors.AddRange(UserColors.GetColors());
+
         Account = parameters as Account;
         IsNewAccount = Account == null;
         Title = IsNewAccount ? "Новый счёт" : "Изменить счёт";
@@ -80,10 +103,26 @@ public partial class AccountPageViewModel : AppViewModelBase
     [RelayCommand]
     private async Task SaveAndReturn()
     {
-        if (AccountType is not null && AccountCurrency is not null && !string.IsNullOrEmpty(AccountName))
+        if (_isNewAccount)
         {
+            // Создание
+            if (AccountType is not null && AccountCurrency is not null && !string.IsNullOrEmpty(AccountName) && !string.IsNullOrEmpty(AccountColorString))
+            {
+                SetDataLoadingIndicators(true);
+                var response = await _dataService.CreateAccountAsync(new AccountCreate(AccountName, AccountNumber, AccountType.Id, AccountValue, AccountCurrency.Symbol, AccountColorString));
+                SetDataLoadingIndicators(false);
+                await HandleServiceResponseErrorsAsync(response);
+                if (response.State == State.Success)
+                {
+                    await NavigationService.PopAsync();
+                }
+            }
+        }
+        else if(Account is not null && AccountType is not null && !string.IsNullOrEmpty(AccountColorString))
+        {
+            // Редактирование
             SetDataLoadingIndicators(true);
-            var response = await _dataService.CreateAccountAsync(new AccountCreate(AccountName, AccountNumber, AccountType.Id, AccountValue, AccountCurrency.Symbol, "#ad1457"));
+            var response = await _dataService.UpdateAccountAsync(new AccountUpdate(Account.Id, AccountName, AccountNumber, AccountType.Id, AccountColorString, AccountDisabled, AccountArchived));
             SetDataLoadingIndicators(false);
             await HandleServiceResponseErrorsAsync(response);
             if (response.State == State.Success)
@@ -94,6 +133,22 @@ public partial class AccountPageViewModel : AppViewModelBase
         else
         {
             await PageService.DisplayAlert("Ошибка", "Не все поля правильно заполнены", "Понятно");
+        }
+    }
+
+    [RelayCommand]
+    private async Task DeleteAndReturn()
+    {
+        if (Account is not null)
+        {
+            SetDataLoadingIndicators(true);
+            var response = await _dataService.DeleteAccountAsync(Account.Id);
+            SetDataLoadingIndicators(false);
+            await HandleServiceResponseErrorsAsync(response);
+            if (response.State == State.Success)
+            {
+                await NavigationService.PopAsync();
+            }
         }
     }
 }

@@ -12,6 +12,12 @@
     HorizontalOptions="FillAndExpand"
     VerticalOptions="Start">
 
+    <Grid.Resources>
+        <converters:AccountsCounterVisibilityConverter x:Key="AccountsCounterVisibilityConverter" />
+        <converters:AccountsCountToStringConverter x:Key="AccountsCountToStringConverter" />
+        <converters:CountOneToBoolConverter x:Key="CountOneToBoolConverter" />
+    </Grid.Resources>
+
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
@@ -27,8 +33,10 @@
         </Grid.ColumnDefinitions>
         <Label
             Grid.Column="0"
+            HorizontalOptions="Start"
             Style="{StaticResource CaptionTextStyle}"
-            Text="Список счетов" />
+            Text="Список счетов"
+            VerticalOptions="Center" />
         <ImageButton
             Grid.Column="1"
             Command="{Binding OpenAccountsPageCommand}"
@@ -75,18 +83,17 @@
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="m:Account">
                 <Border
-                    Padding="20,5"
+                    Padding="15,5"
                     HeightRequest="50"
                     StrokeShape="RoundRectangle 10"
                     StrokeThickness="0"
                     WidthRequest="184">
-                    <VerticalStackLayout>
+                    <VerticalStackLayout
+                        Padding="0"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center">
                         <Label Style="{StaticResource RegularLight12TextStyle}" Text="{Binding Name}" />
-                        <HorizontalStackLayout>
-                            <Label Style="{StaticResource MediumLight14TextStyle}" Text="{Binding Balance}" />
-                            <Label Style="{StaticResource MediumLight14TextStyle}" Text=" " />
-                            <Label Style="{StaticResource MediumLight14TextStyle}" Text="{Binding CurrencySymbol}" />
-                        </HorizontalStackLayout>
+                        <Label Style="{StaticResource MediumLight14TextStyle}" Text="{Binding Value}" />
                     </VerticalStackLayout>
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroup Name="CommonStates">
@@ -112,9 +119,9 @@
         Grid.Row="2"
         Margin="0,15,0,0"
         HorizontalOptions="Center"
-        IsVisible="{Binding SelectedAccounts.Count, Converter={converters:AccountsCounterVisibilityConverter}}"
+        IsVisible="{Binding SelectedAccounts.Count, Converter={StaticResource AccountsCounterVisibilityConverter}}"
         Style="{StaticResource AccentButton}"
-        Text="{Binding SelectedAccounts.Count, Converter={converters:AccountsCountToStringConverter}}" />
+        Text="{Binding SelectedAccounts.Count, Converter={StaticResource AccountsCountToStringConverter}}" />
 
     <!--  Footer  -->
     <Grid Grid.Row="3" Margin="0,15,0,0">
@@ -125,7 +132,7 @@
         <Button
             Grid.Column="0"
             HorizontalOptions="Start"
-            IsVisible="{Binding SelectedAccounts.Count, Converter={converters:CountOneToBoolConverter}}"
+            IsVisible="{Binding SelectedAccounts.Count, Converter={StaticResource CountOneToBoolConverter}}"
             Style="{StaticResource RegularButton}"
             Text="Корректировка баланса" />
         <Button

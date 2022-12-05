@@ -4,13 +4,13 @@ public partial class AccountsPageViewModel : AppViewModelBase
 {
     private readonly IDataService _dataService;
     
-    private Account _selectedAccount;
-    public Account SelectedAccount
+    private Account? _selectedAccount;
+    public Account? SelectedAccount
     {
         get => _selectedAccount;
         set
         {
-            if (SetProperty(ref _selectedAccount, value)) 
+            if (SetProperty(ref _selectedAccount, value) && value is not null) 
             {
                 NavigationService.PushAsync(new AccountPage(_selectedAccount));
             }
@@ -25,11 +25,10 @@ public partial class AccountsPageViewModel : AppViewModelBase
         Title = "Настройки счетов";
     }
 
-    public override async void OnNavigatedTo(object parameters)
+    public override async void OnNavigatedTo(object parameters, bool wasLoaded)
     {
         var accounts = await _dataService.GetAccountsAsync();
-        Accounts.AddRange(accounts.Item);
-
+        Accounts.AddRange(accounts.Item, true);
         SelectedAccount = null;
     }
 

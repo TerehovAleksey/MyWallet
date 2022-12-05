@@ -9,6 +9,12 @@
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
     x:DataType="vm:MainPageViewModel"
     Style="{StaticResource CardStyle}">
+    
+    <Border.Resources>
+        <converters:RecordIsIncomeToColorConverter x:Key="RecordIsIncomeToColorConverter" />
+        <converters:DateTimeToDayConverter x:Key="DateTimeToDayConverter" />
+    </Border.Resources>
+    
     <VerticalStackLayout>
         <Grid>
             <Grid.RowDefinitions>
@@ -79,13 +85,14 @@
                                     HorizontalOptions="End"
                                     Style="{StaticResource CaptionTextStyle}"
                                     Text="{Binding .}"
-                                    TextColor="{Binding IsIncome, Converter={converters:RecordIsIncomeToColorConverter}}" />
+                                    TextColor="{Binding IsIncome, Converter={StaticResource RecordIsIncomeToColorConverter}}" />
                                 <Label
                                     HorizontalOptions="End"
                                     Style="{StaticResource RegularGray12TextStyle}"
-                                    Text="{Binding DateOfRecord, Converter={converters:DateTimeToDayConverter}}" />
+                                    Text="{Binding DateOfRecord, Converter={StaticResource DateTimeToDayConverter}}" />
                             </VerticalStackLayout>
                             <BoxView
+                                Grid.Column="0"
                                 Grid.Row="1"
                                 Grid.ColumnSpan="3"
                                 Style="{StaticResource SeparatorStyle}" />

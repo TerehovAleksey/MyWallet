@@ -17,7 +17,7 @@ public partial class MainPageViewModel : AppViewModelBase
         Title = "Главная";
     }
 
-    public override async void OnNavigatedTo(object? parameters)
+    public override async void OnNavigatedTo(object? parameters, bool reload)
     {
         SetDataLoadingIndicators();
         var response = await _dataService.GetAccountsAsync();
@@ -25,7 +25,7 @@ public partial class MainPageViewModel : AppViewModelBase
         await HandleServiceResponseErrorsAsync(response);
         if (response.Item != null)
         {
-            Accounts.AddRange(response.Item);
+            Accounts.AddRange(response.Item, true);
         }
     }
 

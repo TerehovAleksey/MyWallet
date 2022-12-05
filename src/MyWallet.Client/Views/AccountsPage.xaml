@@ -45,7 +45,7 @@
                                     StrokeShape="RoundRectangle 5"
                                     StrokeThickness="0"
                                     WidthRequest="50">
-                                    <Image Aspect="AspectFill" Source="coins.png" />
+                                    <Image Aspect="AspectFill" Source="{Binding Image}" />
                                 </Border>
                                 <VerticalStackLayout
                                     Grid.Row="0"
@@ -53,7 +53,7 @@
                                     HorizontalOptions="Start"
                                     VerticalOptions="Center">
                                     <Label Style="{StaticResource MediumDark14TextStyle}" Text="{Binding Name}" />
-                                    <Label Style="{StaticResource RegularDark12TextStyle}" Text="{Binding CurrencySymbol}" />
+                                    <Label Style="{StaticResource RegularDark12TextStyle}" Text="{Binding Status}" />
                                 </VerticalStackLayout>
                                 <BoxView
                                     Grid.Row="1"

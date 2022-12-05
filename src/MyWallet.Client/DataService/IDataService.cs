@@ -2,7 +2,7 @@
 
 public interface IDataService
 {
-    #region Currency, Account
+    #region Currency
 
     /// <summary>
     /// Получение списка всех валют
@@ -15,6 +15,10 @@ public interface IDataService
     /// </summary>
     /// <returns></returns>
     public Task<Response<List<Currency>>> GetUserCurrencies();
+
+    #endregion
+
+    #region Account
 
     /// <summary>
     /// Получение списка типов счетов
@@ -35,17 +39,24 @@ public interface IDataService
     /// <returns></returns>
     public Task<IResponse> CreateAccountAsync(AccountCreate account);
 
+    /// <summary>
+    /// Изменение счёта пользователя
+    /// </summary>
+    /// <param name="account"></param>
+    /// <returns></returns>
+    public Task<IResponse> UpdateAccountAsync(AccountUpdate account);
+
+    /// <summary>
+    /// Удаление счёта пользователя
+    /// </summary>
+    /// <param name="id">ID счёта</param>
+    /// <returns></returns>
+    public Task<IResponse> DeleteAccountAsync(Guid id);
+
     #endregion
-
-    public Task<bool> DeleteAccountAsync(Guid id);
-
-    
 
     public Task<List<Category>> GetAllCategoriesAsync();
     public Task<Category> CreateCategoryAsync(string name, string imageName);
-
     public Task<List<Record>> GetRecordsAsync(DateTime startDate, DateTime endDate);
-    public Task<Record> CreateRecordAsync(RecordCreate record);
-
-    
+    public Task<Record> CreateRecordAsync(RecordCreate record);  
 }

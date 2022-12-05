@@ -45,16 +45,10 @@
                         MaximumWidthRequest="{OnPlatform WinUI=400}"
                         Spacing="20"
                         VerticalOptions="Fill">
-                        <Border
-                            BackgroundColor="{StaticResource PrimaryLightColor}"
-                            HeightRequest="100"
-                            StrokeShape="RoundRectangle 50"
-                            WidthRequest="100">
-                            <Image
-                                HeightRequest="64"
-                                Source="mail_gray.png"
-                                WidthRequest="64" />
-                        </Border>
+                        <Image
+                            HeightRequest="120"
+                            Source="mail_wallet.png"
+                            WidthRequest="120" />
                         <Label Style="{StaticResource CaptionTextStyle}" Text="{Binding Caption}" />
                         <common:InputText
                             Title="Email"

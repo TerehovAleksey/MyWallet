@@ -28,11 +28,12 @@ public partial class LoginPageViewModel : AppViewModelBase
         _userService = userService;
     }
 
-    public override void OnNavigatedTo(object? parameters)
+    public override void OnNavigatedTo(object? parameters, bool reload)
     {
-        base.OnNavigatedTo(parameters);
-
-        IsRegister = (bool)(parameters ?? true);
+        if (!reload)
+        {
+            IsRegister = (bool)(parameters ?? true);
+        }
     }
 
     [RelayCommand]

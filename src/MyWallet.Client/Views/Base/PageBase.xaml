@@ -27,7 +27,7 @@
             Grid.Row="1"
             Margin="0"
             BackgroundColor="{StaticResource PrimaryColor}"
-            ColumnDefinitions="56,*,56"
+            ColumnDefinitions="56,*,Auto"
             MinimumHeightRequest="56">
 
             <!--  Icons for Left Side  -->
@@ -73,7 +73,7 @@
             <Grid
                 x:Name="PageIconsGrid"
                 Grid.Column="2"
-                Margin="0,4"
+                Margin="0,4,10,4"
                 HorizontalOptions="End"
                 VerticalOptions="Center" />
 

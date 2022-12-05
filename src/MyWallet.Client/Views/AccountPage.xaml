@@ -6,7 +6,6 @@
     xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
     xmlns:controls="clr-namespace:MyWallet.Client.ViewControls.Common"
     xmlns:converters="clr-namespace:MyWallet.Client.Converters"
-    xmlns:m="clr-namespace:MyWallet.Client.Models"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
     x:DataType="vm:AccountPageViewModel"
     x:TypeArguments="vm:AccountPageViewModel"
@@ -14,18 +13,26 @@
     PageMode="Navigate"
     PageTitle="{Binding Title}">
 
+    <base:ViewBase.Resources>
+        <converters:BoolInvertConverter x:Key="BoolInvertConverter" />
+    </base:ViewBase.Resources>
+
     <base:ViewBase.PageIcons>
 
         <HorizontalStackLayout Spacing="5">
             <ImageButton
+                Margin="0"
+                Command="{Binding DeleteAndReturnCommand}"
+                IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}"
+                Source="trash.png"
+                Style="{StaticResource IconButtonStyle}" />
+
+            <ImageButton
+                Margin="0"
                 Command="{Binding SaveAndReturnCommand}"
                 Source="check.png"
                 Style="{StaticResource IconButtonStyle}" />
 
-            <ImageButton
-                Command="{Binding SaveAndReturnCommand}"
-                Source="trash.png"
-                Style="{StaticResource IconButtonStyle}" />
         </HorizontalStackLayout>
 
     </base:ViewBase.PageIcons>
@@ -35,7 +42,8 @@
             <VerticalStackLayout
                 HorizontalOptions="Fill"
                 MaximumWidthRequest="{OnPlatform WinUI=600}"
-                Spacing="20">
+                Spacing="20"
+                VerticalOptions="Start">
 
                 <!--  Account name  -->
                 <controls:InputText
@@ -95,31 +103,38 @@
                 <BoxView Style="{StaticResource SeparatorStyle}" />
 
                 <!--  Account color  -->
-                <Picker Title="Цвет" BackgroundColor="Brown" />
+                <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
+                    <Label Margin="0,0,0,5" Text="Цвет" />
+                    <Picker
+                        Title="{OnPlatform Android=Выберете цвет}"
+                        BackgroundColor="{Binding AccountColor}"
+                        ItemsSource="{Binding Colors}"
+                        SelectedItem="{Binding AccountColorString}" />
+                </VerticalStackLayout>
 
                 <BoxView Style="{StaticResource SeparatorStyle}" />
 
                 <!--  Is account enable (Not new only!)  -->
-                <Grid IsVisible="{Binding IsNewAccount, Converter={converters:BoolInvertConverter}}">
+                <Grid IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}">
                     <Label
                         HorizontalOptions="Start"
                         Text="Исключить из статистики"
                         VerticalOptions="Center" />
-                    <Switch HorizontalOptions="End" />
+                    <Switch HorizontalOptions="End" IsToggled="{Binding AccountDisabled}" />
                 </Grid>
 
-                <BoxView IsVisible="{Binding IsNewAccount, Converter={converters:BoolInvertConverter}}" Style="{StaticResource SeparatorStyle}" />
+                <BoxView IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}" Style="{StaticResource SeparatorStyle}" />
 
                 <!--  Is account archived (Not new only!)  -->
-                <Grid IsVisible="{Binding IsNewAccount, Converter={converters:BoolInvertConverter}}">
+                <Grid IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}">
                     <Label
                         HorizontalOptions="Start"
                         Text="Архив"
                         VerticalOptions="Center" />
-                    <Switch HorizontalOptions="End" />
+                    <Switch HorizontalOptions="End" IsToggled="{Binding AccountArchived}" />
                 </Grid>
 
-                <BoxView IsVisible="{Binding IsNewAccount, Converter={converters:BoolInvertConverter}}" Style="{StaticResource SeparatorStyle}" />
+                <BoxView IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}" Style="{StaticResource SeparatorStyle}" />
 
             </VerticalStackLayout>
         </ScrollView>

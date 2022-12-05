@@ -13,16 +13,16 @@ public class ViewBase<TViewModel> : PageBase where TViewModel : AppViewModelBase
     {
     }
 
-    protected ViewBase(object initParameters) : base() =>
+    protected ViewBase(object? initParameters) : base() =>
         ViewModelParameters = initParameters;
 
     protected override void OnAppearing()
     {
-        //Initialize only if page is not loaded previously
+        base.OnAppearing();
+        
+        //Срабатывает при первом отображении страницы
         if (!_isLoaded)
         {
-            base.OnAppearing();
-
             BindingContext = ViewModel = ServiceHelpers.GetService<TViewModel>();
 
             ViewModel.NavigationService = Navigation;
@@ -30,12 +30,12 @@ public class ViewBase<TViewModel> : PageBase where TViewModel : AppViewModelBase
 
             //Raise Event to notify that ViewModel has been Initialized
             ViewModelInitialized?.Invoke(this, EventArgs.Empty);
-
-            //Navigate to View Model's OnNavigatedTo method
-            ViewModel.OnNavigatedTo(ViewModelParameters);
-
-            _isLoaded = true;
         }
+
+        //Navigate to View Model's OnNavigatedTo method
+        ViewModel?.OnNavigatedTo(ViewModelParameters, _isLoaded);
+        
+        _isLoaded = true;
     }
 
 }

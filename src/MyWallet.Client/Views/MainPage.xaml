@@ -25,7 +25,11 @@
     <base:ViewBase.PageContent>
 
         <ScrollView>
-            <VerticalStackLayout HorizontalOptions="FillAndExpand">
+            <VerticalStackLayout
+                Margin="0"
+                Padding="0"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Start">
                 <controls:MainAccounts />
                 <controls:MainLastRecords />
             </VerticalStackLayout>

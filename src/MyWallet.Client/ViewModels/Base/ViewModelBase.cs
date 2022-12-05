@@ -25,8 +25,13 @@ public partial class ViewModelBase : ObservableObject
 
     protected ViewModelBase() => IsErrorState = false;
 
-    //Called on Page Appearing
-    public virtual async void OnNavigatedTo(object? parameters) => await Task.CompletedTask;
+    /// <summary>
+    /// Вызавается при отображении страницы
+    /// </summary>
+    /// <param name="parameters">Параметры, переданные на страницу</param>
+    /// <param name="reload">Признак, что происходит повторное отображение страницы,
+    /// например при возврате назад</param>
+    public virtual async void OnNavigatedTo(object? parameters, bool reload) => await Task.CompletedTask;
 
     //Set Loading Indicators for Page
     protected void SetDataLoadingIndicators(bool isStaring = true, string loadingText = "Loading...")
