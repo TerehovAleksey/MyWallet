@@ -99,6 +99,7 @@
 	  <None Remove="Resources\Images\facebook.png" />
 	  <None Remove="Resources\Images\google.png" />
 	  <None Remove="Resources\Images\guard.png" />
+	  <None Remove="Resources\Images\guard_wallet.png" />
 	  <None Remove="Resources\Images\mail.png" />
 	  <None Remove="Resources\Images\mail_gray.png" />
 	  <None Remove="Resources\Images\menu.png" />

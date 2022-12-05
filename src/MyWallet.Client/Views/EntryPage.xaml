@@ -49,14 +49,9 @@
                     </LinearGradientBrush>
                 </Grid.Background>
                 <Image
-                    Margin="0,-10,0,0"
-                    HeightRequest="48"
-                    Source="wallet.png"
-                    WidthRequest="48" />
-                <Image
-                    HeightRequest="150"
-                    Source="guard.png"
-                    WidthRequest="150" />
+                    HeightRequest="135"
+                    Source="guard_wallet.png"
+                    WidthRequest="120" />
             </Grid>
 
             <VerticalStackLayout Grid.Row="1" Spacing="10">
