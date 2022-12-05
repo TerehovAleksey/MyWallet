@@ -122,7 +122,7 @@ public class UserController : ControllerBase
         // счёт пользователя
         var types = await _accountTypeService.GetAccountTypesAsync();
         var typeId = types.First(x => x.Name == "Общий").Id;
-        await _accountService.CreateAccountAsync(new AccountCreateDto(user.Id, "Наличные", null, typeId, 0, "BYN", "#ad1457"));
+        await _accountService.CreateAccountAsync(user.Id, new AccountCreateDto("Наличные", null, typeId, 0, "BYN", "#ad1457"));
 
         // категории и подкатегории
         await _categoryService.InitCategoriesForUser(user.Id);

@@ -4,12 +4,12 @@
 [Authorize]
 [Route("api/account")]
 [Produces(MediaTypeNames.Application.Json)]
-public class AccountController : ControllerBase
+public class AccountController : BaseApiController
 {
     private readonly IAccountService _accountService;
     private readonly ICurrencyService _currencyService;
 
-    public AccountController(IAccountService accountService, ICurrencyService currencyService)
+    public AccountController(IAccountService accountService, ICurrencyService currencyService, UserManager<User> userManager) : base(userManager)
     {
         _accountService = accountService;
         _currencyService = currencyService;
@@ -49,14 +49,21 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> CreateAccountAsync([FromBody] AccountCreateDto account)
     {
-        // проверка вылюты
+        var user = await GetUserAsync();
+
+        if (user is null)
+        {
+            return Unauthorized();
+        }
+
+        // проверка валюты
         var currency = _currencyService.GetAllSymbolsWithDescription().FirstOrDefault(x => x.Key == account.CurrencySymbol.ToUpperInvariant());
         if (string.IsNullOrEmpty(currency.Value))
         {
             return BadRequest();
         }
         
-        var result = await _accountService.CreateAccountAsync(account);
+        var result = await _accountService.CreateAccountAsync(user.Id, account);
         return Created($"api/account/{result.Id}", result);
     }
 
