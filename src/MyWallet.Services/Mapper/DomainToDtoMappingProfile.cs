@@ -1,26 +1,26 @@
-﻿using MyWallet.Common.Dto;
-using MyWallet.Core.Models;
-
-namespace MyWallet.Services.Mapper;
+﻿namespace MyWallet.Services.Mapper;
 
 public class DomainToDtoMappingProfile : Profile
 {
-	public DomainToDtoMappingProfile()
-	{
-		CreateMap<Account, AccountDto>()
-			.ForMember(dto => dto.AccountType, opt => opt.MapFrom(p => p.AccountType.Name));
+    public DomainToDtoMappingProfile()
+    {
+        CreateMap<UserCurrency, UserCurrencyDto>()
+            .ForMember(dto => dto.Symbol, opt => opt.MapFrom(p => p.CurrencySymbol));
 
-		CreateMap<AccountType, AccountTypeDto>();
+        CreateMap<Account, AccountDto>()
+            .ForMember(dto => dto.AccountType, opt => opt.MapFrom(p => p.AccountType.Name));
 
-		CreateMap<SubCategory, CategoryDto>();
-		CreateMap<Category, CategoryResponseDto>()
-			.ForMember(dto => dto.Subcategories, opt => opt.MapFrom(p => p.SubCategories.ToList()));
+        CreateMap<AccountType, AccountTypeDto>();
 
-		CreateMap<Journal, RecordDto>()
-			.ForMember(dto => dto.Subcategory, opt => opt.MapFrom(p => p.SubCategory.Name))
-			.ForMember(dto => dto.Category, opt => opt.MapFrom(p => p.SubCategory.Category.Name))
-			.ForMember(dto => dto.IsIncome, opt => opt.MapFrom(p => p.SubCategory.Category.IsIncome))
-			.ForMember(dto => dto.Account, opt => opt.MapFrom(p => p.Account.Name))
-			.ForMember(dto => dto.CurrencySymbol, opt => opt.MapFrom(p => p.Account.CurrencySymbol));
-	}
+        CreateMap<SubCategory, CategoryDto>();
+        CreateMap<Category, CategoryResponseDto>()
+            .ForMember(dto => dto.Subcategories, opt => opt.MapFrom(p => p.SubCategories.ToList()));
+
+        CreateMap<Journal, RecordDto>()
+            .ForMember(dto => dto.Subcategory, opt => opt.MapFrom(p => p.SubCategory.Name))
+            .ForMember(dto => dto.Category, opt => opt.MapFrom(p => p.SubCategory.Category.Name))
+            .ForMember(dto => dto.IsIncome, opt => opt.MapFrom(p => p.SubCategory.Category.IsIncome))
+            .ForMember(dto => dto.Account, opt => opt.MapFrom(p => p.Account.Name))
+            .ForMember(dto => dto.CurrencySymbol, opt => opt.MapFrom(p => p.Account.CurrencySymbol));
+    }
 }

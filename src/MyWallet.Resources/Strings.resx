@@ -156,4 +156,10 @@
   <data name="NewPassword" xml:space="preserve">
     <value>New password</value>
   </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>Currency symbol</value>
+  </data>
+  <data name="CurrencyDoesNotExist" xml:space="preserve">
+    <value>Currency doesn't exist</value>
+  </data>
 </root>

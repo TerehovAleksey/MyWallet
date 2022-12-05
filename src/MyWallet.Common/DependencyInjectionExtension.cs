@@ -4,6 +4,7 @@ public static class DependencyInjectionExtension
 {
     public static void AddValidation(this IServiceCollection services)
     {
+        services.AddScoped<IValidator<CurrencyDto>, CurrencyDtoValidator>();
         services.AddScoped<IValidator<UserForAuthDto>, UserForAuthDtoValidator>();
         services.AddScoped<IValidator<UserForRegistrationDto>, UserForRegistrationDtoValidator>();
         services.AddScoped<IValidator<PasswordChangeDto>, PasswordChangeDtoValidator>();
