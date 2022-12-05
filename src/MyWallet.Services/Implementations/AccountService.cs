@@ -11,9 +11,10 @@ public class AccountService : IAccountService
         _mapper = mapper;
     }
 
-    public async Task<AccountDto> CreateAccountAsync(AccountCreateDto account)
+    public async Task<AccountDto> CreateAccountAsync(Guid userId, AccountCreateDto account)
     {
         var acc = _mapper.Map<Account>(account);
+        acc.UserId = userId;
 
         if (acc is not null)
         {

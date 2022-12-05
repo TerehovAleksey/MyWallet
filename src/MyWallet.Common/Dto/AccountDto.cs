@@ -1,6 +1,6 @@
 ﻿namespace MyWallet.Common.Dto;
 
-public record AccountCreateDto(Guid UserId, string Name, string? Number, Guid AccountTypeId, decimal Balance, string CurrencySymbol, string Color);
+public record AccountCreateDto(string Name, string? Number, Guid AccountTypeId, decimal Balance, string CurrencySymbol, string Color);
 public record AccountUpdateDto(Guid Id, string Name, string? Number, Guid AccountTypeId, string Color, bool IsDisabled, bool IsArchived);
 
 public record AccountDto
