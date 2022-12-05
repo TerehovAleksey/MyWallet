@@ -11,6 +11,11 @@ public class AccountType : BaseEntity
     public string Name { get; set; } = default!;
 
     /// <summary>
+    /// Иконка
+    /// </summary>
+    public string? ImageName { get; set; }
+
+    /// <summary>
     /// Порядок отображения
     /// </summary>
     public int Order { get; set; }
