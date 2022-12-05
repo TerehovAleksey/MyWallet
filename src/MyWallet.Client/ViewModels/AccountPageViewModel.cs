@@ -3,7 +3,7 @@
 public partial class AccountPageViewModel : AppViewModelBase
 {
     private readonly IDataService _dataService;
-    
+
     private Account? _account;
 
     [ObservableProperty]
@@ -25,7 +25,7 @@ public partial class AccountPageViewModel : AppViewModelBase
     private string _accountCurrencyType = string.Empty;
 
     [ObservableProperty]
-    private Currency? _currentCurrency;
+    private Currency? _accountCurrency;
 
 
     public Account? Account
@@ -40,6 +40,7 @@ public partial class AccountPageViewModel : AppViewModelBase
                 AccountValue = value.Balance;
                 AccountCurrencyType = value.CurrencySymbol;
                 AccountType = AccountTypes.FirstOrDefault(x => x.Name == value.AccountType);
+                AccountCurrency = Currencies.FirstOrDefault(x => x.Symbol == value.CurrencySymbol);
             }
             else
             {
@@ -65,9 +66,9 @@ public partial class AccountPageViewModel : AppViewModelBase
         await HandleServiceResponseErrorsAsync(typesResponse);
         AccountTypes.AddRange(typesResponse.Item);
 
-        //var currencyResponse = await _dataService.GetUserCurrencies();
-        //await HandleServiceResponseErrorsAsync(currencyResponse);
-        //Currencies.AddRange(currencyResponse.Item);
+        var currencyResponse = await _dataService.GetUserCurrencies();
+        await HandleServiceResponseErrorsAsync(currencyResponse);
+        Currencies.AddRange(currencyResponse.Item);
 
         SetDataLoadingIndicators(false);
 
@@ -79,14 +80,20 @@ public partial class AccountPageViewModel : AppViewModelBase
     [RelayCommand]
     private async Task SaveAndReturn()
     {
-        SetDataLoadingIndicators(true);
-
-        //Save
-        await _dataService.CreateAccountAsync(new AccountCreate(AccountName, AccountNumber, AccountType.Id, AccountValue, CurrentCurrency.Symbol, "#ad1457"));
-
-        SetDataLoadingIndicators(false);
-
-        //Return
-        await NavigationService.PopAsync();
+        if (AccountType is not null && AccountCurrency is not null && !string.IsNullOrEmpty(AccountName))
+        {
+            SetDataLoadingIndicators(true);
+            var response = await _dataService.CreateAccountAsync(new AccountCreate(AccountName, AccountNumber, AccountType.Id, AccountValue, AccountCurrency.Symbol, "#ad1457"));
+            SetDataLoadingIndicators(false);
+            await HandleServiceResponseErrorsAsync(response);
+            if (response.State == State.Success)
+            {
+                await NavigationService.PopAsync();
+            }
+        }
+        else
+        {
+            await PageService.DisplayAlert("Ошибка", "Не все поля правильно заполнены", "Понятно");
+        }
     }
 }

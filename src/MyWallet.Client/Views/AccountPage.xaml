@@ -62,7 +62,7 @@
                 <BoxView Style="{StaticResource SeparatorStyle}" />
 
                 <!--  Account type  -->
-                <VerticalStackLayout Padding="0" HorizontalOptions="FillAndExpand">
+                <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
                     <Label Margin="0,0,0,5" Text="Тип" />
                     <Picker
                         Title="{OnPlatform Android=Выберете тип счёта}"
@@ -74,7 +74,10 @@
                 <BoxView Style="{StaticResource SeparatorStyle}" />
 
                 <!--  Initial value (New only!)  -->
-                <VerticalStackLayout IsVisible="{Binding IsNewAccount}">
+                <VerticalStackLayout
+                    Padding="0"
+                    HorizontalOptions="Fill"
+                    IsVisible="{Binding IsNewAccount}">
                     <controls:InputText Title="Начальное значение" Value="{Binding AccountValue}" />
                 </VerticalStackLayout>
 
@@ -86,7 +89,7 @@
                     <Picker
                         Title="{OnPlatform Android=Выберете валюту счёта}"
                         ItemsSource="{Binding Currencies}"
-                        SelectedItem="{Binding CurrentCurrency}" />
+                        SelectedItem="{Binding AccountCurrency}" />
                 </VerticalStackLayout>
 
                 <BoxView Style="{StaticResource SeparatorStyle}" />

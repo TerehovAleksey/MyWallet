@@ -16,10 +16,14 @@ public class RestDataService : RestServiceBase, IDataService
 
     public Task<Response<List<Account>>> GetAccountsAsync() => GetAsync<List<Account>>("account", 24);
 
-    public Task CreateAccountAsync(AccountCreate account)
+    public async Task<IResponse> CreateAccountAsync(AccountCreate account)
     {
-        throw new NotImplementedException();
-        //PostAsync("account", account);
+        var result = await SendAsync("account", account);
+        if (result.State == State.Success)
+        {
+            RemoveFromCache("account");
+        }
+        return result;
     }
 
     #endregion

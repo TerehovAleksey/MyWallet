@@ -33,7 +33,7 @@ public interface IDataService
     /// </summary>
     /// <param name="account"></param>
     /// <returns></returns>
-    public Task CreateAccountAsync(AccountCreate account);
+    public Task<IResponse> CreateAccountAsync(AccountCreate account);
 
     #endregion
 

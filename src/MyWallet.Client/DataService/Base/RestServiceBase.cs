@@ -219,7 +219,7 @@ public abstract class RestServiceBase
         return default;
     }
 
-    private void RemoveFromCache(string resource)
+    protected void RemoveFromCache(string resource)
     {
         var cleanCacheKey = resource.CleanCacheKey();
         _cacheBarrel.Empty(cleanCacheKey);

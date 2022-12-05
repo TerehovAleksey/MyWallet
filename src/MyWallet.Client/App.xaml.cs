@@ -10,6 +10,9 @@ public partial class App : Application
         var cache = ServiceHelpers.GetService<IBarrel>();
         if (cache is not null)
         {
+            //test clean
+            //cache.EmptyAll();
+
             var token = cache.Get<string>(Constants.TOKEN_KEY);
             if (string.IsNullOrEmpty(token))
             {
