@@ -8,7 +8,8 @@ public class DomainToDtoMappingProfile : Profile
             .ForMember(dto => dto.Symbol, opt => opt.MapFrom(p => p.CurrencySymbol));
 
         CreateMap<Account, AccountDto>()
-            .ForMember(dto => dto.AccountType, opt => opt.MapFrom(p => p.AccountType.Name));
+            .ForMember(dto => dto.AccountType, opt => opt.MapFrom(p => p.AccountType.Name))
+            .ForMember(dto => dto.TypeImage, opt => opt.MapFrom(p => p.AccountType.ImageName));
 
         CreateMap<AccountType, AccountTypeDto>();
 
