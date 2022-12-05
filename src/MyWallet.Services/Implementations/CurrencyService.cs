@@ -3,10 +3,12 @@
 public class CurrencyService : ICurrencyService
 {
     private readonly AppDbContext _context;
+    private readonly IMapper _mapper;
 
-    public CurrencyService(AppDbContext context)
+    public CurrencyService(AppDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public Dictionary<string, string> GetAllSymbolsWithDescription()
@@ -184,9 +186,41 @@ public class CurrencyService : ICurrencyService
         };
     }
 
-    public async Task CreateUserCurrencyAsync(Guid userId, string currencySymbol, bool isMain = false)
+    public async Task<IEnumerable<UserCurrencyDto>> GetUserCurrnciesAsync(Guid userId)
     {
+        var result = _context.UserCurrencies
+            .AsNoTracking()
+            .Where(x => x.UserId == userId)
+            .OrderByDescending(x => x.IsMain)
+            .OrderBy(x => x.CurrencySymbol);
+
+        var currencies = await _mapper.ProjectTo<UserCurrencyDto>(result).ToListAsync();
+        return currencies;
+    }
+
+    public async Task<UserCurrencyDto> CreateUserCurrencyAsync(Guid userId, string currencySymbol, bool isMain = false)
+    {
+        // если есть, то просто вернём
+        var exists = await _context.UserCurrencies
+            .AsNoTracking()
+            .Where(x => x.UserId == userId && x.CurrencySymbol == currencySymbol)
+            .FirstOrDefaultAsync();
+
+        if (exists is not null)
+        {
+            return new UserCurrencyDto
+            {
+                Symbol = exists.CurrencySymbol,
+                IsMain = exists.IsMain
+            };
+        }
+
         _context.UserCurrencies.Add(new UserCurrency { Id = Guid.NewGuid(), UserId = userId, CurrencySymbol = currencySymbol, IsMain = isMain });
         await _context.SaveChangesAsync();
+        return new UserCurrencyDto
+        {
+            Symbol = currencySymbol,
+            IsMain = isMain
+        };
     }
 }
