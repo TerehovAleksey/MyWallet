@@ -22,8 +22,17 @@ public class AccountController : BaseApiController
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<AccountDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public Task<IEnumerable<AccountDto>> GetAllAccountsAsync() =>
-        _accountService.GetAccountsAsync();
+    public async Task<IActionResult> GetAllAccountsAsync()
+    {
+        var user = await GetUserAsync();
+        if (user is null)
+        {
+            return Unauthorized();
+        }
+        
+        var result = await _accountService.GetAccountsAsync(user.Id);
+        return Ok(result);
+    }
 
     /// <summary>
     /// Получение счёта по ID
