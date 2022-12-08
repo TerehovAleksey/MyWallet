@@ -62,12 +62,12 @@ public class RecordService : IRecordService
         return result;
     }
 
-    public async Task<IEnumerable<RecordDto>> GetRecordsAsync(DateTime startDate, DateTime finishDate)
+    public async Task<IEnumerable<RecordDto>> GetRecordsAsync(Guid userId, DateTime startDate, DateTime finishDate)
     {
         var records = _context.Journals
             .AsNoTracking()
             .OrderByDescending(x => x.DateOfCreation)
-            .Where(x => x.DateOfCreation >= startDate && x.DateOfCreation <= finishDate);
+            .Where(x => x.SubCategory.Category.UserId == userId && x.DateOfCreation >= startDate && x.DateOfCreation <= finishDate);
 
         var result = await _mapper.ProjectTo<RecordDto>(records).ToListAsync();
         return result;

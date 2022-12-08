@@ -43,10 +43,11 @@ public class AccountService : IAccountService
         return result;
     }
 
-    public async Task<IEnumerable<AccountDto>> GetAccountsAsync()
+    public async Task<IEnumerable<AccountDto>> GetAccountsAsync(Guid userId)
     {
         var result = _context.Accounts
              .AsNoTracking()
+             .Where(x => x.UserId == userId)
              .OrderBy(c => c.Name);
 
         var accounts = await _mapper.ProjectTo<AccountDto>(result).ToListAsync();
