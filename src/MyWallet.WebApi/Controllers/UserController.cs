@@ -122,7 +122,7 @@ public class UserController : ControllerBase
         // счёт пользователя
         var types = await _accountTypeService.GetAccountTypesAsync();
         var typeId = types.First(x => x.Name == "Общий").Id;
-        await _accountService.CreateAccountAsync(new AccountCreateDto(user.Id, "Наличные", null, typeId, 0, "BYN", "#ad1457"));
+        await _accountService.CreateAccountAsync(user.Id, new AccountCreateDto("Наличные", null, typeId, 0, "BYN", "#ad1457"));
 
         // категории и подкатегории
         await _categoryService.InitCategoriesForUser(user.Id);
@@ -227,10 +227,13 @@ public class UserController : ControllerBase
         {
             var logoPath = string.Empty;
             var imgDirectory = new DirectoryInfo(Path.Combine(_environment.ContentRootPath, "wwwroot", "img"));
-            var logoFile = imgDirectory.GetFiles(user.Id.ToString().ToLower() + "*").FirstOrDefault();
-            if (logoFile is not null)
+            if (imgDirectory.Exists)
             {
-                logoPath = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/img/{logoFile.Name}";
+                var logoFile = imgDirectory.GetFiles(user.Id.ToString().ToLower() + "*").FirstOrDefault();
+                if (logoFile is not null)
+                {
+                    logoPath = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/img/{logoFile.Name}";
+                }
             }
 
             var result = new UserDto(user.FirstName, user.LastName, user.Email ?? string.Empty, user.BirthdayDate, (Gender)user.Gender, logoPath);
@@ -240,7 +243,7 @@ public class UserController : ControllerBase
         return NotFound();
     }
 
-    [HttpPost("profile")]
+    [HttpPut("profile")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

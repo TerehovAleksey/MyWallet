@@ -8,7 +8,8 @@ public class DomainToDtoMappingProfile : Profile
             .ForMember(dto => dto.Symbol, opt => opt.MapFrom(p => p.CurrencySymbol));
 
         CreateMap<Account, AccountDto>()
-            .ForMember(dto => dto.AccountType, opt => opt.MapFrom(p => p.AccountType.Name));
+            .ForMember(dto => dto.AccountType, opt => opt.MapFrom(p => p.AccountType.Name))
+            .ForMember(dto => dto.TypeImage, opt => opt.MapFrom(p => p.AccountType.ImageName));
 
         CreateMap<AccountType, AccountTypeDto>();
 
@@ -21,6 +22,7 @@ public class DomainToDtoMappingProfile : Profile
             .ForMember(dto => dto.Category, opt => opt.MapFrom(p => p.SubCategory.Category.Name))
             .ForMember(dto => dto.IsIncome, opt => opt.MapFrom(p => p.SubCategory.Category.IsIncome))
             .ForMember(dto => dto.Account, opt => opt.MapFrom(p => p.Account.Name))
-            .ForMember(dto => dto.CurrencySymbol, opt => opt.MapFrom(p => p.Account.CurrencySymbol));
+            .ForMember(dto => dto.CurrencySymbol, opt => opt.MapFrom(p => p.Account.CurrencySymbol))
+            .ForMember(dto => dto.Color, opt => opt.MapFrom(p => p.SubCategory.Color));
     }
 }

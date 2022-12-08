@@ -11,6 +11,7 @@ public record RecordDto
     public bool IsIncome { get; set; }
     public string? CurrencySymbol { get; set; }
     public string? Account { get; set; }
+    public string Color { get; set; } = default!;
 }
 
 public record RecordCreateDto
