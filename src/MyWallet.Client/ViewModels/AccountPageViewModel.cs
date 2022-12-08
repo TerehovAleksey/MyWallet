@@ -1,6 +1,7 @@
 ﻿namespace MyWallet.Client.ViewModels;
 
-public partial class AccountPageViewModel : AppViewModelBase
+[QueryProperty(nameof(Account), "Account")]
+public partial class AccountPageViewModel : ViewModelBase
 {
     private readonly IDataService _dataService;
 
@@ -19,7 +20,7 @@ public partial class AccountPageViewModel : AppViewModelBase
     private string? _accountNumber;
 
     [ObservableProperty]
-    private decimal _accountValue = 0;
+    private decimal _accountValue;
 
     [ObservableProperty]
     private string _accountCurrencyType = string.Empty;
@@ -28,10 +29,10 @@ public partial class AccountPageViewModel : AppViewModelBase
     private Currency? _accountCurrency;
 
     [ObservableProperty]
-    private bool _accountDisabled = false;
+    private bool _accountDisabled;
 
     [ObservableProperty]
-    private bool _accountArchived = false;
+    private bool _accountArchived;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(AccountColor))]
@@ -52,7 +53,7 @@ public partial class AccountPageViewModel : AppViewModelBase
                 AccountValue = value.Balance;
                 AccountCurrencyType = value.CurrencySymbol;
                 AccountArchived = value.IsArchived;
-                AccountDisabled = value.IsDisable;
+                AccountDisabled = value.IsDisabled;
                 AccountType = AccountTypes.FirstOrDefault(x => x.Name == value.AccountType);
                 AccountCurrency = Currencies.FirstOrDefault(x => x.Symbol == value.CurrencySymbol);
                 AccountColorString = Colors.FirstOrDefault(x => x == value.ColorString);
@@ -68,37 +69,29 @@ public partial class AccountPageViewModel : AppViewModelBase
     public ObservableCollection<Currency> Currencies { get; } = new();
     public ObservableCollection<string> Colors { get; } = new();
 
-    public AccountPageViewModel(IDataService dataService)
+    public AccountPageViewModel(IDataService dataService, IDialogService dialogService, INavigationService navigationService) : base(dialogService,
+        navigationService)
     {
         _dataService = dataService;
         Title = "Новый счёт";
     }
 
-    public override async void OnNavigatedTo(object? parameters, bool reload)
-    {
-        if (reload)
+    public override Task InitializeAsync() =>
+        IsBusyFor(async () =>
         {
-            return;
-        }
+            var typesResponse = await _dataService.GetAccountTypesAsync();
+            await HandleServiceResponseErrorsAsync(typesResponse);
+            AccountTypes.AddRange(typesResponse.Item);
 
-        SetDataLoadingIndicators();
+            var currencyResponse = await _dataService.GetUserCurrencies();
+            await HandleServiceResponseErrorsAsync(currencyResponse);
+            Currencies.AddRange(currencyResponse.Item);
 
-        var typesResponse = await _dataService.GetAccountTypesAsync();
-        await HandleServiceResponseErrorsAsync(typesResponse);
-        AccountTypes.AddRange(typesResponse.Item);
+            Colors.AddRange(UserColors.GetColors());
 
-        var currencyResponse = await _dataService.GetUserCurrencies();
-        await HandleServiceResponseErrorsAsync(currencyResponse);
-        Currencies.AddRange(currencyResponse.Item);
-
-        SetDataLoadingIndicators(false);
-
-        Colors.AddRange(UserColors.GetColors());
-
-        Account = parameters as Account;
-        IsNewAccount = Account == null;
-        Title = IsNewAccount ? "Новый счёт" : "Изменить счёт";
-    }
+            IsNewAccount = Account == null;
+            Title = IsNewAccount ? "Новый счёт" : "Изменить счёт";
+        });
 
     [RelayCommand]
     private async Task SaveAndReturn()
@@ -106,33 +99,38 @@ public partial class AccountPageViewModel : AppViewModelBase
         if (_isNewAccount)
         {
             // Создание
-            if (AccountType is not null && AccountCurrency is not null && !string.IsNullOrEmpty(AccountName) && !string.IsNullOrEmpty(AccountColorString))
+            if (AccountType is not null && AccountCurrency is not null && !string.IsNullOrEmpty(AccountName) &&
+                !string.IsNullOrEmpty(AccountColorString))
             {
-                SetDataLoadingIndicators(true);
-                var response = await _dataService.CreateAccountAsync(new AccountCreate(AccountName, AccountNumber, AccountType.Id, AccountValue, AccountCurrency.Symbol, AccountColorString));
-                SetDataLoadingIndicators(false);
+                await IsBusyFor(async () =>
+                {
+                    var response = await _dataService.CreateAccountAsync(new AccountCreate(AccountName, AccountNumber, AccountType.Id, AccountValue,
+                        AccountCurrency.Symbol, AccountColorString));
+                    await HandleServiceResponseErrorsAsync(response);
+                    if (response.State == State.Success)
+                    {
+                        await NavigationService.GoBackAsync();
+                    }
+                });
+            }
+        }
+        else if (Account is not null && AccountType is not null && !string.IsNullOrEmpty(AccountColorString))
+        {
+            // Редактирование
+            await IsBusyFor(async () =>
+            {
+                var response = await _dataService.UpdateAccountAsync(new AccountUpdate(Account.Id, AccountName, AccountNumber, AccountType.Id,
+                    AccountColorString, AccountDisabled, AccountArchived));
                 await HandleServiceResponseErrorsAsync(response);
                 if (response.State == State.Success)
                 {
-                    await NavigationService.PopAsync();
+                    await NavigationService.GoBackAsync();
                 }
-            }
-        }
-        else if(Account is not null && AccountType is not null && !string.IsNullOrEmpty(AccountColorString))
-        {
-            // Редактирование
-            SetDataLoadingIndicators(true);
-            var response = await _dataService.UpdateAccountAsync(new AccountUpdate(Account.Id, AccountName, AccountNumber, AccountType.Id, AccountColorString, AccountDisabled, AccountArchived));
-            SetDataLoadingIndicators(false);
-            await HandleServiceResponseErrorsAsync(response);
-            if (response.State == State.Success)
-            {
-                await NavigationService.PopAsync();
-            }
+            });
         }
         else
         {
-            await PageService.DisplayAlert("Ошибка", "Не все поля правильно заполнены", "Понятно");
+            await DialogService.ShowAlertAsync("Ошибка", "Не все поля правильно заполнены", "Понятно");
         }
     }
 
@@ -141,14 +139,15 @@ public partial class AccountPageViewModel : AppViewModelBase
     {
         if (Account is not null)
         {
-            SetDataLoadingIndicators(true);
-            var response = await _dataService.DeleteAccountAsync(Account.Id);
-            SetDataLoadingIndicators(false);
-            await HandleServiceResponseErrorsAsync(response);
-            if (response.State == State.Success)
+            await IsBusyFor(async () =>
             {
-                await NavigationService.PopAsync();
-            }
+                var response = await _dataService.DeleteAccountAsync(Account.Id);
+                await HandleServiceResponseErrorsAsync(response);
+                if (response.State == State.Success)
+                {
+                    await NavigationService.GoBackAsync();
+                }
+            });
         }
     }
 }

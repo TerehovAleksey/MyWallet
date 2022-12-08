@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<base:ViewBase
+<base:PageBase
     x:Class="MyWallet.Client.Views.EntryPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
     x:DataType="vm:EntryPageViewModel"
-    x:TypeArguments="vm:EntryPageViewModel"
     Background="{StaticResource BackgroundLightColor}"
     DisplayMode="NoNavigationBar">
 
-    <base:ViewBase.Resources>
+    <base:PageBase.Resources>
         <ResourceDictionary>
             <Style TargetType="Border">
                 <Setter Property="Margin" Value="0,10,0,0" />
@@ -30,9 +29,9 @@
                 <Setter Property="TextTransform" Value="Uppercase" />
             </Style>
         </ResourceDictionary>
-    </base:ViewBase.Resources>
+    </base:PageBase.Resources>
 
-    <base:ViewBase.PageContent>
+    <base:PageBase.PageContent>
 
         <Grid>
             <Grid.RowDefinitions>
@@ -163,6 +162,6 @@
                 </Label>
             </Grid>
         </Grid>
-    </base:ViewBase.PageContent>
+    </base:PageBase.PageContent>
 
-</base:ViewBase>
+</base:PageBase>

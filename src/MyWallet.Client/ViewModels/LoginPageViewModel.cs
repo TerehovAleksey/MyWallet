@@ -1,6 +1,7 @@
 ﻿namespace MyWallet.Client.ViewModels;
 
-public partial class LoginPageViewModel : AppViewModelBase
+[QueryProperty(nameof(IsRegister), "IsRegister")]
+public partial class LoginPageViewModel : ViewModelBase
 {
     private readonly IUserService _userService;
 
@@ -23,17 +24,10 @@ public partial class LoginPageViewModel : AppViewModelBase
     public string ButtonTitle => _isRegister ? "Создать счёт" : "Войти";
     public string SwitchTitle => _isRegister ? "Уже зарегестрированы? ВОЙТИ" : "Не зарегистрированы? РЕГИСТРАЦИЯ";
 
-    public LoginPageViewModel(IUserService userService)
+    public LoginPageViewModel(IUserService userService, IDialogService dialogService, INavigationService navigationService) : base(dialogService,
+        navigationService)
     {
         _userService = userService;
-    }
-
-    public override void OnNavigatedTo(object? parameters, bool reload)
-    {
-        if (!reload)
-        {
-            IsRegister = (bool)(parameters ?? true);
-        }
     }
 
     [RelayCommand]
@@ -42,32 +36,27 @@ public partial class LoginPageViewModel : AppViewModelBase
     [RelayCommand]
     private async Task Login()
     {
-        IResponse? response;
-
-        SetDataLoadingIndicators();
-        if (IsRegister)
+        await IsBusyFor(async () =>
         {
-            var authData = new UserRegisterData(Email, Password, PasswordConfirm);                 
-            response = await _userService.RegisterUserAsync(authData);          
-        }
-        else
-        {
-            var authData = new UserAuthData(Email, Password);
-            response = await _userService.LoginAsync(authData);
-        }
+            IResponse? response;
+            if (IsRegister)
+            {
+                var authData = new UserRegisterData(Email, Password, PasswordConfirm);
+                response = await _userService.RegisterUserAsync(authData);
+            }
+            else
+            {
+                var authData = new UserAuthData(Email, Password);
+                response = await _userService.LoginAsync(authData);
+            }
 
-        SetDataLoadingIndicators(false);
-        await HandleServiceResponseErrorsAsync(response);
+            await HandleServiceResponseErrorsAsync(response);
+        });
 
-        if (response.State == State.Success)
-        {
-            await NavigationService.PushAsync(new MainPage());
-        }
+        await NavigationService.GoToAsync("/main");
     }
 
     [RelayCommand]
-    private void RememberPassword()
-    {
-        PageService.DisplayAlert("В разработке", "Пока не реализовано", "Понятно");
-    }
+    private Task RememberPassword() =>
+        DialogService.ShowAlertAsync("В разработке", "Пока не реализовано", "Понятно");
 }

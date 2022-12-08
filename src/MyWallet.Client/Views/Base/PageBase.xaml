@@ -6,25 +6,18 @@
     xmlns:controls="clr-namespace:MyWallet.Client.ViewControls.Common"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.Base"
-    x:DataType="vm:AppViewModelBase">
-    <!--<ContentPage.Behaviors>
-        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource PrimaryDarkColor}" StatusBarStyle="LightContent" />
-    </ContentPage.Behaviors>-->
+    x:DataType="vm:ViewModelBase">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--  Top margin  -->
-        <Grid Grid.Row="0" BackgroundColor="{StaticResource PrimaryDarkColor}" />
-
         <!--  Header  -->
         <Grid
             x:Name="HeaderGrid"
-            Grid.Row="1"
+            Grid.Row="0"
             Margin="0"
             BackgroundColor="{StaticResource PrimaryColor}"
             ColumnDefinitions="56,*,Auto"
@@ -34,6 +27,7 @@
             <ImageButton
                 x:Name="HamburgerButton"
                 Grid.Column="0"
+                Clicked="HamburgerButton_Clicked"
                 HorizontalOptions="Start"
                 Source="menu.png"
                 Style="{StaticResource IconButtonStyle}"
@@ -80,11 +74,74 @@
         </Grid>
 
         <!--  Content  -->
-        <Grid x:Name="PageContentGrid" Grid.Row="2" />
+        <Grid x:Name="PageContentGrid" Grid.Row="1" />
+
+        <!--  Menu  -->
+        <Grid
+            x:Name="ContentMaskGrid"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            BackgroundColor="Black"
+            IsVisible="false"
+            Opacity="0" />
+        <Grid
+            Grid.Row="0"
+            x:Name="MenuGrid"
+            Grid.RowSpan="2"
+            BackgroundColor="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="MenuGrid_Tapped" />
+            </Grid.GestureRecognizers>
+            <Grid
+                Grid.Column="0"
+                BackgroundColor="{StaticResource BackgroundColor}"
+                WidthRequest="300">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Padding="15">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0.1" Color="{StaticResource PrimaryLightColor}" />
+                            <GradientStop Offset="1.0" Color="{StaticResource PrimaryLightestColor}" />
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border
+                        Grid.Column="0"
+                        BackgroundColor="{StaticResource LightGrayColor}"
+                        HeightRequest="60"
+                        Stroke="{StaticResource GrayColor}"
+                        StrokeShape="RoundRectangle 30"
+                        StrokeThickness="1"
+                        WidthRequest="60">
+                        <Image
+                            HeightRequest="30"
+                            Source="user_gray.png"
+                            WidthRequest="30" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" HorizontalOptions="Start">
+                        <Label Style="{StaticResource MediumLight14TextStyle}" Text="admin@mail.com" />
+                        <Label Style="{StaticResource RegularLight12TextStyle}" Text="Мой кошелёк" />
+                    </VerticalStackLayout>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OpenUserPage_Tapped" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+            </Grid>
+        </Grid>
 
         <!--  Indicators  -->
         <controls:ErrorIndicator
-            Grid.Row="2"
+            Grid.Row="1"
             ErrorImage="{Binding ErrorImage}"
             ErrorText="{Binding ErrorMessage}"
             HorizontalOptions="Fill"
@@ -92,7 +149,7 @@
             VerticalOptions="Fill" />
 
         <controls:LoadingIndicator
-            Grid.Row="2"
+            Grid.Row="1"
             HorizontalOptions="Fill"
             IsBusy="{Binding IsBusy}"
             LoadingText="{Binding LoadingText}"

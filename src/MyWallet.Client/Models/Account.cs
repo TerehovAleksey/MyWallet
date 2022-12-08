@@ -20,9 +20,9 @@ public record AccountType(Guid Id, string Name)
 /// <param name="AccountType">Тип счёта</param>
 /// <param name="Balance">Теукщий баланс на счёте</param>
 /// <param name="CurrencySymbol">Валюта (BYN, USD, etc.)</param>
-/// <param name="IsDisable">Исключён из статистики</param>
+/// <param name="IsDisabled">Исключён из статистики</param>
 /// <param name="IsArchived">В архиве</param>
-public record Account(Guid Id, string Name, string? Number, string AccountType, decimal Balance, string CurrencySymbol, bool IsDisable, bool IsArchived)
+public record Account(Guid Id, string Name, string? Number, string AccountType, decimal Balance, string CurrencySymbol, bool IsDisabled, bool IsArchived)
 {
     /// <summary>
     /// Цвет в HEX-формате
@@ -41,7 +41,7 @@ public record Account(Guid Id, string Name, string? Number, string AccountType, 
     {
         get
         {
-            return IsDisable switch
+            return IsDisabled switch
             {
                 true when IsArchived => "Исключено, Архивировано",
                 true => "Исключено",
@@ -78,6 +78,6 @@ public record AccountCreate(string Name, string? Number, Guid AccountTypeId, dec
 /// <param name="Number">Номер банковского счёта</param>
 /// <param name="AccountTypeId">ID типа счётаparam</param>
 /// <param name="Color">Цвет в HEX-формате</param>
-/// <param name="IsDisable">Исключён из статистики</param>
+/// <param name="IsDisabled">Исключён из статистики</param>
 /// <param name="IsArchived">В архиве</param>
-public record AccountUpdate(Guid Id, string Name, string? Number, Guid AccountTypeId, string Color, bool IsDisable, bool IsArchived);
+public record AccountUpdate(Guid Id, string Name, string? Number, Guid AccountTypeId, string Color, bool IsDisabled, bool IsArchived);

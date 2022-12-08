@@ -8,14 +8,15 @@
     xmlns:m="clr-namespace:MyWallet.Client.Models"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
     x:DataType="vm:MainPageViewModel"
+    HorizontalOptions="FillAndExpand"
     Style="{StaticResource CardStyle}">
-    
+
     <Border.Resources>
         <converters:RecordIsIncomeToColorConverter x:Key="RecordIsIncomeToColorConverter" />
         <converters:DateTimeToDayConverter x:Key="DateTimeToDayConverter" />
     </Border.Resources>
-    
-    <VerticalStackLayout>
+
+    <VerticalStackLayout HorizontalOptions="FillAndExpand">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -30,7 +31,10 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Label Style="{StaticResource CaptionTextStyle}" Text="Последние записи" />
+                <Label
+                    HorizontalOptions="Start"
+                    Style="{StaticResource CaptionTextStyle}"
+                    Text="Последние записи" />
                 <ImageButton
                     Grid.Column="1"
                     Margin="0"
@@ -63,18 +67,26 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="AUTO" />
                             </Grid.ColumnDefinitions>
-                            <commonControls:ColorIcon
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                ImageSource="coins.png"
-                                Color="BlueViolet" />
+                            <Border
+                                Padding="0"
+                                BackgroundColor="{Binding Color}"
+                                HeightRequest="50"
+                                StrokeShape="RoundRectangle 25"
+                                StrokeThickness="0"
+                                WidthRequest="50">
+                                <Image
+                                    Aspect="AspectFill"
+                                    HeightRequest="20"
+                                    Source="coins.png"
+                                    WidthRequest="20" />
+                            </Border>
                             <VerticalStackLayout
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 Margin="10,0,0,0"
-                                VerticalOptions="Center">
-                                <Label Style="{StaticResource MediumDark14TextStyle}" Text="{Binding Title}" />
-                                <Label Style="{StaticResource RegularGray12TextStyle}" Text="{Binding CurrencyType}" />
+                                HorizontalOptions="Start">
+                                <Label Style="{StaticResource MediumDark14TextStyle}" Text="{Binding Subcategory}" />
+                                <Label Style="{StaticResource RegularGray12TextStyle}" Text="{Binding Account}" />
                             </VerticalStackLayout>
                             <VerticalStackLayout
                                 Grid.Row="0"
@@ -92,8 +104,8 @@
                                     Text="{Binding DateOfRecord, Converter={StaticResource DateTimeToDayConverter}}" />
                             </VerticalStackLayout>
                             <BoxView
-                                Grid.Column="0"
                                 Grid.Row="1"
+                                Grid.Column="0"
                                 Grid.ColumnSpan="3"
                                 Style="{StaticResource SeparatorStyle}" />
                         </Grid>

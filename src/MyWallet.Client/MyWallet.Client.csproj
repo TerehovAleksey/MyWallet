@@ -118,6 +118,7 @@
 	  <None Remove="Resources\Images\nointernet.png" />
 	  <None Remove="Resources\Images\notifications.png" />
 	  <None Remove="Resources\Images\trash.png" />
+	  <None Remove="Resources\Images\user_gray.png" />
 	  <None Remove="Resources\Images\wallet.png" />
 	</ItemGroup>
 
@@ -130,6 +131,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="AppShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Borders.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -175,6 +179,13 @@
 	  <MauiXaml Update="Views\EntryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\UserPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Services\Dialog\" />
 	</ItemGroup>
 
 </Project>

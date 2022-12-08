@@ -1,5 +1,5 @@
 ﻿namespace MyWallet.Client.ViewModels;
-public partial class MainPageViewModel : AppViewModelBase
+public partial class MainPageViewModel : ViewModelBase
 {
     private readonly IDataService _dataService;
     
@@ -11,33 +11,41 @@ public partial class MainPageViewModel : AppViewModelBase
     [ObservableProperty]
     private Account? _selectedAccount;
 
-    public MainPageViewModel(IDataService dataService)
+    public MainPageViewModel(IDataService dataService, IDialogService dialogService, INavigationService navigationService) : base(dialogService, navigationService)
     {
         _dataService = dataService;
         Title = "Главная";
     }
 
-    public override async void OnNavigatedTo(object? parameters, bool reload)
+    public override Task InitializeAsync()
     {
-        SetDataLoadingIndicators();
-        var response = await _dataService.GetAccountsAsync();
-        SetDataLoadingIndicators(false);
-        await HandleServiceResponseErrorsAsync(response);
-        if (response.Item != null)
+        return IsBusyFor(async () =>
         {
-            Accounts.AddRange(response.Item, true);
-        }
+            var response = await _dataService.GetAccountsAsync();
+            await HandleServiceResponseErrorsAsync(response);
+            if (response.Item != null)
+            {
+                Accounts.AddRange(response.Item, true);
+            }
+
+            var records = await _dataService.GetRecordsAsync(new DateTime(2020, 01, 01), new DateTime(2023, 01, 01));
+            await HandleServiceResponseErrorsAsync(records);
+            if (records.Item != null)
+            {
+                Records.AddRange(records.Item, true);
+            }
+        });
     }
 
     [RelayCommand]
     private async void OpenNotificationsPage()
     {
-        await PageService.DisplayAlert("Notifications", "Not implemented yet!", "Got it!");
+        await DialogService.ShowAlertAsync("Notifications", "Not implemented yet!", "Got it!");
     }
 
     [RelayCommand]
-    private async void OpenAccountsPage()
-    {
-        await NavigationService.PushAsync(new AccountsPage(), true);
-    }
+    private void OpenAccountsPage() => NavigationService.GoToAsync("accounts");
+    
+    [RelayCommand]
+    private void OpenRecordPage() => NavigationService.GoToAsync("record");
 }

@@ -22,6 +22,8 @@ global using MyWallet.Client.Exceptions;
 global using MyWallet.Client.Extensions;
 global using MyWallet.Client.Helpers;
 global using MyWallet.Client.Models;
+global using MyWallet.Client.Services.Dialog;
+global using MyWallet.Client.Services.Navigation;
 global using MyWallet.Client.UI;
 global using MyWallet.Client.ViewModels;
 global using MyWallet.Client.ViewModels.Base;

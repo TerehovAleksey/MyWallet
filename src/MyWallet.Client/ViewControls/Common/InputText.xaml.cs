@@ -36,6 +36,14 @@ public partial class InputText : VerticalStackLayout
         set => SetValue(IsPasswordProperty, value);
     }
 
+    public static readonly BindableProperty IsReadOnlyProperty = BindableProperty.Create(nameof(IsReadOnly), typeof(bool), typeof(InputText), false, BindingMode.OneWay, propertyChanged: OnIsReadOnlyChanged);
+
+    public new bool IsReadOnly
+    {
+        get => (bool)GetValue(IsReadOnlyProperty);
+        set => SetValue(IsReadOnlyProperty, value);
+    }
+
     #endregion
 
     public InputText()
@@ -74,6 +82,14 @@ public partial class InputText : VerticalStackLayout
         if (bindable is InputText input)
         {
             input.Entry.IsPassword = (bool)newValue;
+        }
+    }
+    private static void OnIsReadOnlyChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is InputText input)
+        {
+            input.Entry.IsEnabled = !(bool)newValue;
+            input.Entry.IsReadOnly = (bool)newValue;
         }
     }
 

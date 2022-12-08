@@ -10,7 +10,9 @@
     <Color x:Key="PrimaryDarkColor">#008859</Color>
     <Color x:Key="AccentColor">#0076ff</Color>
     <Color x:Key="GrayColor">#e0e0e0</Color>
+    <Color x:Key="LightGrayColor">#d8d8d8</Color>
     <Color x:Key="GrayDarkColor">#a3a3a3</Color>
+    <Color x:Key="DangerColor">#f64e62</Color>
     <Color x:Key="FacebookColor">#3F51B5</Color>
     <Color x:Key="GoogleColor">#4285f4</Color>
 

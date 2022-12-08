@@ -1,13 +1,10 @@
 namespace MyWallet.Client.Views;
 
-public partial class AccountPage : ViewBase<AccountPageViewModel>
+public partial class AccountPage : PageBase
 {
-	/// <summary>
-	/// Account new/edit page
-	/// </summary>
-	/// <param name="param">Account for editing or null</param>
-	public AccountPage(object? param) : base(param)
+	public AccountPage(AccountPageViewModel viewModel)
 	{
+		BindingContext = viewModel;
 		InitializeComponent();
 	}
 }

@@ -2,9 +2,23 @@
 
 public interface IUserService
 {
-    public Task ChangePasswordAsync();
-    public Task DeleteUserDataAsync();
-    public Task GetUserDataAsync();
+    /// <summary>
+    /// Изменение пароля
+    /// </summary>
+    /// <returns></returns>
+    public Task<IResponse> ChangePasswordAsync(PasswordChangeData data);
+
+    /// <summary>
+    /// Удаление пользователя
+    /// </summary>
+    /// <returns></returns>
+    public Task<IResponse> DeleteUserDataAsync();
+
+    /// <summary>
+    /// Получение информации о пользователе
+    /// </summary>
+    /// <returns></returns>
+    public Task<Response<UserData>> GetUserDataAsync();
 
     /// <summary>
     /// Вход
@@ -18,7 +32,7 @@ public interface IUserService
     /// </summary>
     /// <param name="serverLogout"></param>
     /// <returns></returns>
-    public Task LogoutAsync(bool serverLogout = true);
+    public Task<IResponse> LogoutAsync(bool serverLogout = true);
 
     /// <summary>
     /// Регистрация пользователя
@@ -26,5 +40,10 @@ public interface IUserService
     /// <param name="registerData"></param>
     /// <returns></returns>
     public Task<IResponse> RegisterUserAsync(UserRegisterData registerData); 
-    public Task UpdateUserDataAsync();
+
+    /// <summary>
+    /// Обновление информации о пользователе
+    /// </summary>
+    /// <returns></returns>
+    public Task<IResponse> UpdateUserDataAsync(UserUpdateData data);
 }

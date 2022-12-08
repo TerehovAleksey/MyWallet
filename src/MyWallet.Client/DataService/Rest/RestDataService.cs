@@ -47,24 +47,18 @@ public class RestDataService : RestServiceBase, IDataService
 
     #endregion
 
-    public Task<Category> CreateCategoryAsync(string name, string imageName)
+    public async Task<IResponse> CreateRecordAsync(RecordCreate record)
     {
-        throw new NotImplementedException();
+        var result = await SendAsync("journal", record);
+        if (result.State == State.Success)
+        {
+            RemoveFromCache("journal");
+        }
+        return result;
     }
 
-    public Task<Record> CreateRecordAsync(RecordCreate record)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<Response<List<Category>>> GetAllCategoriesAsync() => GetAsync<List<Category>>("category", 24);
 
-    public Task<List<Category>> GetAllCategoriesAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<List<Record>> GetRecordsAsync(DateTime startDate, DateTime endDate)
-    {
-        throw new NotImplementedException();
-        //GetAsync<List<Record>>($"journal?startDate={startDate:yyyy-MM-dd}&finishDate={endDate:yyyy-MM-dd}");
-    }
+    public Task<Response<List<Record>>> GetRecordsAsync(DateTime startDate, DateTime endDate) => 
+        GetAsync<List<Record>>($"journal?startDate={startDate:yyyy-MM-dd}&finishDate={endDate:yyyy-MM-dd}", 24);
 }

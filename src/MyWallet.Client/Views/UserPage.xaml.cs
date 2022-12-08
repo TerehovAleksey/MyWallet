@@ -1,8 +1,8 @@
 namespace MyWallet.Client.Views;
 
-public partial class EntryPage : PageBase
+public partial class UserPage : PageBase
 {
-	public EntryPage(EntryPageViewModel viewModel)
+	public UserPage(UserPageViewModel viewModel)
 	{
 		BindingContext = viewModel;
 		InitializeComponent();

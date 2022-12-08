@@ -1,28 +1,28 @@
 ﻿namespace MyWallet.Client.ViewModels;
 
-public partial class EntryPageViewModel : AppViewModelBase
+public partial class EntryPageViewModel : ViewModelBase
 {
     [RelayCommand]
-    private async Task GoogleRegister()
-    {
-        await PageService.DisplayAlert("В разработке","Пока не реализовано", "Понятно");
-    }
+    private Task GoogleRegister() =>
+        DialogService.ShowAlertAsync("В разработке", "Пока не реализовано", "Понятно");
 
     [RelayCommand]
-    private async Task FacebookRegister()
-    {
-        await PageService.DisplayAlert("В разработке", "Пока не реализовано", "Понятно");
-    }
+    private Task FacebookRegister() =>
+        DialogService.ShowAlertAsync("В разработке", "Пока не реализовано", "Понятно");
 
     [RelayCommand]
-    private async Task EmailRegister()
+    private Task EmailRegister() => NavigationService.GoToAsync("login", new Dictionary<string, object>
     {
-        await NavigationService.PushAsync(new LoginPage(true));
-    }
+        { "IsRegister", true }
+    });
 
     [RelayCommand]
-    private async Task Login()
+    private Task Login() => NavigationService.GoToAsync("login", new Dictionary<string, object>
     {
-        await NavigationService.PushAsync(new LoginPage(false));
+        { "IsRegister", false }
+    });
+
+    public EntryPageViewModel(IDialogService dialogService, INavigationService navigationService) : base(dialogService, navigationService)
+    {
     }
 }

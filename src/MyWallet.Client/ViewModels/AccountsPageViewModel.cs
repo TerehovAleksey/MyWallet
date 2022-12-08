@@ -1,6 +1,6 @@
 ﻿namespace MyWallet.Client.ViewModels;
 
-public partial class AccountsPageViewModel : AppViewModelBase
+public partial class AccountsPageViewModel : ViewModelBase
 {
     private readonly IDataService _dataService;
     
@@ -10,26 +10,33 @@ public partial class AccountsPageViewModel : AppViewModelBase
         get => _selectedAccount;
         set
         {
-            if (SetProperty(ref _selectedAccount, value) && value is not null) 
+            if (SetProperty(ref _selectedAccount, value) && value is not null)
             {
-                NavigationService.PushAsync(new AccountPage(_selectedAccount));
+                NavigationService.GoToAsync("account", new Dictionary<string, object>
+                {
+                    { "Account", value }
+                });
             }
         }
     }
 
     public ObservableCollection<Account> Accounts { get; } = new();
 
-    public AccountsPageViewModel(IDataService dataService)
+    public AccountsPageViewModel(IDataService dataService, IDialogService dialogService, INavigationService navigationService) : base(dialogService, navigationService)
 	{
         _dataService = dataService;
         Title = "Настройки счетов";
+        OneTimeInitialized = false;
     }
 
-    public override async void OnNavigatedTo(object parameters, bool wasLoaded)
+    public override Task InitializeAsync()
     {
-        var accounts = await _dataService.GetAccountsAsync();
-        Accounts.AddRange(accounts.Item, true);
-        SelectedAccount = null;
+        return IsBusyFor(async () =>
+        {
+            var accounts = await _dataService.GetAccountsAsync();
+            Accounts.AddRange(accounts.Item, true);
+            SelectedAccount = null;
+        });
     }
 
     #region Commands
@@ -37,7 +44,7 @@ public partial class AccountsPageViewModel : AppViewModelBase
     [RelayCommand]
     private async Task OpenAccountPage()
     {
-        await NavigationService.PushAsync(new AccountPage(null));
+        await NavigationService.GoToAsync("account");
     }
 
     #endregion

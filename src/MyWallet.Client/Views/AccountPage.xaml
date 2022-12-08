@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<base:ViewBase
+<base:PageBase
     x:Class="MyWallet.Client.Views.AccountPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -8,16 +8,16 @@
     xmlns:converters="clr-namespace:MyWallet.Client.Converters"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
     x:DataType="vm:AccountPageViewModel"
-    x:TypeArguments="vm:AccountPageViewModel"
+    Background="{StaticResource BackgroundColor}"
     DisplayMode="NavigationBar"
     PageMode="Navigate"
     PageTitle="{Binding Title}">
 
-    <base:ViewBase.Resources>
+    <base:PageBase.Resources>
         <converters:BoolInvertConverter x:Key="BoolInvertConverter" />
-    </base:ViewBase.Resources>
+    </base:PageBase.Resources>
 
-    <base:ViewBase.PageIcons>
+    <base:PageBase.PageIcons>
 
         <HorizontalStackLayout Spacing="5">
             <ImageButton
@@ -35,9 +35,9 @@
 
         </HorizontalStackLayout>
 
-    </base:ViewBase.PageIcons>
+    </base:PageBase.PageIcons>
 
-    <base:ViewBase.PageContent>
+    <base:PageBase.PageContent>
         <ScrollView Padding="10">
             <VerticalStackLayout
                 HorizontalOptions="Fill"
@@ -139,6 +139,6 @@
             </VerticalStackLayout>
         </ScrollView>
 
-    </base:ViewBase.PageContent>
+    </base:PageBase.PageContent>
 
-</base:ViewBase>
+</base:PageBase>

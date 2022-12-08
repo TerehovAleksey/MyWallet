@@ -8,11 +8,22 @@
         <Setter Property="Padding" Value="0" />
     </Style>
 
+    <!--  ScrollView  -->
+    <Style x:Key="PageScrollView" TargetType="ScrollView">
+        <Setter Property="Padding" Value="10" />
+    </Style>
+
     <!--  VerticalStackLayout  -->
     <Style TargetType="VerticalStackLayout">
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="Padding" Value="10" />
+    </Style>
+
+    <Style x:Key="PageVersicalStackLayout" TargetType="VerticalStackLayout">
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="VerticalOptions" Value="Start" />
+        <Setter Property="Spacing" Value="20" />
     </Style>
 
 </ResourceDictionary>

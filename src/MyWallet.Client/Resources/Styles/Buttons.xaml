@@ -71,12 +71,31 @@
         </Setter>
     </Style>
 
+    <Style
+        x:Key="DangerButton"
+        BasedOn="{StaticResource PrimaryButton}"
+        TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource DangerColor}" />
+    </Style>
+
     <Style x:Key="TransparentButton" TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HeightRequest" Value="46" />
         <Setter Property="HorizontalOptions" Value="Fill" />
         <Setter Property="BorderWidth" Value="0" />
         <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
+        <Setter Property="FontFamily" Value="RegularFont" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+    </Style>
+
+    <Style
+        x:Key="DangerLinkButton"
+        BasedOn="{StaticResource TransparentButton}"
+        TargetType="Button">
+        <Setter Property="TextColor" Value="{StaticResource DangerColor}" />
+        <Setter Property="TextTransform" Value="Uppercase" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontFamily" Value="MediumFont" />
     </Style>
 
     <!--  Icon Styles  -->

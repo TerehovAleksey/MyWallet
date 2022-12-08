@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<base:PageBase
+    x:Class="MyWallet.Client.Views.RecordPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
+    xmlns:controls="clr-namespace:MyWallet.Client.ViewControls.Common"
+    xmlns:m="clr-namespace:MyWallet.Client.Models"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
+    x:DataType="vm:RecordPageViewModel"
+    DisplayMode="NavigationBar"
+    PageMode="Navigate"
+    PageTitle="{Binding Title}">
+
+    <base:PageBase.PageIcons>
+
+        <ImageButton
+            Margin="0"
+            Command="{Binding SaveAndReturnCommand}"
+            Source="check.png"
+            Style="{StaticResource IconButtonStyle}" />
+
+    </base:PageBase.PageIcons>
+
+    <base:PageBase.PageContent>
+
+        <ScrollView Padding="10">
+            <VerticalStackLayout
+                HorizontalOptions="Fill"
+                MaximumWidthRequest="{OnPlatform WinUI=600}"
+                Spacing="20"
+                VerticalOptions="Start">
+
+                <!--  Account  -->
+                <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
+                    <Label Margin="0,0,0,5" Text="Счёт" />
+                    <Picker
+                        Title="{OnPlatform Android=Выберете счёт}"
+                        HorizontalOptions="FillAndExpand"
+                        ItemsSource="{Binding Accounts}"
+                        SelectedItem="{Binding SelectedAccount, Mode=TwoWay}" />
+                </VerticalStackLayout>
+
+                <!--  Categories  -->
+                <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
+                    <Label Margin="0,0,0,5" Text="Категория" />
+                    <Picker
+                        Title="{OnPlatform Android=Выберете категорию}"
+                        HorizontalOptions="FillAndExpand"
+                        ItemsSource="{Binding Categories}"
+                        SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" />
+                </VerticalStackLayout>
+
+                <!--  SubCategories  -->
+                <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
+                    <Label Margin="0,0,0,5" Text="Подкатегория" />
+                    <Picker
+                        Title="{OnPlatform Android=Выберете подкатегорию}"
+                        HorizontalOptions="FillAndExpand"
+                        ItemsSource="{Binding SubCategories}"
+                        SelectedItem="{Binding SelectedSubCategory, Mode=TwoWay}" />
+                </VerticalStackLayout>
+
+                <!--  Value  -->
+                <controls:InputText
+                    Title="Сумма"
+                    Placeholder="Введите сумму..."
+                    Value="{Binding Value}" />
+
+                <!--  Description  -->
+                <controls:InputText
+                    Title="Примечание"
+                    Placeholder="Введите примечание..."
+                    Value="{Binding Description}" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </base:PageBase.PageContent>
+
+</base:PageBase>

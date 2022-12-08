@@ -1,9 +1,10 @@
 ﻿namespace MyWallet.Client.Views;
 
-public partial class LoginPage : ViewBase<LoginPageViewModel>
+public partial class LoginPage : PageBase
 {
-    public LoginPage(object param) : base(param)
+    public LoginPage(LoginPageViewModel viewModel)
     {
+        BindingContext = viewModel;
         InitializeComponent();
     }
 }

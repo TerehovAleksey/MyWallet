@@ -2,13 +2,10 @@ namespace MyWallet.Client.Views.Base;
 
 public partial class PageBase : ContentPage
 {
+    private readonly INavigationService _navigationService;
+
     public IList<IView> PageContent => PageContentGrid.Children;
     public IList<IView> PageIcons => PageIconsGrid.Children;
-
-    protected bool IsBackButtonEnabled
-    {
-        set => NavigateBackButton.IsEnabled = value;
-    }
 
     #region Bindable properties
 
@@ -113,12 +110,12 @@ public partial class PageBase : ContentPage
         {
             case DisplayMode.NavigationBar:
                 HeaderGrid.IsVisible = true;
-                Grid.SetRow(PageContentGrid, 2);
+                Grid.SetRow(PageContentGrid, 1);
                 Grid.SetRowSpan(PageContentGrid, 1);
                 break;
             case DisplayMode.NoNavigationBar:
                 HeaderGrid.IsVisible = false;
-                Grid.SetRow(PageContentGrid, 1);
+                Grid.SetRow(PageContentGrid, 0);
                 Grid.SetRowSpan(PageContentGrid, 2);
                 break;
         }
@@ -126,24 +123,26 @@ public partial class PageBase : ContentPage
 
     #endregion
 
-
     public PageBase()
     {
         InitializeComponent();
 
-        //Hide the Xamarin Forms build in navigation header
+        NavigationPage.SetBackButtonTitle(this, string.Empty);
         NavigationPage.SetHasNavigationBar(this, false);
 
-        //Set Page Mode
         SetPageMode(PageMode.None);
-
-        //Set Display Mode
         SetContentDisplayMode(DisplayMode.NoNavigationBar);
+
+        _navigationService = ServiceHelpers.GetService<INavigationService>();
     }
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
+
+        // скрываем меню
+        // в OnAppearing() Width еще неизвестна
+        MenuGrid.TranslationX = -Window.Width;
 
 #if ANDROID
         // только так работает цвет стаусбара (в других случаях падает в релизе)
@@ -151,5 +150,45 @@ public partial class PageBase : ContentPage
         CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(Color.FromArgb("#21cb87"));
         CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(StatusBarStyle.LightContent);
 #endif
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // скрываем маску меню
+        ContentMaskGrid.IsVisible = false;
+
+        // инициализируем ViewModel, если еще не инициализирована
+        if (BindingContext is IViewModelBase viewModel && (!viewModel.IsInitialized || !viewModel.OneTimeInitialized))
+        {
+            await viewModel.InitializeAsync();
+            viewModel.IsInitialized = true;
+        }
+    }
+
+    protected async void MenuGrid_Tapped(object sender, TappedEventArgs e)
+    {
+        await CloseMenu();
+    }
+
+    protected async void HamburgerButton_Clicked(object sender, EventArgs e)
+    {
+        ContentMaskGrid.IsVisible = true;
+        _ = ContentMaskGrid.FadeTo(0.5, 800);
+        await MenuGrid.TranslateTo(0, 0, 800, Easing.CubicOut);
+    }
+
+    protected async void OpenUserPage_Tapped(object sender, TappedEventArgs e)
+    {
+        _ = CloseMenu();
+        await _navigationService.GoToAsync("user");
+    }
+
+    private async Task CloseMenu()
+    {
+        _ = ContentMaskGrid.FadeTo(0, 800);
+        await MenuGrid.TranslateTo(-Width, 0, 800, Easing.CubicOut);
+        ContentMaskGrid.IsVisible = false;
     }
 }

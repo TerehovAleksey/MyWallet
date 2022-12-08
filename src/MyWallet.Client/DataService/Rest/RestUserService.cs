@@ -6,20 +6,19 @@ public class RestUserService : RestServiceBase, IUserService
     {
     }
 
-    public Task ChangePasswordAsync()
+    public Task<IResponse> ChangePasswordAsync(PasswordChangeData data) => SendAsync("user/password", data);
+
+    public async Task<IResponse> DeleteUserDataAsync()
     {
-        throw new NotImplementedException();
+        var result = await DeleteAsync("user/profile");
+        if (result.State == State.Success)
+        {
+            DeleteTokensFromCache();
+        }
+        return result;
     }
 
-    public Task DeleteUserDataAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task GetUserDataAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public Task<Response<UserData>> GetUserDataAsync() => GetAsync<UserData>("user/profile", 24);
 
     public async Task<IResponse> LoginAsync(UserAuthData authData)
     {
@@ -28,14 +27,17 @@ public class RestUserService : RestServiceBase, IUserService
         return result;
     }
 
-    public async Task LogoutAsync(bool serverLogout = true)
+    public async Task<IResponse> LogoutAsync(bool serverLogout = true)
     {
+        IResponse result = new Response<string>(State.Success);
+
         if (serverLogout)
         {
-            await GetAsync<string>("user/logout");
+            result = await GetAsync<string>("user/logout");
         }
 
         DeleteTokensFromCache();
+        return result;
     }
 
     public async Task<IResponse> RegisterUserAsync(UserRegisterData registerData)
@@ -45,9 +47,14 @@ public class RestUserService : RestServiceBase, IUserService
         return result;
     }
 
-    public Task UpdateUserDataAsync()
+    public async Task<IResponse> UpdateUserDataAsync(UserUpdateData data)
     {
-        throw new NotImplementedException();
+        var result = await SendAsync("user/profile", data, SendType.Put);
+        if (result.State == State.Success)
+        {
+            RemoveFromCache("user/profile");
+        }
+        return result;
     }
 
     private async Task SaveTokenOrLogout(Response<AuthResponse> response, bool serverLogout = true)

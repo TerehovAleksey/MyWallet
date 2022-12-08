@@ -55,8 +55,7 @@ public interface IDataService
 
     #endregion
 
-    public Task<List<Category>> GetAllCategoriesAsync();
-    public Task<Category> CreateCategoryAsync(string name, string imageName);
-    public Task<List<Record>> GetRecordsAsync(DateTime startDate, DateTime endDate);
-    public Task<Record> CreateRecordAsync(RecordCreate record);  
+    public Task<Response<List<Category>>> GetAllCategoriesAsync();
+    public Task<Response<List<Record>>> GetRecordsAsync(DateTime startDate, DateTime endDate);
+    public Task<IResponse> CreateRecordAsync(RecordCreate record); 
 }
