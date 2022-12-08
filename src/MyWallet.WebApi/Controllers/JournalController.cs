@@ -4,18 +4,28 @@
     [Authorize]
     [Route("api/journal")]
     [Produces(MediaTypeNames.Application.Json)]
-    public class JournalController : ControllerBase
+    public class JournalController : BaseApiController
     {
         private readonly IRecordService _recordService;
 
-        public JournalController(IRecordService recordService)
+        public JournalController(UserManager<User> userManager, IRecordService recordService) : base(userManager)
         {
             _recordService = recordService;
         }
 
         [HttpGet]
-        public Task<IEnumerable<RecordDto>> GetRecords([FromQuery] DateTime startDate, [FromQuery] DateTime finishDate) =>
-            _recordService.GetRecordsAsync(startDate, finishDate);
+        public async Task<IActionResult> GetRecords([FromQuery] DateTime startDate, [FromQuery] DateTime finishDate)
+        {
+            var user = await GetUserAsync();
+            if (user is null)
+            {
+                return Unauthorized();
+            }
+
+            var result = await _recordService.GetRecordsAsync(user.Id, startDate, finishDate);
+            return Ok(result);
+        }
+            
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetRecordByIdAsync([FromRoute] Guid id)
