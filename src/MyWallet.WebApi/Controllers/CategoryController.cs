@@ -25,7 +25,7 @@
             var user = await GetUserAsync();
             if (user is not null)
             {
-                var result = _categoryService.GetAllCategoriesAsync(user.Id);
+                var result = await _categoryService.GetAllCategoriesAsync(user.Id);
                 return Ok(result);
             }
             return Unauthorized();

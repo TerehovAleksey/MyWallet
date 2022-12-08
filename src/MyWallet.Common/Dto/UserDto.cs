@@ -5,5 +5,5 @@ public record AuthResponseDto(string Token, string RefreshToken, DateTime TokenE
 public record UserForRegistrationDto(string Email, string Password, string ConfirmPassword);
 public record PasswordChangeDto(string OldPassword, string NewPassword, string NewPasswordConfirm);
 public record RefreshTokenDto(string Token, string RefreshToken);
-public record UserDto(string? FirstName, string? LastName, string Email, DateOnly? BirthdayDate, Gender Gender, string? LogoUri);
-public record UserUpdateDto(string? FirstName, string? LastName, DateOnly? BirthdayDate, Gender Gender);
+public record UserDto(string? FirstName, string? LastName, string Email, DateTime? BirthdayDate, Gender Gender, string? LogoUri);
+public record UserUpdateDto(string? FirstName, string? LastName, DateTime? BirthdayDate, Gender Gender);

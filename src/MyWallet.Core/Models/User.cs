@@ -18,7 +18,7 @@ public class User : IdentityUser<Guid>
     /// <summary>
     /// День рождения
     /// </summary>
-    public DateOnly? BirthdayDate { get; set; }
+    public DateTime? BirthdayDate { get; set; }
 
     /// <summary>
     /// Пол (0 - не указано, 1 - мужской, 2 - женский)
