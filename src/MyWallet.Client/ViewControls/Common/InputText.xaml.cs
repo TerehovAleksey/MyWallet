@@ -1,3 +1,5 @@
+using Microsoft.Maui.Controls;
+
 namespace MyWallet.Client.ViewControls.Common;
 
 public partial class InputText : VerticalStackLayout
@@ -49,6 +51,7 @@ public partial class InputText : VerticalStackLayout
     public InputText()
 	{
 		InitializeComponent();
+        //Entry.SetAppThemeColor(Entry.TextColorProperty, Colors.Green, Colors.Red);
 	}
 
     #region Handlers
@@ -165,15 +168,15 @@ public class InputTextValidationBehavior : Behavior<InputText>
     {
         if (text.Length > 5)
         {
-            _footer.IsVisible = true;
-            _entry.TextColor = Colors.Red;
-            _caption.TextColor = Colors.Red;
+            if (_footer != null) _footer.IsVisible = true;
+            if (_entry != null) _entry.TextColor = Colors.Red;
+            if (_caption != null) _caption.TextColor = Colors.Red;
         }
         else
         {
-            _footer.IsVisible = false;
-            _entry.TextColor = _entryDefaultColor;
-            _caption.TextColor = _captionDefaultColor;
+            if (_footer != null) _footer.IsVisible = false;
+            if (_entry != null) _entry.TextColor = _entryDefaultColor;
+            if (_caption != null) _caption.TextColor = _captionDefaultColor;
         }
     }
 

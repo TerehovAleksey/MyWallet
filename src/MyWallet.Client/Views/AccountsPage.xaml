@@ -51,14 +51,14 @@
                                     Grid.Column="1"
                                     HorizontalOptions="Start"
                                     VerticalOptions="Center">
-                                    <Label Style="{StaticResource MediumDark14TextStyle}" Text="{Binding Name}" />
-                                    <Label Style="{StaticResource RegularDark12TextStyle}" Text="{Binding Status}" />
+                                    <Label Style="{DynamicResource MediumDark14TextStyle}" Text="{Binding Name}" />
+                                    <Label Style="{DynamicResource RegularDark12TextStyle}" Text="{Binding Status}" />
                                 </VerticalStackLayout>
                                 <BoxView
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="2"
-                                    Style="{StaticResource SeparatorStyle}" />
+                                    Style="{DynamicResource SeparatorStyle}" />
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

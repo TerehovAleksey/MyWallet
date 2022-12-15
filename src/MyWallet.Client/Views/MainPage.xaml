@@ -4,9 +4,9 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
-    xmlns:commonControls="clr-namespace:MyWallet.Client.ViewControls.Common"
     xmlns:controls="clr-namespace:MyWallet.Client.ViewControls"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
+    xmlns:widgets="clr-namespace:MyWallet.Client.ViewControls.Widgets"
     x:DataType="vm:MainPageViewModel"
     DisplayMode="NavigationBar"
     PageMode="Menu"
@@ -23,19 +23,20 @@
 
     <base:PageBase.PageContent>
 
-       <Grid>
-           <ScrollView>
-               <VerticalStackLayout
-                   Margin="0"
-                   Padding="0"
-                   HorizontalOptions="FillAndExpand"
-                   VerticalOptions="Start">
-                   <controls:MainAccounts />
-                   <controls:MainLastRecords />
-               </VerticalStackLayout>
-           </ScrollView>
-           <Button Style="{StaticResource FabButtonStyle}" Command="{Binding OpenRecordPageCommand}"/>
-       </Grid>
+        <Grid>
+            <ScrollView>
+                <VerticalStackLayout
+                    Margin="0"
+                    Padding="0"
+                    HorizontalOptions="FillAndExpand"
+                    Spacing="10"
+                    VerticalOptions="Start">
+                    <controls:MainAccounts />
+                    <widgets:WidgetContainer BindingContext="{Binding Widgets}" />
+                </VerticalStackLayout>
+            </ScrollView>
+            <Button Command="{Binding OpenRecordPageCommand}" Style="{StaticResource FabButtonStyle}" />
+        </Grid>
 
     </base:PageBase.PageContent>
 

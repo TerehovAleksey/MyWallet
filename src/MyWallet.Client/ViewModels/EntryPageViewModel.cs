@@ -11,13 +11,13 @@ public partial class EntryPageViewModel : ViewModelBase
         DialogService.ShowAlertAsync("В разработке", "Пока не реализовано", "Понятно");
 
     [RelayCommand]
-    private Task EmailRegister() => NavigationService.GoToAsync("login", new Dictionary<string, object>
+    private Task EmailRegister() => NavigationService.GoToAsync(nameof(LoginPage), new Dictionary<string, object>
     {
         { "IsRegister", true }
     });
 
     [RelayCommand]
-    private Task Login() => NavigationService.GoToAsync("login", new Dictionary<string, object>
+    private Task Login() => NavigationService.GoToAsync(nameof(LoginPage), new Dictionary<string, object>
     {
         { "IsRegister", false }
     });

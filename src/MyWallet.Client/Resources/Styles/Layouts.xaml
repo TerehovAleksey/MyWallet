@@ -4,7 +4,7 @@
     <!--  Content Page Style  -->
     <Style ApplyToDerivedTypes="True" TargetType="ContentPage">
         <Setter Property="NavigationPage.HasNavigationBar" Value="False" />
-        <Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
         <Setter Property="Padding" Value="0" />
     </Style>
 

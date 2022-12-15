@@ -22,7 +22,7 @@
         BasedOn="{StaticResource BaseRegularLabelTextStyle}"
         TargetType="Label">
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="TextColor" Value="{StaticResource GrayTextColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource GrayTextColor}" />
     </Style>
 
     <Style
@@ -30,7 +30,7 @@
         BasedOn="{StaticResource BaseRegularLabelTextStyle}"
         TargetType="Label">
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource DarkTextColor}" />
     </Style>
 
     <!--  Medium Label Style  -->
@@ -46,7 +46,7 @@
         BasedOn="{StaticResource BaseMediumLabelTextStyle}"
         TargetType="Label">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource LightTextColor}" />
     </Style>
 
     <Style
@@ -54,7 +54,7 @@
         BasedOn="{StaticResource BaseMediumLabelTextStyle}"
         TargetType="Label">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource DarkTextColor}" />
     </Style>
 
     <Style
@@ -64,7 +64,7 @@
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
         <Setter Property="FontSize" Value="18" />
-        <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource DarkTextColor}" />
 
     </Style>
 

@@ -1,4 +1,6 @@
-﻿namespace MyWallet.Client.Extensions;
+﻿using MyWallet.Client.Services.Settings;
+
+namespace MyWallet.Client.Extensions;
 
 public static class ServiceExtensions
 {
@@ -7,6 +9,8 @@ public static class ServiceExtensions
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
         builder.Services.AddSingleton<INavigationService, NavigationService>();
         builder.Services.AddSingleton<IDialogService, DialogService>();
+        
+        builder.Services.AddSingleton<ISettingsService, SettingsService>();
 
         //Register Cache Barrel
         Barrel.ApplicationId = Constants.ApplicationId;
@@ -15,7 +19,7 @@ public static class ServiceExtensions
         //Register API Service
         builder.Services.AddHttpClient<IDataService, RestDataService>();
         builder.Services.AddHttpClient<IUserService, RestUserService>();
-
+        
         return builder;
     }
 
@@ -29,6 +33,11 @@ public static class ServiceExtensions
         builder.Services.AddTransient<LoginPageViewModel>();
         builder.Services.AddTransient<UserPageViewModel>();
         builder.Services.AddTransient<RecordPageViewModel>();
+        builder.Services.AddTransient<SettingsPageViewModel>();
+        
+        //Widgets
+        builder.Services.AddSingleton<WidgetContainerViewModel>();
+        builder.Services.AddTransient<WidgetLastRecordsViewModel>();
         
         return builder;
     }
@@ -42,6 +51,11 @@ public static class ServiceExtensions
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<UserPage>();
         builder.Services.AddTransient<RecordPage>();
+        builder.Services.AddTransient<SettingsPage>();
+        builder.Services.AddTransient<CurrenciesPage>();
+
+        //Widgets
+        builder.Services.AddTransient<WidgetSettingsDialog>();
         
         return builder;
     }

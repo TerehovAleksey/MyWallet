@@ -12,7 +12,7 @@ public partial class AccountsPageViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedAccount, value) && value is not null)
             {
-                NavigationService.GoToAsync("account", new Dictionary<string, object>
+                NavigationService.GoToAsync(nameof(AccountPage), new Dictionary<string, object>
                 {
                     { "Account", value }
                 });
@@ -44,7 +44,7 @@ public partial class AccountsPageViewModel : ViewModelBase
     [RelayCommand]
     private async Task OpenAccountPage()
     {
-        await NavigationService.GoToAsync("account");
+        await NavigationService.GoToAsync(nameof(AccountPage));
     }
 
     #endregion

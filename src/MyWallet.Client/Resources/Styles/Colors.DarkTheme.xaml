@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="MyWallet.Client.Resources.Styles.DarkTheme"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!--  поправлено  -->
+
+    <Color x:Key="StatusBarColor">#272727</Color>
+    <Color x:Key="NavBarColor">#272727</Color>
+    <Color x:Key="MenuBackgroundStop1">#1e1e1e</Color>
+    <Color x:Key="MenuBackgroundStop2">#161616</Color>
+    <Color x:Key="MenuSelectedColor">#14222e</Color>
+
+    <Color x:Key="BackgroundColor">#121212</Color>
+    <Color x:Key="BackgroundLightColor">#262626</Color>
+    <Color x:Key="BackgroundCardColor">#1e1e1e</Color>
+    <Color x:Key="GrayColor">#2f2f2f</Color>
+    <Color x:Key="GrayDarkColor">#262626</Color>
+    <Color x:Key="DangerColor">#f64e62</Color>
+
+    <Color x:Key="GrayTextColor">#848484</Color>
+    <Color x:Key="DarkTextColor">#e0e0e0</Color>
+    <Color x:Key="LinkTextColor">#2b8dff</Color>
+
+    <!--  осталось  -->
+
+    <Color x:Key="PrimaryColor">#00aa70</Color>
+    <Color x:Key="PrimaryLightColor">#21cb87</Color>
+    <Color x:Key="PrimaryDarkColor">#008859</Color>
+    <Color x:Key="AccentColor">#0076ff</Color>
+    <Color x:Key="LightGrayColor">#d8d8d8</Color>
+    <Color x:Key="FacebookColor">#3F51B5</Color>
+    <Color x:Key="GoogleColor">#4285f4</Color>
+    <Color x:Key="LightTextColor">#ffffff</Color>
+
+</ResourceDictionary>

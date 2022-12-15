@@ -9,6 +9,7 @@
         x:Name="TitleLabel"
         Margin="0,0,0,5"
         Style="{StaticResource RegularGray12TextStyle}" />
+
     <Entry
         x:Name="Entry"
         ClearButtonVisibility="WhileEditing"

@@ -3,8 +3,8 @@
     x:Class="MyWallet.Client.Views.Base.PageBase"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:MyWallet.Client.ViewControls.Common"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:common="clr-namespace:MyWallet.Client.ViewControls.Common"
+    xmlns:dialogs="clr-namespace:MyWallet.Client.ViewControls.Dialog"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.Base"
     x:DataType="vm:ViewModelBase">
 
@@ -19,7 +19,7 @@
             x:Name="HeaderGrid"
             Grid.Row="0"
             Margin="0"
-            BackgroundColor="{StaticResource PrimaryColor}"
+            BackgroundColor="{DynamicResource NavBarColor}"
             ColumnDefinitions="56,*,Auto"
             MinimumHeightRequest="56">
 
@@ -76,6 +76,22 @@
         <!--  Content  -->
         <Grid x:Name="PageContentGrid" Grid.Row="1" />
 
+        <!--  Indicators  -->
+        <common:ErrorIndicator
+            Grid.Row="1"
+            ErrorImage="{Binding ErrorImage}"
+            ErrorText="{Binding ErrorMessage}"
+            HorizontalOptions="Fill"
+            IsError="{Binding IsErrorState}"
+            VerticalOptions="Fill" />
+
+        <common:LoadingIndicator
+            Grid.Row="1"
+            HorizontalOptions="Fill"
+            IsBusy="{Binding IsBusy}"
+            LoadingText="{Binding LoadingText}"
+            VerticalOptions="Fill" />
+
         <!--  Menu  -->
         <Grid
             x:Name="ContentMaskGrid"
@@ -85,8 +101,8 @@
             IsVisible="false"
             Opacity="0" />
         <Grid
-            Grid.Row="0"
             x:Name="MenuGrid"
+            Grid.Row="0"
             Grid.RowSpan="2"
             BackgroundColor="Transparent">
             <Grid.ColumnDefinitions>
@@ -107,8 +123,8 @@
                 <Grid Grid.Row="0" Padding="15">
                     <Grid.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Offset="0.1" Color="{StaticResource PrimaryLightColor}" />
-                            <GradientStop Offset="1.0" Color="{StaticResource PrimaryLightestColor}" />
+                            <GradientStop Offset="0.1" Color="{DynamicResource MenuBackgroundStop1}" />
+                            <GradientStop Offset="1.0" Color="{DynamicResource MenuBackgroundStop2}" />
                         </LinearGradientBrush>
                     </Grid.Background>
                     <Grid.ColumnDefinitions>
@@ -117,9 +133,9 @@
                     </Grid.ColumnDefinitions>
                     <Border
                         Grid.Column="0"
-                        BackgroundColor="{StaticResource LightGrayColor}"
+                        BackgroundColor="{DynamicResource LightGrayColor}"
                         HeightRequest="60"
-                        Stroke="{StaticResource GrayColor}"
+                        Stroke="{DynamicResource GrayColor}"
                         StrokeShape="RoundRectangle 30"
                         StrokeThickness="1"
                         WidthRequest="60">
@@ -129,32 +145,52 @@
                             WidthRequest="30" />
                     </Border>
                     <VerticalStackLayout Grid.Column="1" HorizontalOptions="Start">
-                        <Label Style="{StaticResource MediumLight14TextStyle}" Text="admin@mail.com" />
-                        <Label Style="{StaticResource RegularLight12TextStyle}" Text="Мой кошелёк" />
+                        <Label Style="{DynamicResource MediumLight14TextStyle}" Text="admin@mail.com" />
+                        <Label Style="{DynamicResource RegularLight12TextStyle}" Text="Мой кошелёк" />
                     </VerticalStackLayout>
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OpenUserPage_Tapped" />
                     </Grid.GestureRecognizers>
                 </Grid>
+                <!--  Menu Items  -->
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    Padding="0"
+                    Background="{DynamicResource BackgroundLightColor}"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand">
+                    <Border
+                        x:Name="MenuItem_Settings"
+                        Grid.Row="0"
+                        Margin="10"
+                        Padding="15,10"
+                        BackgroundColor="{DynamicResource BackgroundLightColor}"
+                        HeightRequest="46"
+                        HorizontalOptions="FillAndExpand"
+                        StrokeShape="RoundRectangle 8">
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Image
+                                Grid.Column="0"
+                                HeightRequest="20"
+                                Source="menu_settings.png"
+                                WidthRequest="20" />
+                            <Label
+                                Grid.Column="1"
+                                Margin="30,0,0,0"
+                                HorizontalOptions="Start"
+                                Style="{DynamicResource MediumDark14TextStyle}"
+                                Text="Настройки" />
+                        </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="MenuItem_Settings_Tapped" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                </VerticalStackLayout>
             </Grid>
         </Grid>
 
-        <!--  Indicators  -->
-        <controls:ErrorIndicator
-            Grid.Row="1"
-            ErrorImage="{Binding ErrorImage}"
-            ErrorText="{Binding ErrorMessage}"
-            HorizontalOptions="Fill"
-            IsError="{Binding IsErrorState}"
-            VerticalOptions="Fill" />
-
-        <controls:LoadingIndicator
-            Grid.Row="1"
-            HorizontalOptions="Fill"
-            IsBusy="{Binding IsBusy}"
-            LoadingText="{Binding LoadingText}"
-            VerticalOptions="Fill" />
-
+        <!--  Dialog Service  -->
+        <dialogs:DialogContainer Grid.Row="0" Grid.RowSpan="2" />
     </Grid>
 
 </ContentPage>

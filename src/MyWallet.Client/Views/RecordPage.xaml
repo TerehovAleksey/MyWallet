@@ -34,7 +34,10 @@
 
                 <!--  Account  -->
                 <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
-                    <Label Margin="0,0,0,5" Text="Счёт" />
+                    <Label
+                        Margin="0,0,0,5"
+                        Style="{StaticResource RegularGray12TextStyle}"
+                        Text="Счёт" />
                     <Picker
                         Title="{OnPlatform Android=Выберете счёт}"
                         HorizontalOptions="FillAndExpand"
@@ -44,7 +47,10 @@
 
                 <!--  Categories  -->
                 <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
-                    <Label Margin="0,0,0,5" Text="Категория" />
+                    <Label
+                        Margin="0,0,0,5"
+                        Style="{StaticResource RegularGray12TextStyle}"
+                        Text="Категория" />
                     <Picker
                         Title="{OnPlatform Android=Выберете категорию}"
                         HorizontalOptions="FillAndExpand"
@@ -54,7 +60,10 @@
 
                 <!--  SubCategories  -->
                 <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
-                    <Label Margin="0,0,0,5" Text="Подкатегория" />
+                    <Label
+                        Margin="0,0,0,5"
+                        Style="{StaticResource RegularGray12TextStyle}"
+                        Text="Подкатегория" />
                     <Picker
                         Title="{OnPlatform Android=Выберете подкатегорию}"
                         HorizontalOptions="FillAndExpand"
@@ -73,6 +82,24 @@
                     Title="Примечание"
                     Placeholder="Введите примечание..."
                     Value="{Binding Description}" />
+
+                <!--  Date  -->
+                <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
+                    <Label
+                        Margin="0,0,0,5"
+                        Style="{StaticResource RegularGray12TextStyle}"
+                        Text="Дата" />
+                    <DatePicker Date="{Binding RecordDate, Mode=TwoWay}" />
+                </VerticalStackLayout>
+
+                <!--  Time  -->
+                <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
+                    <Label
+                        Margin="0,0,0,5"
+                        Style="{StaticResource RegularGray12TextStyle}"
+                        Text="Время" />
+                    <TimePicker Time="{Binding RecordTime, Mode=TwoWay}" />
+                </VerticalStackLayout>
 
             </VerticalStackLayout>
         </ScrollView>

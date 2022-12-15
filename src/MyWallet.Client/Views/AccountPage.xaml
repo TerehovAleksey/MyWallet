@@ -8,7 +8,7 @@
     xmlns:converters="clr-namespace:MyWallet.Client.Converters"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
     x:DataType="vm:AccountPageViewModel"
-    Background="{StaticResource BackgroundColor}"
+    Background="{DynamicResource BackgroundColor}"
     DisplayMode="NavigationBar"
     PageMode="Navigate"
     PageTitle="{Binding Title}">
@@ -38,105 +38,132 @@
     </base:PageBase.PageIcons>
 
     <base:PageBase.PageContent>
-        <ScrollView Padding="10">
-            <VerticalStackLayout
-                HorizontalOptions="Fill"
+        <ScrollView Padding="{OnPlatform WinUI=20, Default=0}">
+            <Border
+                Margin="{OnPlatform Android=-1,
+                                    Default=0}"
+                Padding="{OnPlatform WinUI=20,
+                                     Default=10}"
+                BackgroundColor="{DynamicResource BackgroundLightColor}"
                 MaximumWidthRequest="{OnPlatform WinUI=600}"
-                Spacing="20"
+                Stroke="{OnPlatform WinUI={StaticResource GrayColor}}"
+                StrokeShape="{OnPlatform WinUI=RoundRectangle 8}"
+                StrokeThickness="{OnPlatform WinUI=1,
+                                             Default=0}"
                 VerticalOptions="Start">
-
-                <!--  Account name  -->
-                <controls:InputText
-                    Title="Название счёта"
-                    Placeholder="Введите название..."
-                    Value="{Binding AccountName}">
-                    <controls:InputText.Behaviors>
-                        <controls:InputTextValidationBehavior MaximumLength="50" MinimumLength="1" />
-                    </controls:InputText.Behaviors>
-                </controls:InputText>
-
-                <BoxView Style="{StaticResource SeparatorStyle}" />
-
-                <!--  Account number  -->
-                <controls:InputText
-                    Title="Номер банковского счёта"
-                    Placeholder="Введите номер банковского счёта..."
-                    Value="{Binding AccountNumber}">
-                    <controls:InputText.Behaviors>
-                        <controls:InputTextValidationBehavior MaximumLength="50" />
-                    </controls:InputText.Behaviors>
-                </controls:InputText>
-
-                <BoxView Style="{StaticResource SeparatorStyle}" />
-
-                <!--  Account type  -->
-                <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
-                    <Label Margin="0,0,0,5" Text="Тип" />
-                    <Picker
-                        Title="{OnPlatform Android=Выберете тип счёта}"
-                        HorizontalOptions="FillAndExpand"
-                        ItemsSource="{Binding AccountTypes}"
-                        SelectedItem="{Binding AccountType}" />
-                </VerticalStackLayout>
-
-                <BoxView Style="{StaticResource SeparatorStyle}" />
-
-                <!--  Initial value (New only!)  -->
+                <Border.Shadow>
+                    <Shadow
+                        Brush="Black"
+                        Opacity="0.5"
+                        Radius="5"
+                        Offset="0,5" />
+                </Border.Shadow>
                 <VerticalStackLayout
-                    Padding="0"
                     HorizontalOptions="Fill"
-                    IsVisible="{Binding IsNewAccount}">
-                    <controls:InputText Title="Начальное значение" Value="{Binding AccountValue}" />
+                    Spacing="20"
+                    VerticalOptions="Start">
+
+                    <!--  Account name  -->
+                    <controls:InputText
+                        Title="Название счёта"
+                        Placeholder="Введите название..."
+                        Value="{Binding AccountName}" />
+
+                    <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                    <!--  Account number  -->
+                    <controls:InputText
+                        Title="Номер банковского счёта"
+                        Placeholder="Введите номер банковского счёта..."
+                        Value="{Binding AccountNumber}">
+                        <controls:InputText.Behaviors>
+                            <controls:InputTextValidationBehavior MaximumLength="50" />
+                        </controls:InputText.Behaviors>
+                    </controls:InputText>
+
+                    <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                    <!--  Account type  -->
+                    <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
+                        <Label
+                            Margin="0,0,0,5"
+                            Style="{StaticResource RegularGray12TextStyle}"
+                            Text="Тип" />
+                        <Picker
+                            Title="{OnPlatform Android=Выберете тип счёта}"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding AccountTypes}"
+                            SelectedItem="{Binding AccountType}" />
+                    </VerticalStackLayout>
+
+                    <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                    <!--  Initial value (New only!)  -->
+                    <VerticalStackLayout
+                        Padding="0"
+                        HorizontalOptions="Fill"
+                        IsVisible="{Binding IsNewAccount}">
+                        <controls:InputText Title="Начальное значение" Value="{Binding AccountValue}" />
+                    </VerticalStackLayout>
+
+                    <BoxView IsVisible="{Binding IsNewAccount}" Style="{StaticResource SeparatorStyle}" />
+
+                    <!--  Account currency  -->
+                    <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
+                        <Label
+                            Margin="0,0,0,5"
+                            Style="{StaticResource RegularGray12TextStyle}"
+                            Text="Валюта" />
+                        <Picker
+                            Title="{OnPlatform Android=Выберете валюту счёта}"
+                            ItemsSource="{Binding Currencies}"
+                            SelectedItem="{Binding AccountCurrency}" />
+                    </VerticalStackLayout>
+
+                    <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                    <!--  Account color  -->
+                    <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
+                        <Label
+                            Margin="0,0,0,5"
+                            Style="{StaticResource RegularGray12TextStyle}"
+                            Text="Цвет" />
+                        <Picker
+                            Title="{OnPlatform Android=Выберете цвет}"
+                            BackgroundColor="{Binding AccountColor}"
+                            ItemsSource="{Binding Colors}"
+                            SelectedItem="{Binding AccountColorString}" />
+                    </VerticalStackLayout>
+
+                    <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                    <!--  Is account enable (Not new only!)  -->
+                    <Grid IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}">
+                        <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource RegularGray12TextStyle}"
+                            Text="Исключить из статистики"
+                            VerticalOptions="Center" />
+                        <Switch HorizontalOptions="End" IsToggled="{Binding AccountDisabled}" />
+                    </Grid>
+
+                    <BoxView IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}" Style="{StaticResource SeparatorStyle}" />
+
+                    <!--  Is account archived (Not new only!)  -->
+                    <Grid IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}">
+                        <Label
+                            HorizontalOptions="Start"
+                            Style="{StaticResource RegularGray12TextStyle}"
+                            Text="Архив"
+                            VerticalOptions="Center" />
+                        <Switch HorizontalOptions="End" IsToggled="{Binding AccountArchived}" />
+                    </Grid>
+
+                    <BoxView IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}" Style="{StaticResource SeparatorStyle}" />
+
                 </VerticalStackLayout>
+            </Border>
 
-                <BoxView IsVisible="{Binding IsNewAccount}" Style="{StaticResource SeparatorStyle}" />
-
-                <!--  Account currency  -->
-                <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
-                    <Label Margin="0,0,0,5" Text="Валюта" />
-                    <Picker
-                        Title="{OnPlatform Android=Выберете валюту счёта}"
-                        ItemsSource="{Binding Currencies}"
-                        SelectedItem="{Binding AccountCurrency}" />
-                </VerticalStackLayout>
-
-                <BoxView Style="{StaticResource SeparatorStyle}" />
-
-                <!--  Account color  -->
-                <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
-                    <Label Margin="0,0,0,5" Text="Цвет" />
-                    <Picker
-                        Title="{OnPlatform Android=Выберете цвет}"
-                        BackgroundColor="{Binding AccountColor}"
-                        ItemsSource="{Binding Colors}"
-                        SelectedItem="{Binding AccountColorString}" />
-                </VerticalStackLayout>
-
-                <BoxView Style="{StaticResource SeparatorStyle}" />
-
-                <!--  Is account enable (Not new only!)  -->
-                <Grid IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}">
-                    <Label
-                        HorizontalOptions="Start"
-                        Text="Исключить из статистики"
-                        VerticalOptions="Center" />
-                    <Switch HorizontalOptions="End" IsToggled="{Binding AccountDisabled}" />
-                </Grid>
-
-                <BoxView IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}" Style="{StaticResource SeparatorStyle}" />
-
-                <!--  Is account archived (Not new only!)  -->
-                <Grid IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}">
-                    <Label
-                        HorizontalOptions="Start"
-                        Text="Архив"
-                        VerticalOptions="Center" />
-                    <Switch HorizontalOptions="End" IsToggled="{Binding AccountArchived}" />
-                </Grid>
-
-                <BoxView IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}" Style="{StaticResource SeparatorStyle}" />
-
-            </VerticalStackLayout>
         </ScrollView>
 
     </base:PageBase.PageContent>

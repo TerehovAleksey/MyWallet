@@ -80,7 +80,7 @@ public abstract partial class ViewModelBase : ObservableObject, IViewModelBase, 
                 ErrorImage = "error.png";
                 break;
             case State.Unauthorized:
-                await NavigationService.GoToAsync("entry");
+                await NavigationService.GoToAsync(nameof(EntryPage));
                 break;
             case State.NotFound:
                 break;

@@ -53,6 +53,7 @@ public class RestDataService : RestServiceBase, IDataService
         if (result.State == State.Success)
         {
             RemoveFromCache("journal");
+            RemoveFromCache("account");
         }
         return result;
     }
@@ -60,5 +61,5 @@ public class RestDataService : RestServiceBase, IDataService
     public Task<Response<List<Category>>> GetAllCategoriesAsync() => GetAsync<List<Category>>("category", 24);
 
     public Task<Response<List<Record>>> GetRecordsAsync(DateTime startDate, DateTime endDate) => 
-        GetAsync<List<Record>>($"journal?startDate={startDate:yyyy-MM-dd}&finishDate={endDate:yyyy-MM-dd}", 24);
+        GetAsync<List<Record>>($"journal?startDate={startDate:yyyy-MM-dd}&finishDate={endDate:yyyy-MM-dd}");
 }

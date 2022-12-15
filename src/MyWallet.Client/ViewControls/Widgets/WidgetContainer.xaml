@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CollectionView
+    x:Class="MyWallet.Client.ViewControls.Widgets.WidgetContainer"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:MyWallet.Client.Converters"
+    xmlns:m="clr-namespace:MyWallet.Client.ViewModels.Widget"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.Widget"
+    Margin="0"
+    x:DataType="vm:WidgetContainerViewModel"
+    HorizontalOptions="FillAndExpand"
+    ItemsSource="{Binding Widgets}"
+    VerticalOptions="Start">
+
+    <CollectionView.Resources>
+        <converters:WidgetConverter x:Key="WidgetConverter" />
+    </CollectionView.Resources>
+
+    <CollectionView.ItemTemplate>
+        <DataTemplate x:DataType="m:IWidgetViewModel">
+            <Border
+                Margin="0,0,0,10"
+                BackgroundColor="{DynamicResource BackgroundColor}"
+                Content="{Binding ., Converter={StaticResource WidgetConverter}}" />
+        </DataTemplate>
+    </CollectionView.ItemTemplate>
+
+</CollectionView>

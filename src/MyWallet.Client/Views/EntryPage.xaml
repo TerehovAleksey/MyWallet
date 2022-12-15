@@ -6,7 +6,7 @@
     xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
     x:DataType="vm:EntryPageViewModel"
-    Background="{StaticResource BackgroundLightColor}"
+    Background="{DynamicResource BackgroundLightColor}"
     DisplayMode="NoNavigationBar">
 
     <base:PageBase.Resources>
@@ -24,7 +24,7 @@
             <Style x:Key="RegisterLabel" TargetType="Label">
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+                <Setter Property="TextColor" Value="{DynamicResource LightTextColor}" />
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="TextTransform" Value="Uppercase" />
             </Style>
@@ -43,8 +43,8 @@
             <Grid Grid.Row="0">
                 <Grid.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Offset="0.1" Color="{StaticResource PrimaryLightColor}" />
-                        <GradientStop Offset="1.0" Color="{StaticResource PrimaryLightestColor}" />
+                        <GradientStop Offset="0.1" Color="{DynamicResource MenuBackgroundStop1}" />
+                        <GradientStop Offset="1.0" Color="{DynamicResource MenuBackgroundStop2}" />
                     </LinearGradientBrush>
                 </Grid.Background>
                 <Image
@@ -57,9 +57,9 @@
                 <Label
                     FontSize="18"
                     LineBreakMode="WordWrap"
-                    Style="{StaticResource CaptionTextStyle}"
+                    Style="{DynamicResource CaptionTextStyle}"
                     Text="Зарегистрируйтесь, чтобы создать безопасную учётную запись." />
-                <Border BackgroundColor="{StaticResource BackgroundLightColor}" Stroke="{StaticResource GoogleColor}">
+                <Border BackgroundColor="{DynamicResource BackgroundLightColor}" Stroke="{DynamicResource GoogleColor}">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding GoogleRegisterCommand}" />
                     </Border.GestureRecognizers>
@@ -71,13 +71,13 @@
                         <Image
                             Grid.Column="0"
                             Source="google.png"
-                            Style="{StaticResource RegisterImage}" />
-                        <Grid Grid.Column="1" BackgroundColor="{StaticResource GoogleColor}">
-                            <Label Style="{StaticResource RegisterLabel}" Text="ВОЙТИ ЧЕРЕЗ GOOGLE" />
+                            Style="{DynamicResource RegisterImage}" />
+                        <Grid Grid.Column="1" BackgroundColor="{DynamicResource GoogleColor}">
+                            <Label Style="{DynamicResource RegisterLabel}" Text="ВОЙТИ ЧЕРЕЗ GOOGLE" />
                         </Grid>
                     </Grid>
                 </Border>
-                <Border BackgroundColor="{StaticResource BackgroundLightColor}" Stroke="{StaticResource FacebookColor}">
+                <Border BackgroundColor="{DynamicResource BackgroundLightColor}" Stroke="{DynamicResource FacebookColor}">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding FacebookRegisterCommand}" />
                     </Border.GestureRecognizers>
@@ -89,13 +89,13 @@
                         <Image
                             Grid.Column="0"
                             Source="facebook.png"
-                            Style="{StaticResource RegisterImage}" />
-                        <Grid Grid.Column="1" BackgroundColor="{StaticResource FacebookColor}">
-                            <Label Style="{StaticResource RegisterLabel}" Text="ВОЙТИ ЧЕРЕЗ FACEBOOK" />
+                            Style="{DynamicResource RegisterImage}" />
+                        <Grid Grid.Column="1" BackgroundColor="{DynamicResource FacebookColor}">
+                            <Label Style="{DynamicResource RegisterLabel}" Text="ВОЙТИ ЧЕРЕЗ FACEBOOK" />
                         </Grid>
                     </Grid>
                 </Border>
-                <Border BackgroundColor="{StaticResource BackgroundLightColor}" Stroke="{StaticResource PrimaryLightColor}">
+                <Border BackgroundColor="{DynamicResource BackgroundLightColor}" Stroke="{DynamicResource PrimaryLightColor}">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding EmailRegisterCommand}" />
                     </Border.GestureRecognizers>
@@ -107,9 +107,9 @@
                         <Image
                             Grid.Column="0"
                             Source="mail.png"
-                            Style="{StaticResource RegisterImage}" />
-                        <Grid Grid.Column="1" BackgroundColor="{StaticResource PrimaryLightColor}">
-                            <Label Style="{StaticResource RegisterLabel}" Text="РЕГИСТРАЦИЯ" />
+                            Style="{DynamicResource RegisterImage}" />
+                        <Grid Grid.Column="1" BackgroundColor="{DynamicResource PrimaryLightColor}">
+                            <Label Style="{DynamicResource RegisterLabel}" Text="РЕГИСТРАЦИЯ" />
                         </Grid>
                     </Grid>
                 </Border>
@@ -121,11 +121,11 @@
                     LineBreakMode="WordWrap">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="Уже зарегестрированы? " TextColor="{StaticResource DarkTextColor}" />
+                            <Span Text="Уже зарегестрированы? " TextColor="{DynamicResource DarkTextColor}" />
                             <Span
                                 FontAttributes="Bold"
                                 Text="ВОЙТИ"
-                                TextColor="{StaticResource LinkTextColor}" />
+                                TextColor="{DynamicResource LinkTextColor}" />
                         </FormattedString>
                     </Label.FormattedText>
                     <Label.GestureRecognizers>
@@ -137,24 +137,24 @@
             <Grid
                 Grid.Row="2"
                 Padding="20"
-                BackgroundColor="{StaticResource BackgroundColor}">
+                BackgroundColor="{DynamicResource BackgroundColor}">
                 <Label
                     HorizontalTextAlignment="Center"
                     LineBreakMode="WordWrap"
-                    TextColor="{StaticResource DarkTextColor}">
+                    TextColor="{DynamicResource DarkTextColor}">
                     <Label.FormattedText>
                         <FormattedString>
                             <Span FontSize="12" Text="Регистрируясь или подключаясь к вышеуказанным службам, вы принимаете наши " />
                             <Span
                                 FontSize="12"
                                 Text="Правила использования"
-                                TextColor="{StaticResource LinkTextColor}"
+                                TextColor="{DynamicResource LinkTextColor}"
                                 TextDecorations="Underline" />
                             <Span FontSize="12" Text=" и " />
                             <Span
                                 FontSize="12"
                                 Text="Политику конфиденциальности"
-                                TextColor="{StaticResource LinkTextColor}"
+                                TextColor="{DynamicResource LinkTextColor}"
                                 TextDecorations="Underline" />
                             <Span FontSize="12" Text=", описывающие, как мы обрабатываем ваши личные данные." />
                         </FormattedString>

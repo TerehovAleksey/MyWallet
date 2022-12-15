@@ -3,18 +3,27 @@ public partial class MainPageViewModel : ViewModelBase
 {
     private readonly IDataService _dataService;
     
+    public WidgetContainerViewModel Widgets { get; }
+
     public ObservableCollection<Account> Accounts { get; } = new();
     public ObservableCollection<object> SelectedAccounts { get; } = new();
     
-    public ObservableCollection<Record> Records { get; } = new();
-
-    [ObservableProperty]
-    private Account? _selectedAccount;
-
-    public MainPageViewModel(IDataService dataService, IDialogService dialogService, INavigationService navigationService) : base(dialogService, navigationService)
+    public MainPageViewModel(IDataService dataService, IDialogService dialogService, INavigationService navigationService, WidgetContainerViewModel widgetContainer) : base(dialogService, navigationService)
     {
         _dataService = dataService;
+        Widgets = widgetContainer;
         Title = "Главная";
+        OneTimeInitialized = false;
+
+        SelectedAccounts.CollectionChanged += SelectedAccounts_CollectionChanged;
+    }
+
+    private void SelectedAccounts_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        if (IsInitialized)
+        {
+            //
+        }
     }
 
     public override Task InitializeAsync()
@@ -26,14 +35,10 @@ public partial class MainPageViewModel : ViewModelBase
             if (response.Item != null)
             {
                 Accounts.AddRange(response.Item, true);
+                SelectedAccounts.AddRange(response.Item, true);
             }
 
-            var records = await _dataService.GetRecordsAsync(new DateTime(2020, 01, 01), new DateTime(2023, 01, 01));
-            await HandleServiceResponseErrorsAsync(records);
-            if (records.Item != null)
-            {
-                Records.AddRange(records.Item, true);
-            }
+            await Widgets.LoadingWidgetsAsync();
         });
     }
 
@@ -44,8 +49,14 @@ public partial class MainPageViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void OpenAccountsPage() => NavigationService.GoToAsync("accounts");
+    private void OpenAccountsPage() => NavigationService.GoToAsync(nameof(AccountsPage));
     
     [RelayCommand]
-    private void OpenRecordPage() => NavigationService.GoToAsync("record");
+    private void OpenRecordPage() => NavigationService.GoToAsync(nameof(RecordPage));
+
+    protected override void Dispose(bool disposing)
+    {
+        SelectedAccounts.CollectionChanged -= SelectedAccounts_CollectionChanged;
+        base.Dispose(disposing);
+    }
 }

@@ -11,13 +11,16 @@ public partial class AppShell : Shell
 
 	private static void RegisterRouting()
 	{
-		Routing.RegisterRoute("account", typeof(AccountPage));
-		Routing.RegisterRoute("accounts", typeof(AccountsPage));
-		Routing.RegisterRoute("login", typeof(LoginPage));
-		Routing.RegisterRoute("main", typeof(MainPage));
-		Routing.RegisterRoute("user", typeof(UserPage));
-		Routing.RegisterRoute("record", typeof(RecordPage));
-	}
+		Routing.RegisterRoute(nameof(AccountPage), typeof(AccountPage));
+		Routing.RegisterRoute(nameof(AccountsPage), typeof(AccountsPage));
+		Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+		Routing.RegisterRoute(nameof(UserPage), typeof(UserPage));
+		Routing.RegisterRoute(nameof(RecordPage), typeof(RecordPage));
+		Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
+		Routing.RegisterRoute(nameof(CurrenciesPage), typeof(CurrenciesPage));
+
+        Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+    }
 
 	private void SetRootPage()
 	{
@@ -26,14 +29,14 @@ public partial class AppShell : Shell
 		if (string.IsNullOrEmpty(token))
 		{
 			AppShellContent.ContentTemplate = new DataTemplate(typeof(EntryPage));
-			AppShellContent.Route = "entry";
-			Routing.RegisterRoute("main", typeof(MainPage));
+			AppShellContent.Route = nameof(EntryPage);
+			//Routing.RegisterRoute("main", typeof(MainPage));
 		}
 		else
 		{
 			AppShellContent.ContentTemplate = new DataTemplate(typeof(MainPage));
-			AppShellContent.Route = "main";
-			Routing.RegisterRoute("entry", typeof(EntryPage));
+			AppShellContent.Route = nameof(MainPage);
+			//Routing.RegisterRoute("entry", typeof(EntryPage));
         }
 
 		OnPropertyChanged(nameof(AppShellContent));

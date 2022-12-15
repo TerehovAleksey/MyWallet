@@ -14,7 +14,7 @@ public partial class UserPageViewModel : ViewModelBase
     private string? _email;
 
     [ObservableProperty]
-    private DateTime? _birthday;
+    private DateTime _birthday = DateTime.Today.AddYears(-18);
 
     [ObservableProperty]
     private string _userGender = Gender.Empty.ToString();
@@ -45,7 +45,10 @@ public partial class UserPageViewModel : ViewModelBase
                 FirstName = user.Item.FirstName;
                 LastName = user.Item.LastName;
                 Email = user.Item.Email;
-                Birthday = user.Item.BirthdayDate;
+                if (user.Item.BirthdayDate is not null)
+                {
+                    Birthday = (DateTime)user.Item.BirthdayDate;
+                }               
                 UserGender = user.Item.Gender.ToString();
             }
         });
@@ -71,7 +74,7 @@ public partial class UserPageViewModel : ViewModelBase
             await HandleServiceResponseErrorsAsync(result);
             if (result.State == State.Success)
             {
-                await NavigationService.GoToAsync("entry");
+                await NavigationService.GoToAsync(nameof(EntryPage));
             }
         });
 
@@ -103,7 +106,7 @@ public partial class UserPageViewModel : ViewModelBase
             await HandleServiceResponseErrorsAsync(result);
             if (result.State == State.Success)
             {
-                await NavigationService.GoToAsync("entry");
+                await NavigationService.GoToAsync(nameof(EntryPage));
             }
         });
 }

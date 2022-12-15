@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Grid
+    x:Class="MyWallet.Client.ViewControls.Dialog.DialogContainer"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Grid
+        x:Name="DialogContainerMask"
+        BackgroundColor="Black"
+        Opacity="0.5">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="DialogContainerMask_Tapped" />
+        </Grid.GestureRecognizers>
+    </Grid>
+    <Border
+        x:Name="Dialog"
+        Padding="15,15,15,5"
+        BackgroundColor="{DynamicResource BackgroundCardColor}"
+        HorizontalOptions="Center"
+        Opacity="1"
+        StrokeShape="RoundRectangle 8"
+        StrokeThickness="0"
+        VerticalOptions="Center"
+        WidthRequest="300">
+        <Grid RowDefinitions="Auto,*,Auto">
+            <Label
+                x:Name="TitleLabel"
+                Grid.Row="0"
+                Margin="10"
+                HorizontalOptions="Start"
+                Style="{DynamicResource CaptionTextStyle}"
+                Text="Настройка виджета" />
+            <Border
+                x:Name="DialogContent"
+                Grid.Row="1"
+                Margin="0,15,0,15"
+                HorizontalOptions="FillAndExpand" />
+            <Grid Grid.Row="2" ColumnDefinitions="*,Auto,Auto">
+                <Button
+                    x:Name="CancelButton"
+                    Grid.Column="1"
+                    Clicked="ButtonCancel_Clicked"
+                    Style="{DynamicResource LinkButton}" />
+                <Button
+                    x:Name="OkButton"
+                    Grid.Column="2"
+                    Style="{DynamicResource LinkButton}" />
+            </Grid>
+        </Grid>
+    </Border>
+
+</Grid>

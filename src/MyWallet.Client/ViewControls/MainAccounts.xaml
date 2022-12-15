@@ -8,7 +8,7 @@
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
     Padding="10"
     x:DataType="vm:MainPageViewModel"
-    BackgroundColor="{StaticResource BackgroundLightColor}"
+    BackgroundColor="{DynamicResource BackgroundCardColor}"
     HorizontalOptions="FillAndExpand"
     VerticalOptions="Start">
 
@@ -34,14 +34,14 @@
         <Label
             Grid.Column="0"
             HorizontalOptions="Start"
-            Style="{StaticResource CaptionTextStyle}"
+            Style="{DynamicResource CaptionTextStyle}"
             Text="Список счетов"
             VerticalOptions="Center" />
         <ImageButton
             Grid.Column="1"
             Command="{Binding OpenAccountsPageCommand}"
             Source="cog.png"
-            Style="{StaticResource AccentIconButtonStyle}" />
+            Style="{DynamicResource AccentIconButtonStyle}" />
     </Grid>
 
     <!--  Accounts  -->
@@ -133,12 +133,12 @@
             Grid.Column="0"
             HorizontalOptions="Start"
             IsVisible="{Binding SelectedAccounts.Count, Converter={StaticResource CountOneToBoolConverter}}"
-            Style="{StaticResource RegularButton}"
+            Style="{DynamicResource RegularButton}"
             Text="Корректировка баланса" />
         <Button
             Grid.Column="1"
             HorizontalOptions="End"
-            Style="{StaticResource RegularButton}"
+            Style="{DynamicResource RegularButton}"
             Text="Записи" />
     </Grid>
 

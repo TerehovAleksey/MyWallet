@@ -18,6 +18,12 @@ public partial class RecordPageViewModel : ViewModelBase
     [ObservableProperty]
     private string? _description;
 
+    [ObservableProperty]
+    private DateTime _recordDate = DateTime.Now;
+
+    [ObservableProperty]
+    private TimeSpan _recordTime = DateTime.Now.TimeOfDay;
+
     public Category? SelectedCategory
     {
         get => _category;
@@ -60,9 +66,11 @@ public partial class RecordPageViewModel : ViewModelBase
     {
         if(SelectedAccount is not null && SelectedSubCategory is not null)
         {
+            var dateTime = new DateTime(RecordDate.Year, RecordDate.Month, RecordDate.Day, RecordTime.Hours, RecordTime.Minutes, 0);
+
             var record = new RecordCreate
             {
-                DateTime = DateTime.Now,
+                DateTime = dateTime,
                 Description = Description,
                 SubcategoryId = SelectedSubCategory.Id,
                 AccountId= SelectedAccount.Id,

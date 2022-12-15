@@ -135,29 +135,23 @@ public partial class PageBase : ContentPage
 
         _navigationService = ServiceHelpers.GetService<INavigationService>();
     }
-
+    
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
-
+        
         // скрываем меню
         // в OnAppearing() Width еще неизвестна
         MenuGrid.TranslationX = -Window.Width;
-
-#if ANDROID
-        // только так работает цвет стаусбара (в других случаях падает в релизе)
-        // https://github.com/MicrosoftDocs/CommunityToolkit/blob/main/docs/maui/behaviors/statusbar-behavior.md
-        CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(Color.FromArgb("#21cb87"));
-        CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(StatusBarStyle.LightContent);
-#endif
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
 
-        // скрываем маску меню
+        // скрываем меню
         ContentMaskGrid.IsVisible = false;
+        MenuGrid.IsVisible = false;
 
         // инициализируем ViewModel, если еще не инициализирована
         if (BindingContext is IViewModelBase viewModel && (!viewModel.IsInitialized || !viewModel.OneTimeInitialized))
@@ -175,6 +169,7 @@ public partial class PageBase : ContentPage
     protected async void HamburgerButton_Clicked(object sender, EventArgs e)
     {
         ContentMaskGrid.IsVisible = true;
+        MenuGrid.IsVisible = true;
         _ = ContentMaskGrid.FadeTo(0.5, 800);
         await MenuGrid.TranslateTo(0, 0, 800, Easing.CubicOut);
     }
@@ -182,7 +177,7 @@ public partial class PageBase : ContentPage
     protected async void OpenUserPage_Tapped(object sender, TappedEventArgs e)
     {
         _ = CloseMenu();
-        await _navigationService.GoToAsync("user");
+        await _navigationService.GoToAsync(nameof(UserPage));
     }
 
     private async Task CloseMenu()
@@ -190,5 +185,11 @@ public partial class PageBase : ContentPage
         _ = ContentMaskGrid.FadeTo(0, 800);
         await MenuGrid.TranslateTo(-Width, 0, 800, Easing.CubicOut);
         ContentMaskGrid.IsVisible = false;
+        MenuGrid.IsVisible = false;
+    }
+
+    protected async void MenuItem_Settings_Tapped(object sender, TappedEventArgs e)
+    {
+        await _navigationService.GoToAsync(nameof(SettingsPage));
     }
 }

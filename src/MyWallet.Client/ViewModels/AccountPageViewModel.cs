@@ -5,8 +5,6 @@ public partial class AccountPageViewModel : ViewModelBase
 {
     private readonly IDataService _dataService;
 
-    private Account? _account;
-
     [ObservableProperty]
     private bool _isNewAccount;
 
@@ -40,30 +38,7 @@ public partial class AccountPageViewModel : ViewModelBase
 
     public Color AccountColor => Color.FromArgb(_accountColorString ?? "#a2a2a2");
 
-
-    public Account? Account
-    {
-        get => _account;
-        set
-        {
-            if (value is not null && SetProperty(ref _account, value))
-            {
-                AccountName = value.Name;
-                AccountNumber = value.Number;
-                AccountValue = value.Balance;
-                AccountCurrencyType = value.CurrencySymbol;
-                AccountArchived = value.IsArchived;
-                AccountDisabled = value.IsDisabled;
-                AccountType = AccountTypes.FirstOrDefault(x => x.Name == value.AccountType);
-                AccountCurrency = Currencies.FirstOrDefault(x => x.Symbol == value.CurrencySymbol);
-                AccountColorString = Colors.FirstOrDefault(x => x == value.ColorString);
-            }
-            else
-            {
-                AccountType = AccountTypes.First();
-            }
-        }
-    }
+    public Account? Account { get; set; }
 
     public ObservableCollection<AccountType> AccountTypes { get; } = new();
     public ObservableCollection<Currency> Currencies { get; } = new();
@@ -91,6 +66,19 @@ public partial class AccountPageViewModel : ViewModelBase
 
             IsNewAccount = Account == null;
             Title = IsNewAccount ? "Новый счёт" : "Изменить счёт";
+
+            if (Account is not null)
+            {
+                AccountName = Account.Name;
+                AccountNumber = Account.Number;
+                AccountValue = Account.Balance;
+                AccountCurrencyType = Account.CurrencySymbol;
+                AccountArchived = Account.IsArchived;
+                AccountDisabled = Account.IsDisabled;
+                AccountType = AccountTypes.FirstOrDefault(x => x.Name == Account.AccountType);
+                AccountCurrency = Currencies.FirstOrDefault(x => x.Symbol == Account.CurrencySymbol);
+                AccountColorString = Colors.FirstOrDefault(x => x == Account.ColorString);
+            }
         });
 
     [RelayCommand]

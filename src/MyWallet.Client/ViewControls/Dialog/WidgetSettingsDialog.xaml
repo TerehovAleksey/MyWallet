@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<VerticalStackLayout
+    x:Class="MyWallet.Client.ViewControls.Dialog.WidgetSettingsDialog"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Spacing="20">
+
+    <VerticalStackLayout
+        Grid.Column="0"
+        Padding="0"
+        HorizontalOptions="Fill">
+        <Label
+            Margin="0,0,0,5"
+            Style="{StaticResource RegularGray12TextStyle}"
+            Text="Выбрать период" />
+        <Picker x:Name="TimePeriodPicker" SelectedIndexChanged="TimePeriodPicker_SelectedIndexChanged" />
+    </VerticalStackLayout>
+
+    <VerticalStackLayout
+        Grid.Column="0"
+        Padding="0"
+        HorizontalOptions="Fill">
+        <Label
+            Margin="0,0,0,5"
+            Style="{StaticResource RegularGray12TextStyle}"
+            Text="Фильтр" />
+        <Picker x:Name="FilterPicker" />
+    </VerticalStackLayout>
+
+</VerticalStackLayout>

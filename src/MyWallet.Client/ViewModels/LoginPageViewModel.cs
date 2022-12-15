@@ -53,7 +53,7 @@ public partial class LoginPageViewModel : ViewModelBase
             await HandleServiceResponseErrorsAsync(response);
         });
 
-        await NavigationService.GoToAsync("/main");
+        await NavigationService.GoToAsync(nameof(MainPage));
     }
 
     [RelayCommand]

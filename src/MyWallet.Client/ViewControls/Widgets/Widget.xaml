@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="MyWallet.Client.ViewControls.Widgets.Widget"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.Widget"
+    x:DataType="vm:IWidgetViewModel">
+
+    <ContentView.Resources>
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Margin" Value="10,0" />
+            <Setter Property="Padding" Value="5,0,5,5" />
+            <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundCardColor}" />
+            <Setter Property="Stroke" Value="{DynamicResource GrayDarkColor}" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+            <Setter Property="StrokeThickness" Value=".5" />
+        </Style>
+    </ContentView.Resources>
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Border HorizontalOptions="FillAndExpand" Style="{StaticResource CardStyle}">
+                <VerticalStackLayout Padding="10,5,10,10" HorizontalOptions="FillAndExpand">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <!--  Header  -->
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                HorizontalOptions="Start"
+                                Style="{DynamicResource CaptionTextStyle}"
+                                Text="{TemplateBinding Title}" />
+                            <ImageButton
+                                x:Name="FilterButton"
+                                Grid.Column="1"
+                                Margin="0"
+                                Clicked="FilterButton_Clicked"
+                                Source="dots.png"
+                                Style="{DynamicResource IconButtonStyle}" />
+                        </Grid>
+
+                        <!--  Description  -->
+                        <Label
+                            Grid.Row="1"
+                            Style="{DynamicResource RegularGray12TextStyle}"
+                            Text="Последние 7 дней"
+                            TextTransform="Uppercase" />
+
+                        <!--  Content  -->
+                        <ContentPresenter Grid.Row="2" Margin="0,10,0,0" />
+
+                        <!--  Divider  -->
+                        <BoxView
+                            Grid.Row="3"
+                            Margin="0,10"
+                            Style="{StaticResource SeparatorStyle}" />
+
+                        <!--  Footer  -->
+                        <Button
+                            x:Name="LinkButton"
+                            Grid.Row="4"
+                            Clicked="LinkButton_Clicked"
+                            HeightRequest="30"
+                            HorizontalOptions="Start"
+                            Style="{StaticResource LinkButton}"
+                            Text="Еще" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+</ContentView>

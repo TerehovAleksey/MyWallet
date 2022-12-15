@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!--  Separator  -->
+    <Style x:Key="SeparatorStyle" TargetType="BoxView">
+        <Setter Property="HeightRequest" Value=".5" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="Color" Value="{DynamicResource GrayColor}" />
+    </Style>
+
+</ResourceDictionary>
