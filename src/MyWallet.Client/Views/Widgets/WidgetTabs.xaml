@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<TabbedPage
+    x:Class="MyWallet.Client.Views.Widgets.WidgetTabs"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MyWallet.Client.Views.Widgets">
+
+    <local:BalanceWidgetsPage Title="Баланс" />
+    <!-- <local:BalanceWidgetsPage Title="Прогноз"></local:BalanceWidgetsPage> -->
+    <!-- <local:BalanceWidgetsPage Title="Денежный поток"></local:BalanceWidgetsPage> -->
+    <!-- <local:BalanceWidgetsPage Title="Расходы"></local:BalanceWidgetsPage> -->
+    <!-- <local:BalanceWidgetsPage Title="Кредит"></local:BalanceWidgetsPage> -->
+    <!-- <local:BalanceWidgetsPage Title="Отчёты"></local:BalanceWidgetsPage> -->
+    <!-- <local:BalanceWidgetsPage Title="Другие"></local:BalanceWidgetsPage> -->
+</TabbedPage>

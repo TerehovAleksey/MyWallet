@@ -2,7 +2,7 @@
 
 namespace MyWallet.Client.ViewModels.Widget;
 
-public abstract class BaseWidgetViewModel : IWidgetViewModel
+public abstract class BaseWidgetViewModel : ObservableObject, IWidgetViewModel
 {
     private readonly IDialogService _dialogService;
 

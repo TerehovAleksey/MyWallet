@@ -24,7 +24,7 @@ public partial class AccountPageViewModel : ViewModelBase
     private string _accountCurrencyType = string.Empty;
 
     [ObservableProperty]
-    private Currency? _accountCurrency;
+    private CurrencyDto? _accountCurrency;
 
     [ObservableProperty]
     private bool _accountDisabled;
@@ -41,11 +41,10 @@ public partial class AccountPageViewModel : ViewModelBase
     public Account? Account { get; set; }
 
     public ObservableCollection<AccountType> AccountTypes { get; } = new();
-    public ObservableCollection<Currency> Currencies { get; } = new();
+    public ObservableCollection<CurrencyDto> Currencies { get; } = new();
     public ObservableCollection<string> Colors { get; } = new();
 
-    public AccountPageViewModel(IDataService dataService, IDialogService dialogService, INavigationService navigationService) : base(dialogService,
-        navigationService)
+    public AccountPageViewModel(IAppService appService, IDataService dataService) : base(appService)
     {
         _dataService = dataService;
         Title = "Новый счёт";
@@ -54,13 +53,11 @@ public partial class AccountPageViewModel : ViewModelBase
     public override Task InitializeAsync() =>
         IsBusyFor(async () =>
         {
-            var typesResponse = await _dataService.GetAccountTypesAsync();
-            await HandleServiceResponseErrorsAsync(typesResponse);
-            AccountTypes.AddRange(typesResponse.Item);
+            var types = await _dataService.Account.GetAccountTypesAsync();
+            AccountTypes.AddRange(types);
 
-            var currencyResponse = await _dataService.GetUserCurrencies();
-            await HandleServiceResponseErrorsAsync(currencyResponse);
-            Currencies.AddRange(currencyResponse.Item);
+            var currencies = await _dataService.Currency.GetUserCurrencyAsync();
+            Currencies.AddRange(currencies.Select(x => new CurrencyDto(x.Symbol, x.Description)));
 
             Colors.AddRange(UserColors.GetColors());
 
@@ -92,13 +89,9 @@ public partial class AccountPageViewModel : ViewModelBase
             {
                 await IsBusyFor(async () =>
                 {
-                    var response = await _dataService.CreateAccountAsync(new AccountCreate(AccountName, AccountNumber, AccountType.Id, AccountValue,
+                    await _dataService.Account.CreateAccountAsync(new AccountCreate(AccountName, AccountNumber, AccountType.Id, AccountValue,
                         AccountCurrency.Symbol, AccountColorString));
-                    await HandleServiceResponseErrorsAsync(response);
-                    if (response.State == State.Success)
-                    {
-                        await NavigationService.GoBackAsync();
-                    }
+                    await NavigationService.GoBackAsync();
                 });
             }
         }
@@ -107,18 +100,14 @@ public partial class AccountPageViewModel : ViewModelBase
             // Редактирование
             await IsBusyFor(async () =>
             {
-                var response = await _dataService.UpdateAccountAsync(new AccountUpdate(Account.Id, AccountName, AccountNumber, AccountType.Id,
+                await _dataService.Account.UpdateAccountAsync(new AccountUpdate(Account.Id, AccountName, AccountNumber, AccountType.Id,
                     AccountColorString, AccountDisabled, AccountArchived));
-                await HandleServiceResponseErrorsAsync(response);
-                if (response.State == State.Success)
-                {
-                    await NavigationService.GoBackAsync();
-                }
+                await NavigationService.GoBackAsync();
             });
         }
         else
         {
-            await DialogService.ShowAlertAsync("Ошибка", "Не все поля правильно заполнены", "Понятно");
+            await DialogService.ShowMessageAsync("Ошибка", "Не все поля правильно заполнены", "Понятно");
         }
     }
 
@@ -129,12 +118,8 @@ public partial class AccountPageViewModel : ViewModelBase
         {
             await IsBusyFor(async () =>
             {
-                var response = await _dataService.DeleteAccountAsync(Account.Id);
-                await HandleServiceResponseErrorsAsync(response);
-                if (response.State == State.Success)
-                {
-                    await NavigationService.GoBackAsync();
-                }
+                await _dataService.Account.DeleteAccountAsync(Account.Id);
+                await NavigationService.GoBackAsync();
             });
         }
     }

@@ -16,7 +16,6 @@
 
     <!--  Content  -->
     <CollectionView
-        Grid.Row="2"
         Margin="0,10,0,0"
         ItemsSource="{Binding Records}"
         SelectionMode="None">
@@ -33,17 +32,15 @@
                         <ColumnDefinition Width="AUTO" />
                     </Grid.ColumnDefinitions>
                     <Border
-                        Padding="0"
+                        Padding="6"
                         BackgroundColor="{Binding Color}"
                         HeightRequest="50"
                         StrokeShape="RoundRectangle 25"
                         StrokeThickness="0"
                         WidthRequest="50">
-                        <Image
-                            Aspect="AspectFill"
-                            HeightRequest="20"
-                            Source="coins.png"
-                            WidthRequest="20" />
+                        <Border Padding="6" BackgroundColor="Transparent">
+                            <Image Source="coins.png" />
+                        </Border>
                     </Border>
                     <VerticalStackLayout
                         Grid.Row="0"

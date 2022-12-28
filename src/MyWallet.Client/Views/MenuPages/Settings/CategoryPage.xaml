@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<base:PageBase
+    x:Class="MyWallet.Client.Views.MenuPages.Settings.CategoryPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
+    xmlns:common="clr-namespace:MyWallet.Client.ViewControls.Common"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.MenuPages.Settings"
+    x:DataType="vm:CategoryPageViewModel"
+    DisplayMode="NavigationBar"
+    PageMode="Navigate"
+    PageTitle="{Binding Title}">
+
+    <base:PageBase.PageContent>
+        <ScrollView>
+            <Grid
+                BackgroundColor="{DynamicResource BackgroundLightColor}"
+                Grid.ColumnDefinitions="*,60"
+                Grid.RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0,20"
+                    BackgroundColor="{Binding Category.Color}"
+                    HeightRequest="100"
+                    HorizontalOptions="Center"
+                    StrokeShape="RoundRectangle 50"
+                    WidthRequest="100">
+                    <Image Source="{Binding Category.ImageName}" />
+                </Border>
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Padding="5"
+                    HeightRequest="30"
+                    WidthRequest="30">
+                    <Image Source="edit.png" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding EditImageCommand}" NumberOfTapsRequired="1" />
+                    </Border.GestureRecognizers>
+                </Border>
+                <BoxView
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Style="{DynamicResource SeparatorStyle}" />
+                <VerticalStackLayout
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="10,0,0,0"
+                    HorizontalOptions="StartAndExpand">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Header"
+                        HorizontalOptions="Start"
+                        Text="{x:Static res:Strings.Name}"
+                        TextColor="{DynamicResource DarkTextColor}" />
+                    <Label
+                        HorizontalOptions="Start"
+                        Text="{Binding Category.Name}"
+                        TextColor="{DynamicResource GrayTextColor}" />
+                </VerticalStackLayout>
+                <Border
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Padding="5"
+                    HeightRequest="30"
+                    WidthRequest="30">
+                    <Image Source="edit.png" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding EditNameCommand}" NumberOfTapsRequired="1" />
+                    </Border.GestureRecognizers>
+                </Border>
+                <BoxView
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Style="{DynamicResource SeparatorStyle}" />
+                <VerticalStackLayout
+                    x:Name="row"
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Margin="10,0,0,0"
+                    HorizontalOptions="StartAndExpand">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Header"
+                        HorizontalOptions="Start"
+                        Text="{x:Static res:Strings.CategoryNature}"
+                        TextColor="{DynamicResource DarkTextColor}" />
+                    <Label
+                        HorizontalOptions="Start"
+                        Text="Need"
+                        TextColor="{DynamicResource GrayTextColor}" />
+                </VerticalStackLayout>
+                <Border
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Padding="5"
+                    HeightRequest="30"
+                    WidthRequest="30">
+                    <Image Source="edit.png" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding EditNatureCommand}" NumberOfTapsRequired="1" />
+                    </Border.GestureRecognizers>
+                </Border>
+                <BoxView
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Style="{DynamicResource SeparatorStyle}" />
+                <VerticalStackLayout
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    Margin="10,0,0,0"
+                    HeightRequest="{Binding Source={x:Reference row}, Path=Width}"
+                    HorizontalOptions="StartAndExpand">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Header"
+                        HorizontalOptions="Start"
+                        Text="{x:Static res:Strings.Show}"
+                        TextColor="{DynamicResource DarkTextColor}" />
+                </VerticalStackLayout>
+                <Switch
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center" />
+                <common:PageMenu
+                    Title="{x:Static res:Strings.Subcategories}"
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    IsVisible="{Binding IsCategory}"
+                    Items="{Binding MenuItems}"
+                    SelectedCommand="{Binding NavigateCommand}" />
+            </Grid>
+        </ScrollView>
+    </base:PageBase.PageContent>
+
+</base:PageBase>

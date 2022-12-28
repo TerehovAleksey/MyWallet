@@ -34,7 +34,9 @@
                 x:Name="DialogContent"
                 Grid.Row="1"
                 Margin="0,15,0,15"
-                HorizontalOptions="FillAndExpand" />
+                HorizontalOptions="FillAndExpand"
+                Stroke="{DynamicResource BackgroundCardColor}"
+                StrokeThickness="-1" />
             <Grid Grid.Row="2" ColumnDefinitions="*,Auto,Auto">
                 <Button
                     x:Name="CancelButton"
@@ -44,6 +46,7 @@
                 <Button
                     x:Name="OkButton"
                     Grid.Column="2"
+                    Clicked="OkButton_OnClicked"
                     Style="{DynamicResource LinkButton}" />
             </Grid>
         </Grid>

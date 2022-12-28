@@ -11,9 +11,6 @@ public partial class DialogContainer : Grid, IDisposable
 
         IsVisible = false;
         InitializeComponent();
-
-        _dialogService.OnShow += Dialog_OnShow;
-        _dialogService.OnClose += Dialog_OnClose;
     }
 
     private void Dialog_OnClose(bool result)
@@ -23,9 +20,20 @@ public partial class DialogContainer : Grid, IDisposable
         _tcs = new(false);
     }
 
+    public void Subscribe()
+    {
+        _dialogService.OnShow += Dialog_OnShow;
+        _dialogService.OnClose += Dialog_OnClose;
+    }
+
+    public void Unsubscribe()
+    {
+        _dialogService.OnShow -= Dialog_OnShow;
+        _dialogService.OnClose -= Dialog_OnClose;
+    }
+
     private Task<bool> Dialog_OnShow(View content, DialogSettings settings)
     {
-
 #if WINDOWS
         Dialog.WidthRequest = 450;
 #elif ANDROID
@@ -37,22 +45,22 @@ public partial class DialogContainer : Grid, IDisposable
 
         TitleLabel.Text = settings.Title;
         OkButton.Text = settings.OkButtonText;
+        CancelButton.IsVisible = settings.IsCancelButtonVisible;
         CancelButton.Text = settings.CancelButtonText;
 
         IsVisible = true;
         return _tcs.Task;
     }
 
-    private void DialogContainerMask_Tapped(object sender, TappedEventArgs e) => CloseDialog();
-    private void ButtonCancel_Clicked(object sender, EventArgs e) => CloseDialog();
-    private void CloseDialog()
+    private void DialogContainerMask_Tapped(object sender, TappedEventArgs e) => CloseDialog(false);
+    private void OkButton_OnClicked(object? sender, EventArgs e) => CloseDialog(true);
+    private void ButtonCancel_Clicked(object sender, EventArgs e) => CloseDialog(false);
+
+    private void CloseDialog(bool result)
     {
-        _dialogService.Close();
+        _dialogService.Close(result);
         IsVisible = false;
     }
-    public void Dispose()
-    {
-        _dialogService.OnShow -= Dialog_OnShow;
-        _dialogService.OnClose -= Dialog_OnClose;
-    }
+
+    public void Dispose() => Unsubscribe();
 }

@@ -30,9 +30,13 @@
                     Padding="0"
                     HorizontalOptions="FillAndExpand"
                     Spacing="10"
-                    VerticalOptions="Start">
+                    VerticalOptions="FillAndExpand">
                     <controls:MainAccounts />
                     <widgets:WidgetContainer BindingContext="{Binding Widgets}" />
+                    <Button
+                        Command="{Binding OpenWidgetTabsCommand}"
+                        Style="{StaticResource AddWidgetButton}"
+                        Text="Добавить виджеты" />
                 </VerticalStackLayout>
             </ScrollView>
             <Button Command="{Binding OpenRecordPageCommand}" Style="{StaticResource FabButtonStyle}" />

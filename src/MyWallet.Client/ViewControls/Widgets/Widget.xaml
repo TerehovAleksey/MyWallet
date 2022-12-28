@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.Widget"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
     x:DataType="vm:IWidgetViewModel">
 
     <ContentView.Resources>
@@ -12,15 +13,21 @@
             <Setter Property="Padding" Value="5,0,5,5" />
             <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundCardColor}" />
             <Setter Property="Stroke" Value="{DynamicResource GrayDarkColor}" />
-            <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 5" />
             <Setter Property="StrokeThickness" Value=".5" />
         </Style>
     </ContentView.Resources>
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Border HorizontalOptions="FillAndExpand" Style="{StaticResource CardStyle}">
-                <VerticalStackLayout Padding="10,5,10,10" HorizontalOptions="FillAndExpand">
-                    <Grid>
+            <Border
+                HorizontalOptions="FillAndExpand"
+                Style="{StaticResource CardStyle}"
+                VerticalOptions="FillAndExpand">
+                <VerticalStackLayout
+                    Padding="10,5,10,5"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand">
+                    <Grid VerticalOptions="FillAndExpand">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -41,7 +48,7 @@
                             <ImageButton
                                 x:Name="FilterButton"
                                 Grid.Column="1"
-                                Margin="0"
+                                Margin="0,0,-10,0"
                                 Clicked="FilterButton_Clicked"
                                 Source="dots.png"
                                 Style="{DynamicResource IconButtonStyle}" />
@@ -71,7 +78,8 @@
                             HeightRequest="30"
                             HorizontalOptions="Start"
                             Style="{StaticResource LinkButton}"
-                            Text="Еще" />
+                            Text="{x:Static res:Strings.ShowMore}"
+                            VerticalOptions="Center" />
                     </Grid>
                 </VerticalStackLayout>
             </Border>

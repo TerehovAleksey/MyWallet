@@ -1,18 +1,19 @@
 ﻿namespace MyWallet.Client.ViewModels;
+
 public partial class MainPageViewModel : ViewModelBase
 {
     private readonly IDataService _dataService;
-    
+
     public WidgetContainerViewModel Widgets { get; }
 
     public ObservableCollection<Account> Accounts { get; } = new();
     public ObservableCollection<object> SelectedAccounts { get; } = new();
-    
-    public MainPageViewModel(IDataService dataService, IDialogService dialogService, INavigationService navigationService, WidgetContainerViewModel widgetContainer) : base(dialogService, navigationService)
+
+    public MainPageViewModel(IAppService appService, IDataService dataService, WidgetContainerViewModel widgetContainer) : base(appService)
     {
         _dataService = dataService;
         Widgets = widgetContainer;
-        Title = "Главная";
+        Title = Strings.Home;
         OneTimeInitialized = false;
 
         SelectedAccounts.CollectionChanged += SelectedAccounts_CollectionChanged;
@@ -30,29 +31,25 @@ public partial class MainPageViewModel : ViewModelBase
     {
         return IsBusyFor(async () =>
         {
-            var response = await _dataService.GetAccountsAsync();
-            await HandleServiceResponseErrorsAsync(response);
-            if (response.Item != null)
-            {
-                Accounts.AddRange(response.Item, true);
-                SelectedAccounts.AddRange(response.Item, true);
-            }
+            var accounts = await _dataService.Account.GetAccountsAsync();
+            Accounts.AddRange(accounts, true);
+            SelectedAccounts.AddRange(accounts, true);
 
             await Widgets.LoadingWidgetsAsync();
         });
     }
 
     [RelayCommand]
-    private async void OpenNotificationsPage()
-    {
-        await DialogService.ShowAlertAsync("Notifications", "Not implemented yet!", "Got it!");
-    }
+    private Task OpenNotificationsPage() => DialogService.ShowInDevelopmentMessage();
 
     [RelayCommand]
-    private void OpenAccountsPage() => NavigationService.GoToAsync(nameof(AccountsPage));
-    
+    private Task OpenAccountsPage() => NavigationService.GoToAsync("accounts");
+
     [RelayCommand]
-    private void OpenRecordPage() => NavigationService.GoToAsync(nameof(RecordPage));
+    private Task OpenRecordPage() => NavigationService.GoToAsync("record");
+
+    [RelayCommand]
+    private Task OpenWidgetTabs() => NavigationService.GoToAsync(nameof(WidgetTabs));
 
     protected override void Dispose(bool disposing)
     {

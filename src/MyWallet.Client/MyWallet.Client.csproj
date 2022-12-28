@@ -29,6 +29,11 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<AndroidHttpClientHandlerType>DangerousAndroidMessageHandler, DangerousAndroidMessageHandler</AndroidHttpClientHandlerType>
+	</PropertyGroup>
+
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-maccatalyst|AnyCPU'">
 	  <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
 	</PropertyGroup>
@@ -64,24 +69,52 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.png" Color="#00aa70" />
-		<MauiSplashScreen Include="Resources\AppIcon\appiconfg.png">
-		  <Color>#ffffff</Color>
-		  <BaseSize>128,128</BaseSize>
-		</MauiSplashScreen>
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.png" Color="#ffffff" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+		<MauiImage Include="Resources\Images\svg\edit.svg" TintColor="#a3a3a3" />
 		
 		<!-- Menu Images -->
+		<MauiImage Include="Resources\Images\Menu\menu_home.svg" TintColor="#ec407a" />
+		<MauiImage Include="Resources\Images\Menu\menu_records.svg" TintColor="#ee8c01" />
+		<MauiImage Include="Resources\Images\Menu\menu_statistics.svg" TintColor="#0097a7" />
+		<MauiImage Include="Resources\Images\Menu\menu_balance.svg" TintColor="#0097a7" />
+		<MauiImage Include="Resources\Images\Menu\menu_outlook.svg" TintColor="#0097a7" />
+		<MauiImage Include="Resources\Images\Menu\menu_cash_flow.svg" TintColor="#0097a7" />
+		<MauiImage Include="Resources\Images\Menu\menu_spending.svg" TintColor="#0097a7" />
+		<MauiImage Include="Resources\Images\Menu\menu_credit.svg" TintColor="#0097a7" />
+		<MauiImage Include="Resources\Images\Menu\menu_reports.svg" TintColor="#0097a7" />
+		<MauiImage Include="Resources\Images\Menu\menu_planned.svg" TintColor="#ff9500" />
+		<MauiImage Include="Resources\Images\Menu\menu_budgets.svg" TintColor="#f01111" />
+		<MauiImage Include="Resources\Images\Menu\menu_debts.svg" TintColor="#e53935" />
+		<MauiImage Include="Resources\Images\Menu\menu_goals.svg" TintColor="#0097a7" />
+		<MauiImage Include="Resources\Images\Menu\menu_shopping.svg" TintColor="#52bb7b" />
+		<MauiImage Include="Resources\Images\Menu\menu_warranties.svg" TintColor="#ff9500" />
+		<MauiImage Include="Resources\Images\Menu\menu_loyalty_cards.svg" TintColor="#f44336" />
+		<MauiImage Include="Resources\Images\Menu\menu_currency_rates.svg" TintColor="#6099eb" />
+		<MauiImage Include="Resources\Images\Menu\menu_group_sharing.svg" TintColor="#26a69a" />
+		<MauiImage Include="Resources\Images\Menu\menu_invite.svg" TintColor="#03a9f4" />
+		<MauiImage Include="Resources\Images\Menu\menu_follow_us.svg" TintColor="#ff4081" />
+		<MauiImage Include="Resources\Images\Menu\menu_help.svg" TintColor="#ffa000" />
 		<MauiImage Include="Resources\Images\Menu\menu_settings.svg" TintColor="#4caf50" />
 
 		<!-- Settings Page Images -->
-		<MauiImage Include="Resources\Images\Settings\user.svg" TintColor="#007aff" />
-		<MauiImage Include="Resources\Images\Settings\bitcoin.svg" TintColor="#007aff" />
+		<MauiImage Include="Resources\Images\Settings\settings_accounts.svg" TintColor="#007aff" />
+		<MauiImage Include="Resources\Images\Settings\settings_categories.svg" TintColor="#007aff" />
+		<MauiImage Include="Resources\Images\Settings\settings_currencies.svg" TintColor="#007aff" />
+		<MauiImage Include="Resources\Images\Settings\settings_devices.svg" TintColor="#007aff" />
+		<MauiImage Include="Resources\Images\Settings\settings_user.svg" TintColor="#007aff" />
+
+		<!-- StartScreen Images -->
+		<MauiImage Include="Resources\Images\StartScreen\start_screen_1.png" />
+		<MauiImage Include="Resources\Images\StartScreen\start_screen_2.png" />
+		<MauiImage Include="Resources\Images\StartScreen\start_screen_3.png" />
+		<MauiImage Include="Resources\Images\StartScreen\start_screen_4.png" />
+		<MauiImage Include="Resources\Images\StartScreen\start_screen_5.png" />
+		<MauiImage Include="Resources\Images\StartScreen\start_screen_6.png" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -124,13 +157,19 @@
 	  <None Remove="Resources\Images\menu.png" />
 	  <None Remove="Resources\Images\nointernet.png" />
 	  <None Remove="Resources\Images\notifications.png" />
+	  <None Remove="Resources\Images\StartScreen\start_screen_1.png" />
+	  <None Remove="Resources\Images\StartScreen\start_screen_2.png" />
+	  <None Remove="Resources\Images\StartScreen\start_screen_3.png" />
+	  <None Remove="Resources\Images\StartScreen\start_screen_4.png" />
+	  <None Remove="Resources\Images\StartScreen\start_screen_5.png" />
+	  <None Remove="Resources\Images\StartScreen\start_screen_6.png" />
 	  <None Remove="Resources\Images\trash.png" />
 	  <None Remove="Resources\Images\user_gray.png" />
 	  <None Remove="Resources\Images\wallet.png" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="3.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
@@ -139,6 +178,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="AppShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="EntryShell.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Buttons.xaml">
@@ -168,7 +210,7 @@
 	  <MauiXaml Update="Resources\Styles\Texts.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ViewControls\Common\ColorIcon.xaml">
+	  <MauiXaml Update="ViewControls\Common\EditPageContainer.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ViewControls\Common\ErrorIndicator.xaml">
@@ -178,6 +220,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ViewControls\Common\LoadingIndicator.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ViewControls\Common\PageMenu.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ViewControls\Dialog\WidgetSettingsDialog.xaml">
@@ -198,18 +243,6 @@
 	  <MauiXaml Update="Views\Base\PageBase.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\CurrenciesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\EntryPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\SettingsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\UserPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="ViewControls\Dialog\DialogContainer.xaml">
 	    <SubType>Designer</SubType>
 	    <Generator>MSBuild:Compile</Generator>
@@ -223,6 +256,40 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ViewControls\Widgets\WidgetLastRecords.xaml">
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Entry\EntryPage.xaml">
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Entry\LoginPage.xaml">
+	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MenuPages\SettingsPage.xaml">
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Entry\StartPage.xaml">
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MenuPages\Settings\CategoriesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MenuPages\Settings\CurrenciesPage.xaml">
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MenuPages\Settings\CurrencyPage.xaml">
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MenuPages\Settings\DevicesPage.xaml">
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MenuPages\Settings\UserPage.xaml">
 	    <SubType>Designer</SubType>
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -250,6 +317,56 @@
 	    <DependentUpon>WidgetLastRecords.xaml</DependentUpon>
 	    <SubType>Code</SubType>
 	  </Compile>
+	  <Compile Update="Resources\Strings.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Strings.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Entry\EntryPage.xaml.cs">
+	    <DependentUpon>EntryPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Views\Entry\LoginPage.xaml.cs">
+	    <DependentUpon>LoginPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Views\MenuPages\SettingsPage.xaml.cs">
+	    <DependentUpon>SettingsPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Views\Entry\StartPage.xaml.cs">
+	    <DependentUpon>StartPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Views\MenuPages\Settings\CurrenciesPage.xaml.cs">
+	    <DependentUpon>CurrenciesPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Views\MenuPages\Settings\CurrencyPage.xaml.cs">
+	    <DependentUpon>CurrencyPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Views\MenuPages\Settings\DevicesPage.xaml.cs">
+	    <DependentUpon>DevicesPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Views\MenuPages\Settings\UserPage.xaml.cs">
+	    <DependentUpon>UserPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="Mono.Android">
+	    <HintPath>C:\Program Files\dotnet\packs\Microsoft.Android.Ref.33\33.0.4\ref\net7.0\Mono.Android.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Strings.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 </Project>

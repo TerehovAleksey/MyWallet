@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<base:PageBase
+    x:Class="MyWallet.Client.Views.MenuPages.Settings.UserPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
+    xmlns:controls="clr-namespace:MyWallet.Client.ViewControls.Common"
+    xmlns:converters="clr-namespace:MyWallet.Client.Converters"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.MenuPages.Settings"
+    x:DataType="vm:UserPageViewModel"
+    Background="{StaticResource BackgroundColor}"
+    DisplayMode="NavigationBar"
+    PageMode="Navigate"
+    PageTitle="{Binding Title}">
+
+    <base:PageBase.Resources>
+        <converters:GenderDisplayConverter x:Key="GenderDisplayConverter" />
+    </base:PageBase.Resources>
+
+    <base:PageBase.PageIcons>
+
+        <ImageButton
+            Margin="0"
+            Command="{Binding SaveCommand}"
+            Source="check.png"
+            Style="{StaticResource IconButtonStyle}" />
+
+    </base:PageBase.PageIcons>
+
+    <base:PageBase.PageContent>
+
+        <ScrollView Style="{StaticResource PageScrollView}">
+            <VerticalStackLayout MaximumWidthRequest="{OnPlatform WinUI=600}" Style="{StaticResource PageVerticalStackLayout}">
+
+                <!--  Main  -->
+                <Grid ColumnDefinitions="Auto,*">
+                    <!--  Logo  -->
+                    <Border
+                        Grid.Column="0"
+                        Margin="10,0,15,0"
+                        BackgroundColor="{StaticResource LightGrayColor}"
+                        HeightRequest="60"
+                        Stroke="{StaticResource BackgroundLightColor}"
+                        StrokeShape="RoundRectangle 30"
+                        StrokeThickness="1"
+                        WidthRequest="60">
+                        <Image
+                            HeightRequest="30"
+                            Source="user_gray.png"
+                            WidthRequest="30" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Style="{StaticResource PageVerticalStackLayout}">
+                        <!--  First name  -->
+                        <controls:InputText
+                            Title="{x:Static res:Strings.FirstName}"
+                            Placeholder="{x:Static res:Strings.EnterFirstNameDots}"
+                            Value="{Binding FirstName}" />
+                        <!--  Last name  -->
+                        <controls:InputText
+                            Title="{x:Static res:Strings.LastName}"
+                            Placeholder="{x:Static res:Strings.EnterLastNameDots}"
+                            Value="{Binding LastName}" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!--  Email  -->
+                <controls:InputText
+                    Title="{x:Static res:Strings.Email}"
+                    IsReadOnly="True"
+                    Placeholder="{x:Static res:Strings.EnterEmailDots}"
+                    Value="{Binding Email}" />
+
+                <!--  Birthday, Gender  -->
+                <Grid ColumnDefinitions="*,*">
+                    <VerticalStackLayout
+                        Grid.Column="0"
+                        Padding="0"
+                        HorizontalOptions="Fill">
+                        <Label
+                            Margin="0,0,0,5"
+                            Style="{StaticResource RegularGray12TextStyle}"
+                            Text="{x:Static res:Strings.DateOfBirth}" />
+                        <DatePicker Date="{Binding Birthday}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        Padding="0"
+                        HorizontalOptions="Fill">
+                        <Label
+                            Margin="0,0,0,5"
+                            Style="{StaticResource RegularGray12TextStyle}"
+                            Text="{x:Static res:Strings.SelectGender}" />
+                        <Picker
+                            ItemDisplayBinding="{Binding ., Converter={StaticResource GenderDisplayConverter}}"
+                            ItemsSource="{Binding Genders}"
+                            SelectedItem="{Binding UserGender}" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <Button
+                    Command="{Binding LogoutCommand}"
+                    Style="{StaticResource DangerButton}"
+                    Text="{x:Static res:Strings.Logout}" />
+
+                <VerticalStackLayout HorizontalOptions="Start">
+                    <Label
+                        Style="{StaticResource MediumDark14TextStyle}"
+                        Text="{x:Static res:Strings.PasswordChange}"
+                        TextTransform="Uppercase" />
+                    <Label
+                        LineBreakMode="WordWrap"
+                        Style="{StaticResource RegularGray12TextStyle}"
+                        Text="{x:Static res:Strings.PasswordChangeDescription}" />
+                </VerticalStackLayout>
+
+                <controls:InputText
+                    Title="{x:Static res:Strings.Password}"
+                    Placeholder="{x:Static res:Strings.EnterPasswordDots}"
+                    Value="{Binding Password}" />
+                <controls:InputText
+                    Title="{x:Static res:Strings.PasswordConfirmation}"
+                    Placeholder="{x:Static res:Strings.EnterConfirmPasswordDots}"
+                    Value="{Binding NewPassword}" />
+
+                <Button
+                    Command="{Binding ChangePasswordCommand}"
+                    Style="{StaticResource PrimaryButton}"
+                    Text="{x:Static res:Strings.ChangePassword}" />
+
+                <Button
+                    Command="{Binding DeleteUserCommand}"
+                    Style="{StaticResource DangerLinkButton}"
+                    Text="{x:Static res:Strings.DeleteAllUserData}" />
+
+                <Button
+                    Command="{Binding ClearCommand}"
+                    Style="{StaticResource DangerLinkButton}"
+                    Text="{x:Static res:Strings.DeleteTempData}"
+                    TextColor="{DynamicResource AccentColor}" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </base:PageBase.PageContent>
+
+</base:PageBase>

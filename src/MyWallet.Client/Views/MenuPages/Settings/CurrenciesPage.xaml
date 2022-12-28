@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<base:PageBase
+    x:Class="MyWallet.Client.Views.MenuPages.Settings.CurrenciesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
+    xmlns:m="clr-namespace:MyWallet.Client.Models"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
+    xmlns:settings="using:MyWallet.Client.ViewModels.MenuPages.Settings"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.MenuPages.Settings"
+    x:DataType="settings:CurrenciesPageViewModel"
+    DisplayMode="NavigationBar"
+    PageMode="Navigate"
+    PageTitle="{Binding Title}">
+
+    <base:PageBase.PageContent>
+        <Grid>
+            <ScrollView>
+                <CollectionView
+                    EmptyView="{x:Static res:Strings.NoData}"
+                    ItemsSource="{Binding UserCurrencies}"
+                    SelectedItem="{Binding SelectedCurrency}"
+                    SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="m:UserCurrencyDto">
+                            <Grid RowDefinitions="Auto,Auto">
+                                <VerticalStackLayout
+                                    Grid.Row="0"
+                                    Margin="10"
+                                    HorizontalOptions="Start">
+                                    <Label Style="{DynamicResource MediumDark14TextStyle}" Text="{Binding Symbol}" />
+                                    <Label Style="{DynamicResource RegularDark12TextStyle}" Text="{Binding Description}" />
+                                </VerticalStackLayout>
+                                <BoxView Grid.Row="1" Style="{DynamicResource SeparatorStyle}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+            <Button Command="{Binding FabButtonCommand}" Style="{StaticResource FabButtonStyle}" />
+        </Grid>
+    </base:PageBase.PageContent>
+
+</base:PageBase>

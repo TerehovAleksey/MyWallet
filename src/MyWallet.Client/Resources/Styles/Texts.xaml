@@ -76,4 +76,13 @@
         <Setter Property="FontSize" Value="20" />
         <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
     </Style>
+
+    <!--  Input Lable  -->
+    <Style
+        x:Key="InputLabel"
+        BasedOn="{StaticResource RegularGray12TextStyle}"
+        TargetType="Label">
+        <Setter Property="Margin" Value="0,0,0,5" />
+    </Style>
+
 </ResourceDictionary>

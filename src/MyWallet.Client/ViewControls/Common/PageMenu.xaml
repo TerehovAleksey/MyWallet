@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Grid
+    x:Class="MyWallet.Client.ViewControls.Common.PageMenu"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:MyWallet.Client.Converters"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
+    xmlns:ui="clr-namespace:MyWallet.Client.UI">
+
+    <Grid.Resources>
+        <converters:StringNotEmptyToVisibleConverter x:Key="StringNotEmptyToVisibleConverter" />
+    </Grid.Resources>
+
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Border
+        x:Name="TitleLabelContainer"
+        Grid.Row="0"
+        BackgroundColor="{DynamicResource BackgroundColor}"
+        IsVisible="false">
+        <Label
+            x:Name="TitleLabel"
+            Margin="20,10,0,10"
+            FontSize="Caption"
+            Style="{DynamicResource RegularGray12TextStyle}"
+            TextTransform="Uppercase" />
+    </Border>
+    <BoxView Grid.Row="1" Style="{DynamicResource SeparatorStyle}" />
+    <CollectionView
+        x:Name="Collection"
+        Grid.Row="2"
+        BackgroundColor="{DynamicResource BackgroundCardColor}"
+        EmptyView="{x:Static res:Strings.NoData}"
+        SelectionMode="Single">
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout Orientation="Vertical" />
+        </CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="ui:MenuItem">
+                <Grid
+                    ColumnDefinitions="Auto, *"
+                    MinimumHeightRequest="65"
+                    RowDefinitions="*,Auto">
+                    <Border
+                        x:Name="ImageContainer"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="16,0"
+                        Padding="12"
+                        BackgroundColor="{Binding Color}"
+                        HeightRequest="44"
+                        Stroke="{Binding Color}"
+                        StrokeShape="RoundRectangle 22"
+                        StrokeThickness="0"
+                        WidthRequest="44">
+                        <Image Aspect="AspectFit" Source="{Binding Icon}" />
+                    </Border>
+                    <VerticalStackLayout
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        HorizontalOptions="StartAndExpand"
+                        Spacing="5"
+                        VerticalOptions="Center">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="Header"
+                            IsVisible="{Binding Title, Converter={StaticResource StringNotEmptyToVisibleConverter}}"
+                            Text="{Binding Title}"
+                            TextColor="{DynamicResource DarkTextColor}" />
+                        <Label
+                            IsVisible="{Binding Description, Converter={StaticResource StringNotEmptyToVisibleConverter}}"
+                            LineBreakMode="WordWrap"
+                            FontSize="Caption"
+                            Text="{Binding Description}"
+                            TextColor="{DynamicResource GrayTextColor}" />
+                    </VerticalStackLayout>
+                    <BoxView
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        IsVisible="{Binding HasSeparator}"
+                        Style="{StaticResource SeparatorStyle}" />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</Grid>

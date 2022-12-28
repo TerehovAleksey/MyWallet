@@ -3,6 +3,7 @@
     x:Class="MyWallet.Client.ViewControls.Common.ErrorIndicator"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
     BackgroundColor="{StaticResource BackgroundColor}"
     HorizontalOptions="Fill"
     IsVisible="False"
@@ -12,19 +13,19 @@
         Padding="48,12"
         HorizontalOptions="Center"
         VerticalOptions="Center">
-        <Frame
+        <Border
             BackgroundColor="{StaticResource BackgroundLightColor}"
-            CornerRadius="80"
-            HasShadow="False"
             HeightRequest="160"
+            StrokeShape="RoundRectangle 80"
             WidthRequest="160">
             <Image
                 x:Name="ErrorIcon"
                 Aspect="AspectFit"
                 HeightRequest="86"
                 HorizontalOptions="Center"
+                VerticalOptions="Center"
                 WidthRequest="86" />
-        </Frame>
+        </Border>
 
         <Label
             Margin="0,12,0,0"
@@ -32,7 +33,7 @@
             HorizontalOptions="Center"
             HorizontalTextAlignment="Center"
             Style="{StaticResource BaseMediumLabelTextStyle}"
-            Text="Uh-Oh!"
+            Text="{x:Static res:Strings.ErrorMessageTitle}"
             TextColor="{StaticResource DarkTextColor}" />
 
         <Label
@@ -43,6 +44,15 @@
             LineBreakMode="WordWrap"
             Style="{StaticResource BaseRegularLabelTextStyle}"
             TextColor="{StaticResource GrayTextColor}" />
+
+        <Button
+            x:Name="RefreshButton"
+            Margin="0,20,0,0"
+            Clicked="RefreshButton_Clicked"
+            HeightRequest="36"
+            Style="{StaticResource AccentButton}"
+            Text="{x:Static res:Strings.GoBack}"
+            WidthRequest="140" />
     </VerticalStackLayout>
 
 </Grid>

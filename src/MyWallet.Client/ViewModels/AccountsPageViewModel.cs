@@ -12,7 +12,7 @@ public partial class AccountsPageViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedAccount, value) && value is not null)
             {
-                NavigationService.GoToAsync(nameof(AccountPage), new Dictionary<string, object>
+                NavigationService.GoToAsync("account", new Dictionary<string, object>
                 {
                     { "Account", value }
                 });
@@ -22,7 +22,7 @@ public partial class AccountsPageViewModel : ViewModelBase
 
     public ObservableCollection<Account> Accounts { get; } = new();
 
-    public AccountsPageViewModel(IDataService dataService, IDialogService dialogService, INavigationService navigationService) : base(dialogService, navigationService)
+    public AccountsPageViewModel(IAppService appService, IDataService dataService) : base(appService)
 	{
         _dataService = dataService;
         Title = "Настройки счетов";
@@ -33,8 +33,8 @@ public partial class AccountsPageViewModel : ViewModelBase
     {
         return IsBusyFor(async () =>
         {
-            var accounts = await _dataService.GetAccountsAsync();
-            Accounts.AddRange(accounts.Item, true);
+            var accounts = await _dataService.Account.GetAccountsAsync();
+            Accounts.AddRange(accounts, true);
             SelectedAccount = null;
         });
     }
@@ -44,7 +44,7 @@ public partial class AccountsPageViewModel : ViewModelBase
     [RelayCommand]
     private async Task OpenAccountPage()
     {
-        await NavigationService.GoToAsync(nameof(AccountPage));
+        await NavigationService.GoToAsync("account");
     }
 
     #endregion

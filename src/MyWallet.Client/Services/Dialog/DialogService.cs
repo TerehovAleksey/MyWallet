@@ -10,6 +10,22 @@ public class DialogService : IDialogService
         return Application.Current?.MainPage?.DisplayAlert(title, message, buttonLabel) ?? Task.CompletedTask;
     }
 
+    public async Task ShowMessageAsync(string title, string message, string buttonText = "Ok")
+    {
+        var settings = new DialogSettings(title)
+        {
+            OkButtonText = buttonText,
+            IsCancelButtonVisible = false
+        };
+        var parameters = new DialogParameters()
+        {
+            { "Message", message }
+        };
+        await ShowDialogAsync<MessageDialog>(settings, parameters);
+    }
+
+    public Task ShowInDevelopmentMessage() => ShowMessageAsync("В разработке", "обязательно появится в ближайших обновлениях!)");
+
     public async Task<bool> ShowDialogAsync<T>(DialogSettings settings, DialogParameters? parameters = null) where T : View, IDialog
     {
         if (OnShow is not null)

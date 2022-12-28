@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<base:PageBase
+    x:Class="MyWallet.Client.Views.MenuPages.Settings.DevicesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
+    xmlns:m="clr-namespace:MyWallet.Client.Models"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.MenuPages.Settings"
+    x:Name="Devices"
+    Title="{Binding Title}"
+    x:DataType="vm:DevicesPageViewModel"
+    DisplayMode="NavigationBar"
+    PageMode="Navigate">
+
+    <base:PageBase.PageContent>
+        <Grid>
+            <ScrollView>
+                <CollectionView
+                    EmptyView="{x:Static res:Strings.NoData}"
+                    ItemsSource="{Binding UserDevices}"
+                    SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="m:UserDeviceDto">
+                            <Grid RowDefinitions="Auto,Auto">
+                                <VerticalStackLayout
+                                    Grid.Row="0"
+                                    Margin="10"
+                                    HorizontalOptions="Start">
+                                    <Label Style="{DynamicResource MediumDark14TextStyle}" Text="{Binding Name}" />
+                                    <Label Style="{DynamicResource RegularDark12TextStyle}" Text="{Binding}" />
+                                </VerticalStackLayout>
+                                <BoxView Grid.Row="1" Style="{DynamicResource SeparatorStyle}" />
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DevicesPageViewModel}}, Path=DeleteCommand}"
+                                        CommandParameter="{Binding .}"
+                                        NumberOfTapsRequired="1" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+        </Grid>
+    </base:PageBase.PageContent>
+</base:PageBase>

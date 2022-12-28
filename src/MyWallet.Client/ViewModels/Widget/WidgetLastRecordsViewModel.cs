@@ -13,11 +13,7 @@ public class WidgetLastRecordsViewModel : BaseWidgetViewModel
 
     public override async Task LoadingAsync()
     {
-        var records = await _dataService.GetRecordsAsync(new DateTime(2020, 01, 01), new DateTime(2023, 01, 01));
-        //TODO: обработка ошибки?
-        if (records.Item != null)
-        {
-            Records.AddRange(records.Item, true);
-        }
+        var records = await _dataService.Record.GetRecordsAsync();
+        Records.AddRange(records.Take(10), true);
     }
 }

@@ -6,6 +6,7 @@
     xmlns:converters="clr-namespace:MyWallet.Client.Converters"
     xmlns:m="clr-namespace:MyWallet.Client.Models"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
     Padding="10"
     x:DataType="vm:MainPageViewModel"
     BackgroundColor="{DynamicResource BackgroundCardColor}"
@@ -35,7 +36,7 @@
             Grid.Column="0"
             HorizontalOptions="Start"
             Style="{DynamicResource CaptionTextStyle}"
-            Text="Список счетов"
+            Text="{x:Static res:Strings.ListOfAccounts}"
             VerticalOptions="Center" />
         <ImageButton
             Grid.Column="1"
@@ -120,7 +121,7 @@
         Margin="0,15,0,0"
         HorizontalOptions="Center"
         IsVisible="{Binding SelectedAccounts.Count, Converter={StaticResource AccountsCounterVisibilityConverter}}"
-        Style="{StaticResource AccentButton}"
+        Style="{StaticResource AccentRoundedButton}"
         Text="{Binding SelectedAccounts.Count, Converter={StaticResource AccountsCountToStringConverter}}" />
 
     <!--  Footer  -->
@@ -134,12 +135,12 @@
             HorizontalOptions="Start"
             IsVisible="{Binding SelectedAccounts.Count, Converter={StaticResource CountOneToBoolConverter}}"
             Style="{DynamicResource RegularButton}"
-            Text="Корректировка баланса" />
+            Text="{x:Static res:Strings.AdjustBalance}" />
         <Button
             Grid.Column="1"
             HorizontalOptions="End"
             Style="{DynamicResource RegularButton}"
-            Text="Записи" />
+            Text="{x:Static res:Strings.Records}" />
     </Grid>
 
 </Grid>

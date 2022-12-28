@@ -4,13 +4,13 @@ public class WidgetConverter : IValueConverter
 {
     public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var widget = (IWidgetViewModel)value;
-        if (widget is null)
+        if (value is IWidgetViewModel viewModel)
         {
-            return null;
+            var result = CreateWidget(viewModel);
+            return result;
         }
-        var result = CreateWidget(widget);
-        return result;
+
+        return null;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -23,6 +23,14 @@ public class WidgetConverter : IValueConverter
         if (viewModel is WidgetLastRecordsViewModel)
         {
             return new WidgetLastRecords
+            {
+                BindingContext = viewModel
+            };
+        }
+
+        if (viewModel is WidgetCashFlowViewModel)
+        {
+            return new WidgetCashFlow
             {
                 BindingContext = viewModel
             };

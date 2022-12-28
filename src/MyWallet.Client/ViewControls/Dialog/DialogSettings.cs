@@ -6,6 +6,8 @@ public class DialogSettings
     public string OkButtonText { get; set; } = "СОХРАНИТЬ";
     public string CancelButtonText { get; set; } = "ОТМЕНА";
 
+    public bool IsCancelButtonVisible = true;
+
     public DialogSettings(string title)
     {
         Title = title;

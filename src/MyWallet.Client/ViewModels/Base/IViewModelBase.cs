@@ -10,7 +10,10 @@ public interface IViewModelBase : IQueryAttributable
     /// или каждый раз 
     /// </summary>
     public bool OneTimeInitialized { get; set; }
-    
+
+    /// <summary>
+    /// Признак того, что идёт получение данных
+    /// </summary>
     public bool IsBusy { get; }
 
     /// <summary>
@@ -19,4 +22,6 @@ public interface IViewModelBase : IQueryAttributable
     public bool IsInitialized { get; set; }
 
     Task InitializeAsync();
+
+    Task Reload();
 }

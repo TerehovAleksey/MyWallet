@@ -1,16 +1,23 @@
-﻿namespace MyWallet.Client;
+﻿using CommunityToolkit.Maui.Core;
 
-public partial class App : Application
+namespace MyWallet.Client;
+
+public partial class App : Application, IDisposable
 {
-    private readonly IBarrel _cache;
+    private readonly IStorageService _storageService;
+    private readonly IAppService _appService;
 
-    public App(IBarrel cache)
+
+    public App(IStorageService storageService, IAppService appService)
     {
-        _cache = cache;
+        _storageService = storageService;
+        _appService = appService;
 
-        InitializeComponent();
         InitApp();
-        MainPage = new AppShell();
+        SetShell();
+        InitializeComponent();
+        
+        _appService.OnAppStateChanged += OnAppStateChanged;
     }
 
     protected override void OnStart()
@@ -82,13 +89,36 @@ public partial class App : Application
 
 #if DEBUG
         //очистка кеша, если изменился источник данных
-        var source = _cache.Get<string>("ApiServiceUrl");
+        var source = _storageService.LoadFromCache<string>("ApiServiceUrl").Result;
         if (string.IsNullOrEmpty(source) || source != Constants.ApiServiceUrl)
         {
-            _cache.EmptyAll();
+            _storageService.ClearCache();
         }
 
-        _cache.Add("ApiServiceUrl", Constants.ApiServiceUrl, TimeSpan.MaxValue);
+        _storageService.SaveToCache("ApiServiceUrl", Constants.ApiServiceUrl, TimeSpan.MaxValue);
 #endif
+    }
+
+    private void OnAppStateChanged(bool isAuthenticated)
+    {
+        if (isAuthenticated)
+        {
+            MainPage = new AppShell();
+        }
+        else
+        {
+            MainPage = new EntryShell();
+        }
+    }
+
+    private void SetShell()
+    {
+        var isAuth = _storageService.IsAuthorized().Result;
+        OnAppStateChanged(isAuth);     
+    }
+
+    public void Dispose()
+    {
+        _appService.OnAppStateChanged -= OnAppStateChanged;
     }
 }

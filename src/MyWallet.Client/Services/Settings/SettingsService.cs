@@ -6,7 +6,9 @@ public class SettingsService : ISettingsService
     {
         var settings = new List<WidgetSettings>
         {
-            new(nameof(WidgetLastRecords))
+            new(Widgets.CashFlow),
+            new(Widgets.LastRecords)
+            
         };
 
         return await Task.FromResult(settings);

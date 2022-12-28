@@ -75,4 +75,13 @@ public partial class ErrorIndicator : Grid
     {
         InitializeComponent();
     }
+
+    private void RefreshButton_Clicked(object sender, EventArgs e)
+    {
+        var pageBase = Parent.Parent as PageBase;
+        if (pageBase?.BindingContext is IViewModelBase vm)
+        {
+            vm.Reload();
+        }
+    }
 }

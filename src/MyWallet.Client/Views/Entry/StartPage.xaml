@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MyWallet.Client.Views.Entry.StartPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:m="clr-namespace:MyWallet.Client.UI"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.Entry"
+    x:DataType="vm:StartPageViewModel"
+    BackgroundColor="{DynamicResource BackgroundLightColor}"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+
+    <Grid RowDefinitions="*,80,Auto">
+        <CarouselView
+            Grid.Row="0"
+            HorizontalScrollBarVisibility="Never"
+            IndicatorView="indicatorView"
+            ItemsSource="{Binding Items}"
+            Loop="False"
+            MaximumWidthRequest="{OnPlatform WinUI=460}">
+            <CarouselView.ItemTemplate>
+                <DataTemplate x:DataType="m:StartScreenCarouselItem">
+                    <Grid RowDefinitions="*,Auto,Auto">
+                        <Image
+                            Grid.Row="0"
+                            Aspect="AspectFit"
+                            HeightRequest="250"
+                            Source="{Binding Image}"
+                            WidthRequest="250" />
+                        <Label
+                            Grid.Row="1"
+                            Padding="30,10"
+                            FontAttributes="Bold"
+                            FontFamily="RegularFont"
+                            FontSize="24"
+                            HorizontalOptions="FillAndExpand"
+                            HorizontalTextAlignment="Center"
+                            LineBreakMode="WordWrap"
+                            Text="{Binding Title}"
+                            TextColor="{DynamicResource DarkTextColor}" />
+                        <Label
+                            Grid.Row="2"
+                            Padding="20,10"
+                            FontFamily="RegularFont"
+                            FontSize="18"
+                            HorizontalOptions="FillAndExpand"
+                            HorizontalTextAlignment="Center"
+                            LineBreakMode="WordWrap"
+                            Text="{Binding Description}"
+                            TextColor="{DynamicResource GrayTextColor}" />
+                    </Grid>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+        <IndicatorView
+            x:Name="indicatorView"
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            IndicatorColor="{DynamicResource LightGrayColor}"
+            IndicatorSize="10"
+            SelectedIndicatorColor="{DynamicResource AccentColor}"
+            VerticalOptions="Center" />
+        <Button
+            Grid.Row="2"
+            Margin="0,0,0,50"
+            BackgroundColor="Transparent"
+            BorderColor="{DynamicResource AccentColor}"
+            BorderWidth="1"
+            Command="{Binding OpenEntryPageCommand}"
+            CornerRadius="5"
+            FontAttributes="Bold"
+            FontFamily="RegularFont"
+            HeightRequest="40"
+            HorizontalOptions="Center"
+            Text="{x:Static res:Strings.StartNow}"
+            TextColor="{DynamicResource AccentColor}"
+            TextTransform="Uppercase"
+            VerticalOptions="Center"
+            WidthRequest="210" />
+    </Grid>
+
+</ContentPage>

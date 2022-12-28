@@ -10,7 +10,7 @@
     x:DataType="vm:WidgetContainerViewModel"
     HorizontalOptions="FillAndExpand"
     ItemsSource="{Binding Widgets}"
-    VerticalOptions="Start">
+    VerticalOptions="FillAndExpand">
 
     <CollectionView.Resources>
         <converters:WidgetConverter x:Key="WidgetConverter" />
@@ -21,7 +21,8 @@
             <Border
                 Margin="0,0,0,10"
                 BackgroundColor="{DynamicResource BackgroundColor}"
-                Content="{Binding ., Converter={StaticResource WidgetConverter}}" />
+                Content="{Binding ., Converter={StaticResource WidgetConverter}}"
+                VerticalOptions="FillAndExpand" />
         </DataTemplate>
     </CollectionView.ItemTemplate>
 

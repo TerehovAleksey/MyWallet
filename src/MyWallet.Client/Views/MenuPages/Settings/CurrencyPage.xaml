@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<base:PageBase
+    x:Class="MyWallet.Client.Views.MenuPages.Settings.CurrencyPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
+    xmlns:common="clr-namespace:MyWallet.Client.ViewControls.Common"
+    xmlns:converters="clr-namespace:MyWallet.Client.Converters"
+    xmlns:m="clr-namespace:MyWallet.Client.Models"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.MenuPages.Settings"
+    x:DataType="vm:CurrencyPageViewModel"
+    DisplayMode="NavigationBar"
+    PageMode="Navigate"
+    PageTitle="{Binding Title}">
+
+    <base:PageBase.Resources>
+        <converters:BoolInvertConverter x:Key="BoolInvertConverter" />
+    </base:PageBase.Resources>
+
+    <base:PageBase.PageIcons>
+        <HorizontalStackLayout Spacing="5">
+            <ImageButton
+                Margin="0"
+                Command="{Binding DeleteAndReturnCommand}"
+                IsVisible="{Binding IsNewCurrency, Converter={StaticResource BoolInvertConverter}}"
+                Source="trash.png"
+                Style="{StaticResource IconButtonStyle}" />
+            <ImageButton
+                Margin="0"
+                Command="{Binding SaveAndReturnCommand}"
+                Source="check.png"
+                Style="{StaticResource IconButtonStyle}" />
+        </HorizontalStackLayout>
+    </base:PageBase.PageIcons>
+    <base:PageBase.PageContent>
+        <common:EditPageContainer>
+            <VerticalStackLayout Style="{StaticResource InputContainer}">
+                <!--  Currency  -->
+                <VerticalStackLayout x:Name="CurrencyPickerLayout" Style="{StaticResource InputGroup}">
+                    <Label Style="{StaticResource InputLabel}" Text="Тип" />
+                    <Picker
+                        x:Name="CurrencyPicker"
+                        Title="{OnPlatform Android=Выберете валюту}"
+                        HorizontalOptions="FillAndExpand"
+                        IsEnabled="{Binding IsNewCurrency}"
+                        ItemsSource="{Binding Currencies}"
+                        SelectedItem="{Binding SelectedCurrency}" />
+                </VerticalStackLayout>
+                <BoxView Style="{StaticResource SeparatorStyle}" />
+                <!--  Rates  -->
+                <Grid ColumnDefinitions="*,20,*">
+                    <common:InputText
+                        Title="{Binding TargetToMainTitle}"
+                        Grid.Column="0"
+                        Value="{Binding ReverseRate}" />
+                    <common:InputText
+                        Title="{Binding MainToTargetTitle}"
+                        Grid.Column="2"
+                        Value="{Binding Rate}" />
+                </Grid>
+                <!--  Refresh  -->
+                <Button
+                    Command="{Binding RefreshRatesCommand}"
+                    HorizontalOptions="End"
+                    Style="{StaticResource AccentButton}"
+                    Text="Обновить" />
+                <!--  Symbol  -->
+                <common:InputText
+                    Title="Код"
+                    IsReadOnly="True"
+                    Value="{Binding CurrencySymbol}" />
+            </VerticalStackLayout>
+        </common:EditPageContainer>
+    </base:PageBase.PageContent>
+
+</base:PageBase>

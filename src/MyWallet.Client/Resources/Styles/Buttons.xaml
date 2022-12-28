@@ -35,7 +35,7 @@
         <Setter Property="FontSize" Value="12" />
     </Style>
 
-    <Style x:Key="AccentButton" TargetType="Button">
+    <Style x:Key="AccentRoundedButton" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource AccentColor}" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="BorderWidth" Value="0" />
@@ -76,6 +76,23 @@
         BasedOn="{StaticResource PrimaryButton}"
         TargetType="Button">
         <Setter Property="Background" Value="{StaticResource DangerColor}" />
+    </Style>
+
+    <Style
+        x:Key="AccentButton"
+        BasedOn="{StaticResource PrimaryButton}"
+        TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource AccentColor}" />
+    </Style>
+
+    <Style
+        x:Key="AddWidgetButton"
+        BasedOn="{StaticResource PrimaryButton}"
+        TargetType="Button">
+        <Setter Property="Background" Value="{DynamicResource BackgroundCardColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource LinkTextColor}" />
+        <Setter Property="Margin" Value="10,-10,10,10" />
+        <Setter Property="CornerRadius" Value="5" />
     </Style>
 
     <Style x:Key="TransparentButton" TargetType="Button">

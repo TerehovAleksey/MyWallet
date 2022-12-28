@@ -19,6 +19,9 @@ public class NavigationService : INavigationService
             return Task.CompletedTask;
         }
 
-        return routeParameters != null ? Shell.Current.GoToAsync(shellNavigation, routeParameters) : Shell.Current.GoToAsync(shellNavigation);
+        return routeParameters != null ? Shell.Current.GoToAsync(route, routeParameters) : Shell.Current.GoToAsync(route);
     }
+
+    public bool CanGoBack => Shell.Current.Navigation.NavigationStack.Count > 1;
+    public string Current => string.Empty;
 }

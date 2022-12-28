@@ -1,44 +1,29 @@
-﻿namespace MyWallet.Client;
+﻿using System.Diagnostics;
+
+namespace MyWallet.Client;
 
 public partial class AppShell : Shell
 {
-	public AppShell()
-	{
-		RegisterRouting();	
+    public AppShell()
+    {
+        RegisterRouting();
         InitializeComponent();
-        SetRootPage();
+        //todo: c FlyoutBackdrop Opacity пока проблема
     }
 
-	private static void RegisterRouting()
-	{
-		Routing.RegisterRoute(nameof(AccountPage), typeof(AccountPage));
-		Routing.RegisterRoute(nameof(AccountsPage), typeof(AccountsPage));
-		Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
-		Routing.RegisterRoute(nameof(UserPage), typeof(UserPage));
-		Routing.RegisterRoute(nameof(RecordPage), typeof(RecordPage));
-		Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
-		Routing.RegisterRoute(nameof(CurrenciesPage), typeof(CurrenciesPage));
-
-        Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+    private static void RegisterRouting()
+    {
+        Routing.RegisterRoute("account", typeof(AccountPage));
+        Routing.RegisterRoute("accounts", typeof(AccountsPage));
+        Routing.RegisterRoute("user", typeof(UserPage));
+        Routing.RegisterRoute("record", typeof(RecordPage));
+        Routing.RegisterRoute("devices", typeof(DevicesPage));
+        Routing.RegisterRoute("currencies", typeof(CurrenciesPage));
+        Routing.RegisterRoute("currency", typeof(CurrencyPage));
+        Routing.RegisterRoute("categories", typeof(CategoriesPage));
+        Routing.RegisterRoute("category", typeof(CategoryPage));
+        
+        Routing.RegisterRoute(nameof(WidgetTabs), typeof(WidgetTabs));
+        Routing.RegisterRoute($"{nameof(WidgetTabs)}/{nameof(BalanceWidgetsPage)}", typeof(BalanceWidgetsPage));
     }
-
-	private void SetRootPage()
-	{
-		var cache = ServiceHelpers.GetService<IBarrel>();
-        var token = cache.Get<string>(Constants.TOKEN_KEY);
-		if (string.IsNullOrEmpty(token))
-		{
-			AppShellContent.ContentTemplate = new DataTemplate(typeof(EntryPage));
-			AppShellContent.Route = nameof(EntryPage);
-			//Routing.RegisterRoute("main", typeof(MainPage));
-		}
-		else
-		{
-			AppShellContent.ContentTemplate = new DataTemplate(typeof(MainPage));
-			AppShellContent.Route = nameof(MainPage);
-			//Routing.RegisterRoute("entry", typeof(EntryPage));
-        }
-
-		OnPropertyChanged(nameof(AppShellContent));
-	}
 }

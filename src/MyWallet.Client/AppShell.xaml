@@ -3,8 +3,79 @@
     x:Class="MyWallet.Client.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:menuPages="clr-namespace:MyWallet.Client.Views.MenuPages"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
+    xmlns:v="clr-namespace:MyWallet.Client.Views"
+    FlyoutBehavior="Flyout"
     NavBarIsVisible="False">
 
-    <ShellContent x:Name="AppShellContent" />
+    <Shell.FlyoutHeader>
+        <Grid Padding="15">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Offset="0.1" Color="{DynamicResource MenuBackgroundStop1}" />
+                    <GradientStop Offset="1.0" Color="{DynamicResource MenuBackgroundStop2}" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border
+                Grid.Column="0"
+                BackgroundColor="{DynamicResource LightGrayColor}"
+                HeightRequest="60"
+                Stroke="{DynamicResource GrayColor}"
+                StrokeShape="RoundRectangle 30"
+                StrokeThickness="1"
+                WidthRequest="60">
+                <Image
+                    HeightRequest="30"
+                    Source="user_gray.png"
+                    WidthRequest="30" />
+            </Border>
+            <VerticalStackLayout Grid.Column="1" HorizontalOptions="Start">
+                <Label Style="{DynamicResource MediumLight14TextStyle}" Text="admin@mail.com" />
+                <Label Style="{DynamicResource RegularLight12TextStyle}" Text="" />
+            </VerticalStackLayout>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <FlyoutItem
+        Title="{x:Static res:Strings.Home}"
+        Icon="menu_home.png"
+        Route="home">
+        <ShellContent ContentTemplate="{DataTemplate v:MainPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem
+        Title="{x:Static res:Strings.Records}"
+        Icon="menu_records.png"
+        Route="records">
+        <ShellContent ContentTemplate="{DataTemplate menuPages:RecordsPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="{x:Static res:Strings.Statistics}" Icon="menu_statistics.png">
+        <ShellContent ContentTemplate="{DataTemplate menuPages:StatisticsPage}" />
+    </FlyoutItem>
+
+    <!-- <FlyoutItem Title="{x:Static res:Strings.PlannedPayments}" Icon="menu_planned.png" /> -->
+    <!-- <FlyoutItem Title="{x:Static res:Strings.Budgets}" Icon="menu_budgets.png" /> -->
+    <!-- <FlyoutItem Title="{x:Static res:Strings.Debts}" Icon="menu_debts.png" /> -->
+    <!-- <FlyoutItem Title="{x:Static res:Strings.Goals}" Icon="menu_goals.png" /> -->
+    <!-- <FlyoutItem Title="{x:Static res:Strings.ShoppingLists}" Icon="menu_shopping.png" /> -->
+    <!-- <FlyoutItem Title="{x:Static res:Strings.Warranties}" Icon="menu_warranties.png" /> -->
+    <!-- <FlyoutItem Title="{x:Static res:Strings.LoyaltyCards}" Icon="menu_loyalty_cards.png" /> -->
+    <!-- <FlyoutItem Title="{x:Static res:Strings.CurrencyRates}" Icon="menu_currency_rates.png" /> -->
+    <!-- <FlyoutItem Title="{x:Static res:Strings.GroupSharing}" Icon="menu_group_sharing.png" /> -->
+    <!-- <FlyoutItem Title="{x:Static res:Strings.InviteFriends}" Icon="menu_invite.png" /> -->
+    <!-- <FlyoutItem Title="{x:Static res:Strings.FollowUs}" Icon="menu_follow_us.png" /> -->
+    <!-- <FlyoutItem Title="{x:Static res:Strings.Help}" Icon="menu_help.png" /> -->
+
+    <FlyoutItem
+        Title="{x:Static res:Strings.Settings}"
+        Icon="menu_settings.png"
+        Route="settings">
+        <ShellContent ContentTemplate="{DataTemplate menuPages:SettingsPage}" />
+    </FlyoutItem>
 
 </Shell>

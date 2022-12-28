@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<VerticalStackLayout
+    x:Class="MyWallet.Client.ViewControls.Dialog.MessageDialog"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="{DynamicResource BackgroundCardColor}"
+    MinimumHeightRequest="60">
+    <Label
+        x:Name="TextLabel"
+        Margin="20,10,20,10"
+        HorizontalOptions="Start"
+        LineBreakMode="WordWrap"
+        Style="{DynamicResource RegularDark12TextStyle}"
+        VerticalOptions="Center" />
+</VerticalStackLayout>

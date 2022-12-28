@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<controls:Widget
+    x:Class="MyWallet.Client.ViewControls.Widgets.WidgetCashFlow"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MyWallet.Client.ViewControls.Widgets"
+    xmlns:converters="clr-namespace:MyWallet.Client.Converters"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.Widget"
+    x:DataType="vm:WidgetCashFlowViewModel">
+
+    <controls:Widget.Resources>
+        <converters:ProgressWidthConverter x:Key="ProgressWidthConverter" />
+    </controls:Widget.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+        <Label
+            Grid.Row="0"
+            HorizontalOptions="Start"
+            Style="{DynamicResource CaptionTextStyle}"
+            Text="{Binding Total}" />
+        <Label
+            Grid.Row="1"
+            Margin="0,10,0,0"
+            HorizontalOptions="Start"
+            Style="{DynamicResource RegularGray12TextStyle}"
+            Text="{x:Static res:Strings.Income}" />
+        <Label
+            Grid.Row="1"
+            Margin="0,10,0,0"
+            HorizontalOptions="End"
+            Style="{DynamicResource MediumDark14TextStyle}"
+            Text="{Binding Income}" />
+        <Border
+            Grid.Row="2"
+            Margin="0,5,0,0"
+            BackgroundColor="{DynamicResource GrayColor}"
+            HeightRequest="20"
+            HorizontalOptions="Fill"
+            StrokeShape="RoundRectangle 5"
+            StrokeThickness="0">
+            <Border
+                Background="{DynamicResource PrimaryColor}"
+                HeightRequest="20"
+                HorizontalOptions="Start"
+                StrokeShape="RoundRectangle 5">
+                <Border.WidthRequest>
+                    <MultiBinding Converter="{StaticResource ProgressWidthConverter}">
+                        <Binding Path="Width" Source="{RelativeSource AncestorType={x:Type Border}, AncestorLevel=1}" />
+                        <Binding Path="IncomeProgress" />
+                    </MultiBinding>
+                </Border.WidthRequest>
+            </Border>
+        </Border>
+        <Label
+            Grid.Row="3"
+            Margin="0,10,0,0"
+            HorizontalOptions="Start"
+            Style="{DynamicResource RegularGray12TextStyle}"
+            Text="{x:Static res:Strings.Expenses}" />
+        <Label
+            Grid.Row="3"
+            Margin="0,10,0,0"
+            HorizontalOptions="End"
+            Style="{DynamicResource MediumDark14TextStyle}"
+            Text="{Binding Expenses}" />
+        <Border
+            Grid.Row="4"
+            Margin="0,5,0,0"
+            BackgroundColor="{DynamicResource GrayColor}"
+            HeightRequest="20"
+            StrokeShape="RoundRectangle 5"
+            StrokeThickness="0">
+            <Border
+                Background="{DynamicResource DangerColor}"
+                HeightRequest="20"
+                HorizontalOptions="Start"
+                StrokeShape="RoundRectangle 5">
+                <Border.WidthRequest>
+                    <MultiBinding Converter="{StaticResource ProgressWidthConverter}">
+                        <Binding Path="Width" Source="{RelativeSource AncestorType={x:Type Border}, AncestorLevel=1}" />
+                        <Binding Path="ExpensesProgress" />
+                    </MultiBinding>
+                </Border.WidthRequest>
+            </Border>
+        </Border>
+    </Grid>
+</controls:Widget>

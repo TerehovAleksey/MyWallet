@@ -30,10 +30,10 @@ public partial class RecordPageViewModel : ViewModelBase
         set
         {
            if(value is not null && SetProperty(ref _category, value))
-            {
-                SubCategories.AddRange(value.Subcategories, true);
-                SelectedSubCategory = SubCategories.FirstOrDefault();
-            }
+           {
+               SubCategories.AddRange(value.Subcategories, true);
+               SelectedSubCategory = SubCategories.FirstOrDefault();
+           }
         }
     }
 
@@ -41,22 +41,22 @@ public partial class RecordPageViewModel : ViewModelBase
     public ObservableCollection<Category> Categories { get; } = new();
     public ObservableCollection<BaseCategory> SubCategories { get; } = new();
 
-    public RecordPageViewModel(IDataService dataService, IDialogService dialogService, INavigationService navigationService) : base(dialogService, navigationService)
+    public RecordPageViewModel(IAppService appService, IDataService dataService) : base(appService)
     {
         _dataService = dataService;
-        Title = "новая запись";
+        Title = "Новая запись";
     }
 
     public override Task InitializeAsync()
     {
         return IsBusyFor(async () =>
         {
-            var accounts = await _dataService.GetAccountsAsync();
-            Accounts.AddRange(accounts.Item, true);
+            var accounts = await _dataService.Account.GetAccountsAsync();
+            Accounts.AddRange(accounts, true);
             SelectedAccount = Accounts.FirstOrDefault();
 
-            var categories = await _dataService.GetAllCategoriesAsync();
-            Categories.AddRange(categories.Item, true);
+            var categories = await _dataService.Categories.GetAllCategoriesAsync();
+            Categories.AddRange(categories, true);
             SelectedCategory = Categories.FirstOrDefault();
         });
     }
@@ -76,11 +76,8 @@ public partial class RecordPageViewModel : ViewModelBase
                 AccountId= SelectedAccount.Id,
                 Value = Value
             };
-            var result = await _dataService.CreateRecordAsync(record);
-            if (result.State == State.Success)
-            {
-                await NavigationService.GoBackAsync();
-            }
+            await _dataService.Record.CreateRecordAsync(record);
+            await NavigationService.GoBackAsync();
         }     
     });
 }

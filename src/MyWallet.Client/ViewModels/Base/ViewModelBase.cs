@@ -3,17 +3,17 @@
 public abstract partial class ViewModelBase : ObservableObject, IViewModelBase, IDisposable
 {
     private readonly SemaphoreSlim _isBusyLock = new(1, 1);
-    
+
     private bool _disposedValue;
-    
+
     [ObservableProperty]
     private bool _isInitialized;
-    
+
     [ObservableProperty]
     private bool _isBusy;
-    
-    public IDialogService DialogService { get; }
 
+    protected IAppService AppService { get; }
+    public IDialogService DialogService { get; }
     public INavigationService NavigationService { get; }
 
     public bool OneTimeInitialized { get; set; } = true;
@@ -36,18 +36,26 @@ public abstract partial class ViewModelBase : ObservableObject, IViewModelBase, 
     [ObservableProperty]
     private string _errorImage = string.Empty;
 
-    protected ViewModelBase(IDialogService dialogService, INavigationService navigationService)
+    protected ViewModelBase(IAppService appService)
     {
-        DialogService = dialogService;
-        NavigationService = navigationService;
+        AppService = appService;
+        DialogService = appService.Dialog;
+        NavigationService = appService.Navigation;
         IsErrorState = false;
+        LoadingText = Strings.Loading;
     }
-    
+
     public virtual void ApplyQueryAttributes(IDictionary<string, object> query)
     {
     }
 
     public virtual Task InitializeAsync() => Task.CompletedTask;
+
+    public virtual Task Reload()
+    {
+        IsErrorState = false;
+        return Task.CompletedTask;
+    }
 
     protected async Task IsBusyFor(Func<Task> unitOfWork)
     {
@@ -55,10 +63,41 @@ public abstract partial class ViewModelBase : ObservableObject, IViewModelBase, 
 
         try
         {
+            IsErrorState = false;
             IsBusy = true;
-            LoadingText = "loading...";
 
             await unitOfWork();
+        }
+        catch (InternetConnectionException)
+        {
+            IsErrorState = true;
+            ErrorMessage = Strings.NoInternetMessagePart1 + Environment.NewLine + Strings.NoInternetMessagePart2;
+            ErrorImage = "nointernet.png";
+        }
+        catch (UnauthorizedAccessException)
+        {
+            AppService.SetAppState(false);
+        }
+        // серверная валидация
+        catch (ServerResponseException ex)
+        {
+            IsErrorState = true;
+            ErrorMessage = $"{Strings.ErrorMessagePart1} {Constants.Email} {Strings.ErrorMessagePart2}{Environment.NewLine}{Environment.NewLine}{ex.Message}";
+            ErrorImage = "error.png";
+        }
+        // сервер недоступен
+        catch (HttpRequestException ex)
+        {
+            IsErrorState = true;
+            ErrorMessage = $"{Strings.ErrorMessagePart1} {Constants.Email} {Strings.ErrorMessagePart2}{Environment.NewLine}{Environment.NewLine}{ex.Message}";
+            ErrorImage = "error.png";
+        }
+        // в Android, если localhost, то сюда попадаем и ex = null
+        catch (Exception ex)
+        {
+            IsErrorState = true;
+            ErrorMessage = $"{Strings.ErrorMessagePart1} {Constants.Email} {Strings.ErrorMessagePart2}{Environment.NewLine}{Environment.NewLine}{ex.Message}";
+            ErrorImage = "error.png";
         }
         finally
         {
@@ -66,31 +105,6 @@ public abstract partial class ViewModelBase : ObservableObject, IViewModelBase, 
             LoadingText = string.Empty;
             _isBusyLock.Release();
         }
-    }
-    
-    protected async Task<bool> HandleServiceResponseErrorsAsync(IResponse response)
-    {
-        switch (response.State)
-        {
-            case State.Success:
-                return true;
-            case State.Error:
-                IsErrorState = true;
-                ErrorMessage = $"Something went wrong. If the problem persists, plz contact support at email with the error message:{Environment.NewLine}{Environment.NewLine}{response.Errors.FirstOrDefault()}";
-                ErrorImage = "error.png";
-                break;
-            case State.Unauthorized:
-                await NavigationService.GoToAsync(nameof(EntryPage));
-                break;
-            case State.NotFound:
-                break;
-            case State.NoInternet:
-                IsErrorState = true;
-                ErrorMessage = $"Slow or no internet connection.{Environment.NewLine}Please check you internet connection and try again.";
-                ErrorImage = "nointernet.png";
-                break;
-        }
-        return false;
     }
 
     protected virtual void Dispose(bool disposing)
@@ -114,7 +128,17 @@ public abstract partial class ViewModelBase : ObservableObject, IViewModelBase, 
     }
 
     [RelayCommand]
-    private Task NavigateBack() => NavigationService.GoBackAsync();
+    private async Task NavigateBack()
+    {
+        if (NavigationService.CanGoBack && NavigationService.Current != nameof(MainPage))
+        {
+            await NavigationService.GoBackAsync();
+        }
+        else
+        {
+            await NavigationService.GoToAsync("//home");
+        }
+    }
 
     [RelayCommand]
     private Task CloseModal() => throw new NotImplementedException();
