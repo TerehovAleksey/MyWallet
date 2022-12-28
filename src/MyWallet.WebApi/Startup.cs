@@ -17,6 +17,7 @@ public class Startup
         services.AddScoped<ITokenService, TokenService>();
         services.AddDatabaseContext(_configuration, _environment);
         services.AddServices();
+        services.AddTransient<IHttpService, HttpService>();
 
         services.AddApiVersion();
         services.ConfigureIdentity();

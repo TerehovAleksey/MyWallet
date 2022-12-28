@@ -131,7 +131,7 @@ public class UserController : ControllerBase
         return await Login(new UserForAuthDto(userForRegistration.Email, userForRegistration.Password));
     }
 
-    [HttpGet("logout")]
+    [HttpPost("logout")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Logout()
     {
@@ -261,6 +261,51 @@ public class UserController : ControllerBase
         }
 
         return NotFound();
+    }
+
+    [HttpGet("devices")]
+    [ProducesResponseType(typeof(IEnumerable<UserDeviceDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> GetUserDevices([FromServices]IHttpService httpService)
+    {
+        var user = await GetUserByClaims();
+        if (user is null)
+        {
+            return Unauthorized();
+        }
+
+        var devices = await _userService.GetUserDevicesAsync(user.Id);
+        foreach (var device in devices)
+        {
+            if (!string.IsNullOrEmpty(device?.Ip))
+            {
+                var info = await httpService.GetDeviceLocationAsync(device.Ip);
+                device.DeviceLocation = info;
+            }
+        }
+
+        return Ok(devices);
+    }
+
+    [HttpDelete("devices/{name}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> DeleteUserDevice(string name)
+    {
+        var user = await GetUserByClaims();
+        if (user is null)
+        {
+            return Unauthorized();
+        }
+
+        var result = await _userService.DeleteDeviceAsync(user.Id, name);
+        if (result)
+        {
+            return NoContent();
+        }
+
+        return BadRequest();
     }
 
     private (string? DeviceName, string? Ip) GetClientInfo()

@@ -5,6 +5,8 @@ public class BaseCategoryDto
     public string Name { get; set; } = default!;
     public string? ImageName { get; set; }
     public bool IsVisible { get; set; }
+    
+    public string Color { get; set; } = default!;
 }
 
 public class CategoryDto : BaseCategoryDto
