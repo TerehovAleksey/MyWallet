@@ -200,6 +200,8 @@ public class CurrencyService : ICurrencyService
 
     public async Task<UserCurrencyDto> CreateUserCurrencyAsync(Guid userId, string currencySymbol, bool isMain = false)
     {
+        currencySymbol = currencySymbol.ToUpper();
+
         // если есть, то просто вернём
         var exists = await _context.UserCurrencies
             .AsNoTracking()
@@ -211,15 +213,25 @@ public class CurrencyService : ICurrencyService
             return new UserCurrencyDto
             {
                 Symbol = exists.CurrencySymbol,
+                Description = exists.Description,
                 IsMain = exists.IsMain
             };
         }
 
-        _context.UserCurrencies.Add(new UserCurrency { Id = Guid.NewGuid(), UserId = userId, CurrencySymbol = currencySymbol, IsMain = isMain });
+        _context.UserCurrencies.Add(new UserCurrency
+        {
+            Id = Guid.NewGuid(),
+            UserId = userId,
+            CurrencySymbol = currencySymbol,
+            IsMain = isMain,
+            Description = GetAllSymbolsWithDescription()[currencySymbol]
+        });
         await _context.SaveChangesAsync();
+
         return new UserCurrencyDto
         {
             Symbol = currencySymbol,
+            Description = GetAllSymbolsWithDescription()[currencySymbol],
             IsMain = isMain
         };
     }

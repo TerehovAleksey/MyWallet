@@ -42,6 +42,16 @@
             }
 
             var result = await _currencyService.GetUserCurrnciesAsync(user.Id);
+
+            //FIX 
+            foreach (var item in result)
+            {
+                if (string.IsNullOrEmpty(item.Description))
+                {
+                    item.Description = GetCurrencySymbols().FirstOrDefault(x => x.Symbol == item.Symbol)?.Description;
+                }
+            }
+
             return Ok(result);
         }
 
@@ -94,6 +104,24 @@
 
             var result = await _currencyService.CreateUserCurrencyAsync(user.Id, currency.Symbol);
             return Created($"api/currency/{result.Symbol}", result);
+        }
+
+        /// <summary>
+        /// Курс валют
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("exchange")]
+        [ProducesResponseType(typeof(CurrencyExchangeDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetCurrencyExchange([FromQuery]string baseSymbol, [FromQuery]string targetSymbol, [FromServices]IHttpService httpService)
+        {
+            var result = await httpService.GetExchange(baseSymbol, targetSymbol);
+            if (result is null)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
         }
     }
 }

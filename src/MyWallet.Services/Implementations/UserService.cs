@@ -69,4 +69,14 @@ public class UserService : IUserService
 
         return false;
     }
+
+    public async Task<List<UserDeviceDto>> GetUserDevicesAsync(Guid userId)
+    {
+        var devices = await _context.UserDevices
+            .Where(x => x.UserId == userId)
+            .OrderByDescending(x => x.LastLoginDate)
+            .ToListAsync();
+
+        return devices.Select(x => new UserDeviceDto(x.DeviceName, x.LastIpAddress, x.LastLoginDate)).ToList();
+    }
 }

@@ -5,6 +5,8 @@ public interface IUserService
     public Task UpdateOrCreateDeviceAsync(Guid userId, string deviceName, string? lastIpAddress, 
         string refreshToken, DateTime refreshTokenExpiryTime);
 
+    public Task<List<UserDeviceDto>> GetUserDevicesAsync(Guid userId);
+
     public Task<bool> DeleteDeviceAsync(Guid userId, string deviceName);
 
     /// <summary>
