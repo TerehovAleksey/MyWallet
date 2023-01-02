@@ -2,10 +2,11 @@
 
 public interface IDialogService
 {
-    [Obsolete("Нативный алерт, меняем на наш ShowMessageAsync")]
-    public Task ShowAlertAsync(string title, string message, string buttonLabel);
-    public Task ShowMessageAsync(string title, string message, string buttonText = "Ok");
+    public Task ShowMessageAsync(string title, string message);
+    public Task<(bool Sucsess, string Value)> ShowInputTextAsync(string title, string placeholder, string value);
+    public Task<(bool Sucsess, string Value)> ShowRadioInputAsync(string title, string[] values, string? value);
+
     public Task ShowInDevelopmentMessage();
-    public Task<bool> ShowDialogAsync<T>(DialogSettings settings, DialogParameters? parameters = null) where T : View, IDialog;
+    public Task<bool> ShowDialogAsync<T>(DialogSettings settings, DialogParameters? parameters) where T : View, IDialog;
     public void Close(bool result = false);
 }

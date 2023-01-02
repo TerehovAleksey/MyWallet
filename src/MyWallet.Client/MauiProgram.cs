@@ -1,4 +1,8 @@
-﻿namespace MyWallet.Client;
+﻿using System.Resources;
+
+[assembly: NeutralResourcesLanguage("ru")]
+
+namespace MyWallet.Client;
 
 public static class MauiProgram
 {
@@ -10,12 +14,12 @@ public static class MauiProgram
                 {
                 })
             .UseMauiCommunityToolkit()
-            .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("FiraSans-Light.ttf", "RegularFont");
-                fonts.AddFont("FiraSans-Medium.ttf", "MediumFont");
-                fonts.AddFont("FiraSans-Regular.ttf", "RegularFont");
-            })
+            //.ConfigureFonts(fonts =>
+            //{
+            //    fonts.AddFont("FiraSans-Light.ttf", "RegularFont");
+            //    fonts.AddFont("FiraSans-Medium.ttf", "MediumFont");
+            //    fonts.AddFont("FiraSans-Regular.ttf", "RegularFont");
+            //})
             .ConfigureEssentials(essentials =>
             {
                 essentials.UseVersionTracking();

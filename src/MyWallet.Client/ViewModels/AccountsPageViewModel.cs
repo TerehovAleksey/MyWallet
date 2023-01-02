@@ -25,7 +25,7 @@ public partial class AccountsPageViewModel : ViewModelBase
     public AccountsPageViewModel(IAppService appService, IDataService dataService) : base(appService)
 	{
         _dataService = dataService;
-        Title = "Настройки счетов";
+        Title = Strings.AccountsSettings;
         OneTimeInitialized = false;
     }
 

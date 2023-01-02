@@ -4,7 +4,7 @@ public partial class RecordPage : PageBase
 {
     public RecordPage(RecordPageViewModel viewModel)
     {
-        BindingContext = viewModel;
         InitializeComponent();
+        BindingContext = viewModel;
     }
 }

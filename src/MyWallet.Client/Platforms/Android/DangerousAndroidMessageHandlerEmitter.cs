@@ -51,7 +51,7 @@ internal static class DangerousAndroidMessageHandlerEmitter
         );
 
         var generator = methodBuilder.GetILGenerator();
-        generator.Emit(OpCodes.Call, typeof(DangerousHostNameVerifier).GetMethod("Create"));
+        generator.Emit(OpCodes.Call, typeof(DangerousHostNameVerifier).GetMethod("Create")!);
         generator.Emit(OpCodes.Ret);
 
         typeBuilder.CreateType();

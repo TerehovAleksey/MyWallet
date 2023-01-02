@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <Grid
     x:Class="MyWallet.Client.ViewControls.MainAccounts"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:MyWallet.Client.Converters"
     xmlns:m="clr-namespace:MyWallet.Client.Models"
-    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
     xmlns:res="clr-namespace:MyWallet.Client.Resources"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
     Padding="10"
     x:DataType="vm:MainPageViewModel"
     BackgroundColor="{DynamicResource BackgroundCardColor}"
@@ -34,13 +35,12 @@
         </Grid.ColumnDefinitions>
         <Label
             Grid.Column="0"
-            HorizontalOptions="Start"
-            Style="{DynamicResource CaptionTextStyle}"
-            Text="{x:Static res:Strings.ListOfAccounts}"
-            VerticalOptions="Center" />
+            Style="{DynamicResource CardCaption}"
+            Text="{x:Static res:Strings.ListOfAccounts}" />
         <ImageButton
             Grid.Column="1"
-            Command="{Binding OpenAccountsPageCommand}"
+            Command="{Binding NavigateCommand}"
+            CommandParameter="accounts"
             Source="cog.png"
             Style="{DynamicResource AccentIconButtonStyle}" />
     </Grid>
@@ -48,7 +48,7 @@
     <!--  Accounts  -->
     <CollectionView
         Grid.Row="1"
-        Margin="0,15,0,0"
+        Margin="0,10,0,0"
         ItemsSource="{Binding Accounts}"
         SelectedItems="{Binding SelectedAccounts, Mode=TwoWay}"
         SelectionMode="Multiple">
@@ -84,17 +84,23 @@
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="m:Account">
                 <Border
-                    Padding="15,5"
+                    Padding="10,5"
                     HeightRequest="50"
                     StrokeShape="RoundRectangle 10"
                     StrokeThickness="0"
-                    WidthRequest="184">
+                    WidthRequest="150">
                     <VerticalStackLayout
                         Padding="0"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="Center">
-                        <Label Style="{StaticResource RegularLight12TextStyle}" Text="{Binding Name}" />
-                        <Label Style="{StaticResource MediumLight14TextStyle}" Text="{Binding Value}" />
+                        <Label
+                            Style="{DynamicResource ItemCaption}"
+                            Text="{Binding Name}"
+                            TextColor="{DynamicResource TextLightColor}" />
+                        <Label
+                            Style="{DynamicResource ItemBody}"
+                            Text="{Binding Value}"
+                            TextColor="{DynamicResource TextLightColor}" />
                     </VerticalStackLayout>
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroup Name="CommonStates">
@@ -132,12 +138,15 @@
         </Grid.ColumnDefinitions>
         <Button
             Grid.Column="0"
+            Command="{Binding OpenAdjustWizardCommand}"
             HorizontalOptions="Start"
             IsVisible="{Binding SelectedAccounts.Count, Converter={StaticResource CountOneToBoolConverter}}"
             Style="{DynamicResource RegularButton}"
             Text="{x:Static res:Strings.AdjustBalance}" />
         <Button
             Grid.Column="1"
+            Command="{Binding NavigateCommand}"
+            CommandParameter="records"
             HorizontalOptions="End"
             Style="{DynamicResource RegularButton}"
             Text="{x:Static res:Strings.Records}" />

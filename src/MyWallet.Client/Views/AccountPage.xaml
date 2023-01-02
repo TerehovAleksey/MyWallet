@@ -6,6 +6,7 @@
     xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
     xmlns:controls="clr-namespace:MyWallet.Client.ViewControls.Common"
     xmlns:converters="clr-namespace:MyWallet.Client.Converters"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
     x:DataType="vm:AccountPageViewModel"
     Background="{DynamicResource BackgroundColor}"
@@ -25,13 +26,13 @@
                 Command="{Binding DeleteAndReturnCommand}"
                 IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}"
                 Source="trash.png"
-                Style="{StaticResource IconButtonStyle}" />
+                Style="{DynamicResource IconButtonStyle}" />
 
             <ImageButton
                 Margin="0"
                 Command="{Binding SaveAndReturnCommand}"
                 Source="check.png"
-                Style="{StaticResource IconButtonStyle}" />
+                Style="{DynamicResource IconButtonStyle}" />
 
         </HorizontalStackLayout>
 
@@ -65,101 +66,84 @@
 
                     <!--  Account name  -->
                     <controls:InputText
-                        Title="Название счёта"
-                        Placeholder="Введите название..."
+                        Title="{x:Static res:Strings.AccountName}"
+                        Placeholder="{x:Static res:Strings.EnterNameDots}"
                         Value="{Binding AccountName}" />
 
-                    <BoxView Style="{StaticResource SeparatorStyle}" />
+                    <BoxView Style="{DynamicResource SeparatorStyle}" />
 
                     <!--  Account number  -->
                     <controls:InputText
-                        Title="Номер банковского счёта"
-                        Placeholder="Введите номер банковского счёта..."
+                        Title="{x:Static res:Strings.BankAccountNumber}"
+                        Placeholder="{x:Static res:Strings.EnterNumberDots}"
                         Value="{Binding AccountNumber}">
                         <controls:InputText.Behaviors>
                             <controls:InputTextValidationBehavior MaximumLength="50" />
                         </controls:InputText.Behaviors>
                     </controls:InputText>
 
-                    <BoxView Style="{StaticResource SeparatorStyle}" />
+                    <BoxView Style="{DynamicResource SeparatorStyle}" />
 
                     <!--  Account type  -->
                     <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
-                        <Label
-                            Margin="0,0,0,5"
-                            Style="{StaticResource RegularGray12TextStyle}"
-                            Text="Тип" />
+                        <Label Style="{DynamicResource InputCaption}" Text="{x:Static res:Strings.Type}" />
                         <Picker
-                            Title="{OnPlatform Android=Выберете тип счёта}"
+                            Title="{OnPlatform Android={x:Static res:Strings.ChooseAnAccountType}}"
                             HorizontalOptions="FillAndExpand"
                             ItemsSource="{Binding AccountTypes}"
                             SelectedItem="{Binding AccountType}" />
                     </VerticalStackLayout>
 
-                    <BoxView Style="{StaticResource SeparatorStyle}" />
+                    <BoxView Style="{DynamicResource SeparatorStyle}" />
 
                     <!--  Initial value (New only!)  -->
                     <VerticalStackLayout
                         Padding="0"
                         HorizontalOptions="Fill"
                         IsVisible="{Binding IsNewAccount}">
-                        <controls:InputText Title="Начальное значение" Value="{Binding AccountValue}" />
+                        <controls:InputText Title="{x:Static res:Strings.InitialValue}" Value="{Binding AccountValue}" />
                     </VerticalStackLayout>
 
-                    <BoxView IsVisible="{Binding IsNewAccount}" Style="{StaticResource SeparatorStyle}" />
+                    <BoxView IsVisible="{Binding IsNewAccount}" Style="{DynamicResource SeparatorStyle}" />
 
                     <!--  Account currency  -->
                     <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
-                        <Label
-                            Margin="0,0,0,5"
-                            Style="{StaticResource RegularGray12TextStyle}"
-                            Text="Валюта" />
+                        <Label Style="{DynamicResource InputCaption}" Text="{x:Static res:Strings.Currency}" />
                         <Picker
-                            Title="{OnPlatform Android=Выберете валюту счёта}"
+                            Title="{OnPlatform Android={x:Static res:Strings.ChooseAnAccountCurrency}}"
                             ItemsSource="{Binding Currencies}"
                             SelectedItem="{Binding AccountCurrency}" />
                     </VerticalStackLayout>
 
-                    <BoxView Style="{StaticResource SeparatorStyle}" />
+                    <BoxView Style="{DynamicResource SeparatorStyle}" />
 
                     <!--  Account color  -->
-                    <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
-                        <Label
-                            Margin="0,0,0,5"
-                            Style="{StaticResource RegularGray12TextStyle}"
-                            Text="Цвет" />
-                        <Picker
-                            Title="{OnPlatform Android=Выберете цвет}"
-                            BackgroundColor="{Binding AccountColor}"
-                            ItemsSource="{Binding Colors}"
-                            SelectedItem="{Binding AccountColorString}" />
-                    </VerticalStackLayout>
+                    <controls:ColorSelector Color="{Binding AccountColor}" />
 
-                    <BoxView Style="{StaticResource SeparatorStyle}" />
+                    <BoxView Style="{DynamicResource SeparatorStyle}" />
 
                     <!--  Is account enable (Not new only!)  -->
                     <Grid IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}">
                         <Label
-                            HorizontalOptions="Start"
-                            Style="{StaticResource RegularGray12TextStyle}"
-                            Text="Исключить из статистики"
+                            Style="{DynamicResource InputCaption}"
+                            Text="{x:Static res:Strings.ExcludeFromStats}"
                             VerticalOptions="Center" />
                         <Switch HorizontalOptions="End" IsToggled="{Binding AccountDisabled}" />
                     </Grid>
 
-                    <BoxView IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}" Style="{StaticResource SeparatorStyle}" />
+                    <BoxView IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}" Style="{DynamicResource SeparatorStyle}" />
 
                     <!--  Is account archived (Not new only!)  -->
                     <Grid IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}">
                         <Label
                             HorizontalOptions="Start"
-                            Style="{StaticResource RegularGray12TextStyle}"
-                            Text="Архив"
+                            Style="{DynamicResource InputCaption}"
+                            Text="{x:Static res:Strings.Archive}"
                             VerticalOptions="Center" />
                         <Switch HorizontalOptions="End" IsToggled="{Binding AccountArchived}" />
                     </Grid>
 
-                    <BoxView IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}" Style="{StaticResource SeparatorStyle}" />
+                    <BoxView IsVisible="{Binding IsNewAccount, Converter={StaticResource BoolInvertConverter}}" Style="{DynamicResource SeparatorStyle}" />
 
                 </VerticalStackLayout>
             </Border>

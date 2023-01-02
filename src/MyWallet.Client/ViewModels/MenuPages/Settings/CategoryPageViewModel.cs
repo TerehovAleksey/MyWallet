@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Animations;
-using MenuItem = MyWallet.Client.UI.MenuItem;
+﻿using MenuItem = MyWallet.Client.UI.MenuItem;
 
 namespace MyWallet.Client.ViewModels.MenuPages.Settings;
 
@@ -9,15 +8,30 @@ public partial class CategoryPageViewModel : ViewModelBase
 {
     private readonly IDataService _dataService;
 
+    private IEnumerable<CategoryType>? _categoryTypes;
+
     [ObservableProperty]
     private BaseCategory? _category;
 
     [ObservableProperty]
     private bool _isCategory;
-    
+
+    private string _name = string.Empty;
+    public string Name
+    {
+        get => _name;
+        set
+        {
+            if (SetProperty(ref _name, value) && Category is not null)
+            {
+                Category.Name = value;
+            }
+        }
+    }
+
     public string? CategoryName { get; set; }
     public ObservableCollection<MenuItem> MenuItems { get; } = new();
-    
+
     public CategoryPageViewModel(IAppService appService, IDataService dataService) : base(appService)
     {
         _dataService = dataService;
@@ -26,10 +40,13 @@ public partial class CategoryPageViewModel : ViewModelBase
     public override Task InitializeAsync() => IsBusyFor(async () =>
     {
         Title = CategoryName ?? string.Empty;
+        _categoryTypes = await _dataService.Categories.GetAllCategoryTypes();
         var categories = await _dataService.Categories.GetAllCategoriesAsync().ConfigureAwait(false);
         if (IsCategory)
         {
             Category = categories.First(c => c.Name == CategoryName);
+            Name = Category.Name;
+
             var menuItems = categories.First(c => c.Name == CategoryName).Subcategories
                 .Select(c => new MenuItem
                 {
@@ -43,10 +60,10 @@ public partial class CategoryPageViewModel : ViewModelBase
         }
         else
         {
-            Category = categories.SelectMany(c => c.Subcategories).First(c=>c.Name == CategoryName);
+            Category = categories.SelectMany(c => c.Subcategories).First(c => c.Name == CategoryName);
         }
     });
-    
+
     [RelayCommand]
     private async Task Navigate(string link)
     {
@@ -60,10 +77,26 @@ public partial class CategoryPageViewModel : ViewModelBase
     private Task EditImage() => AppService.Dialog.ShowInDevelopmentMessage();
 
     [RelayCommand]
-    private Task EditName() => AppService.Dialog.ShowInDevelopmentMessage();
+    private async Task EditName()
+    {
+        var (success, value) = await AppService.Dialog.ShowInputTextAsync(Strings.EditCategory, Strings.Name, Category?.Name ?? string.Empty);
+        if (success && Category is not null)
+        {
+            Name = value;
+        }
+    }
 
     [RelayCommand]
-    private Task EditNature() => AppService.Dialog.ShowInDevelopmentMessage();
+    private async Task EditNature()
+    {
+        var values = _categoryTypes.Select(x => x.Name).ToArray();
+        var selected = _categoryTypes.First().Name;
+        var result = await AppService.Dialog.ShowRadioInputAsync("Type", values, selected);
+        if (result.Sucsess)
+        {
+
+        }
+    }
 
     [RelayCommand]
     private Task SaveAndReturn() => AppService.Dialog.ShowInDevelopmentMessage();

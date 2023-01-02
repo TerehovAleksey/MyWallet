@@ -1,6 +1,6 @@
 ﻿namespace MyWallet.Client.ViewModels.MenuPages.Settings;
 
-[QueryProperty(nameof(UserCurrency), "UserCurrency")]
+[QueryProperty(nameof(Symbol), "symbol")]
 public partial class CurrencyPageViewModel : ViewModelBase
 {
     private readonly ICurrencyService _currencyService;
@@ -13,10 +13,10 @@ public partial class CurrencyPageViewModel : ViewModelBase
     private string? _currencySymbol;
 
     [ObservableProperty]
-    private string? _mainToTargetTitle = "Обратный курс";
+    private string? _mainToTargetTitle = Strings.InverseRate;
 
     [ObservableProperty]
-    private string? _targetToMainTitle = "Курс";
+    private string? _targetToMainTitle = Strings.Rate;
 
     [ObservableProperty]
     private bool _isNewCurrency;
@@ -46,20 +46,22 @@ public partial class CurrencyPageViewModel : ViewModelBase
     }
 
     public ObservableCollection<CurrencyDto> Currencies { get; } = new();
+
     public CurrencyDto? SelectedCurrency
     {
         get => _selectedCurrency;
         set
         {
-            if (value != null && SetProperty(ref _selectedCurrency, value))
+            if (value != null)
             {
-                CurrencySymbol = value?.Symbol;
+                SetProperty(ref _selectedCurrency, value);
+                CurrencySymbol = _selectedCurrency?.Symbol;
                 _ = LoadRates(value.Symbol);
             }
         }
     }
 
-    public UserCurrencyDto? UserCurrency { get; set; }
+    public string? Symbol { get; set; }
 
     public CurrencyPageViewModel(IAppService appService, ICurrencyService currencyService) : base(appService)
     {
@@ -68,8 +70,8 @@ public partial class CurrencyPageViewModel : ViewModelBase
 
     public override async Task InitializeAsync()
     {
-        Title = UserCurrency == null ? "Новая валюта" : "Изменить валюту";
-        IsNewCurrency = UserCurrency == null;
+        Title = Symbol == null ? Strings.NewCurrency : Strings.EditCurrency;
+        IsNewCurrency = Symbol == null;
 
         await IsBusyFor(async () =>
         {
@@ -79,9 +81,9 @@ public partial class CurrencyPageViewModel : ViewModelBase
             var currencies = await _currencyService.GetAllCurrenciesAsync();
             Currencies.AddRange(currencies);
 
-            if (UserCurrency != null)
+            if (Symbol != null)
             {
-                SelectedCurrency = currencies.FirstOrDefault(c => c.Symbol == UserCurrency.Symbol);
+                SelectedCurrency = currencies.FirstOrDefault(c => c.Symbol == Symbol);
                 MainToTargetTitle = $"1 {_selectedCurrency?.Symbol} =";
                 TargetToMainTitle = $"1 {_mainCurrency?.Symbol} =";
             }
@@ -100,7 +102,13 @@ public partial class CurrencyPageViewModel : ViewModelBase
     });
 
     [RelayCommand]
-    private Task RefreshRates() => LoadRates(CurrencySymbol, true);
+    private async Task RefreshRates()
+    {
+        if (CurrencySymbol is not null)
+        {
+            await LoadRates(CurrencySymbol, true);
+        }
+    }
 
     [RelayCommand]
     private async Task SaveAndReturn()
@@ -115,7 +123,7 @@ public partial class CurrencyPageViewModel : ViewModelBase
         }
         else
         {
-            await DialogService.ShowMessageAsync("Ошибка", "Не все поля правильно заполнены", "Понятно");
+            await DialogService.ShowMessageAsync(Strings.Error, Strings.NoCurrencySelected);
         }
     }
 

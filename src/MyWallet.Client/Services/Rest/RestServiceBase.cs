@@ -127,7 +127,7 @@ public abstract class RestServiceBase
         httpResponse.EnsureSuccessStatusCode();
     }
 
-    protected async Task<T?> SendAsync<T, TRequest>(string resource, TRequest data, SendType type = SendType.Post,
+    protected async Task<T> SendAsync<T, TRequest>(string resource, TRequest data, SendType type = SendType.Post,
          bool tryRefresh = true, CancellationToken token = default)
         where T : class
     {
@@ -162,7 +162,7 @@ public abstract class RestServiceBase
                 .ConfigureAwait(false);
             var result = await JsonSerializer.DeserializeAsync<T>(jsonStream, _jsonSerializerOptions, token)
                 .ConfigureAwait(false);
-            return result;
+            return result ?? throw new NoDataException($"Data not received from {resource}");
         }
 
         //Если Unauthorized, то пытаемся обновить токен
@@ -181,7 +181,7 @@ public abstract class RestServiceBase
         if (httpResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
         {
             var jsonResponse = await httpResponse.Content.ReadAsStringAsync(token);
-            var errors = ParseErrors(jsonResponse);
+            IEnumerable<string> errors = ParseErrors(jsonResponse);
             if(errors.Any())
             {
                 throw new ServerResponseException(errors.First());
@@ -194,7 +194,7 @@ public abstract class RestServiceBase
         }
 
         httpResponse.EnsureSuccessStatusCode();
-        return null;
+        throw new NoDataException($"Data not received from {resource}");
     }
 
     protected async Task DeleteAsync(string resource, bool tryRefresh = true, CancellationToken token = default)
@@ -256,19 +256,12 @@ public abstract class RestServiceBase
 
         var result = await SendAsync<AuthResponse, RefreshTokenRequest>("user/refresh", new RefreshTokenRequest(token.Token, token.RefreshToken), tryRefresh: false)
             .ConfigureAwait(false);
-        if (result is not null)
-        {
-            await StorageService.SaveToken(result)
-                .ConfigureAwait(false);
-            return true;
-        }
-
-        await StorageService.DeleteToken()
+        await StorageService.SaveToken(result)
             .ConfigureAwait(false);
-        return false;
+        return true;
     }
 
-    private static IEnumerable<string> ParseErrors(string json)
+    private static List<string> ParseErrors(string json)
     {
         if (string.IsNullOrEmpty(json))
         {

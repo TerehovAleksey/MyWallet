@@ -6,16 +6,11 @@ public class ResourceHelper
     {
         var theme = App.Current!.RequestedTheme;
 
-        ResourceDictionary? dictionary;
-        switch (theme)
+        ResourceDictionary? dictionary = theme switch
         {
-            case AppTheme.Dark:
-                dictionary = GetDarkThemeDictionary();
-                break;
-            default:
-                dictionary = GetLightThemeDictionary();
-                break;
-        }
+            AppTheme.Dark => GetDarkThemeDictionary(),
+            _ => GetLightThemeDictionary(),
+        };
 
         if (dictionary is not null)
         {

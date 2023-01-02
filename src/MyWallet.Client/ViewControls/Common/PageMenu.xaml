@@ -20,12 +20,13 @@
         x:Name="TitleLabelContainer"
         Grid.Row="0"
         BackgroundColor="{DynamicResource BackgroundColor}"
-        IsVisible="false">
+        IsVisible="false"
+        StrokeThickness="0">
         <Label
             x:Name="TitleLabel"
             Margin="20,10,0,10"
             FontSize="Caption"
-            Style="{DynamicResource RegularGray12TextStyle}"
+            Style="{DynamicResource CardCaption}"
             TextTransform="Uppercase" />
     </Border>
     <BoxView Grid.Row="1" Style="{DynamicResource SeparatorStyle}" />
@@ -50,6 +51,7 @@
                         Grid.Column="0"
                         Margin="16,0"
                         Padding="12"
+                        IsVisible="{Binding Icon, Converter={StaticResource StringNotEmptyToVisibleConverter}}"
                         BackgroundColor="{Binding Color}"
                         HeightRequest="44"
                         Stroke="{Binding Color}"
@@ -66,23 +68,23 @@
                         VerticalOptions="Center">
                         <Label
                             FontAttributes="Bold"
-                            FontSize="Header"
                             IsVisible="{Binding Title, Converter={StaticResource StringNotEmptyToVisibleConverter}}"
+                            Style="{DynamicResource ItemBody}"
                             Text="{Binding Title}"
-                            TextColor="{DynamicResource DarkTextColor}" />
+                            TextColor="{DynamicResource TextDarkColor}" />
                         <Label
                             IsVisible="{Binding Description, Converter={StaticResource StringNotEmptyToVisibleConverter}}"
                             LineBreakMode="WordWrap"
-                            FontSize="Caption"
+                            Style="{DynamicResource ItemCaption}"
                             Text="{Binding Description}"
-                            TextColor="{DynamicResource GrayTextColor}" />
+                            TextColor="{DynamicResource TextGrayColor}" />
                     </VerticalStackLayout>
                     <BoxView
                         Grid.Row="1"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
                         IsVisible="{Binding HasSeparator}"
-                        Style="{StaticResource SeparatorStyle}" />
+                        Style="{DynamicResource SeparatorStyle}" />
 
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />

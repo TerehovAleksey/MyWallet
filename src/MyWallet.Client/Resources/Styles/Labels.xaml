@@ -1,14 +1,67 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    
-    <Style x:Key="Medium" TargetType="Label">
-        <Setter Property="FontSize" Value="Medium"/>
-        <Setter Property="HorizontalOptions" Value="Start"/>
-        <Setter Property="VerticalOptions" Value="Center"/>
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Style x:Key="BaseLabelStyle" TargetType="Label">
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="VerticalOptions" Value="Center" />
     </Style>
-    
-    <Style x:Key="MediumLight" TargetType="Label" BasedOn="{StaticResource Medium}">
-        <Setter Property="TextColor" Value="{DynamicResource LightTextColor}"/>
+
+    <Style
+        x:Key="Small"
+        BasedOn="{StaticResource BaseLabelStyle}"
+        TargetType="Label">
+        <Setter Property="FontSize" Value="Small" />
     </Style>
-    
+
+    <Style
+        x:Key="Default"
+        BasedOn="{StaticResource BaseLabelStyle}"
+        TargetType="Label">
+        <Setter Property="FontSize" Value="Default" />
+    </Style>
+
+    <Style
+        x:Key="Medium"
+        BasedOn="{StaticResource BaseLabelStyle}"
+        TargetType="Label">
+        <Setter Property="FontSize" Value="Medium" />
+    </Style>
+
+    <Style
+        x:Key="MediumLight"
+        BasedOn="{StaticResource Medium}"
+        TargetType="Label">
+        <Setter Property="TextColor" Value="{DynamicResource TextLightColor}" />
+    </Style>
+
+    <Style
+        x:Key="InputCaption"
+        BasedOn="{StaticResource Small}"
+        TargetType="Label">
+        <Setter Property="Margin" Value="0,0,0,5" />
+        <Setter Property="TextColor" Value="{DynamicResource GrayTextColor}" />
+    </Style>
+
+    <Style
+        x:Key="CardCaption"
+        BasedOn="{StaticResource BaseLabelStyle}"
+        TargetType="Label">
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="Margin" Value="0,0,0,5" />
+        <Setter Property="TextColor" Value="{DynamicResource TextDarkGrayColor}" />
+    </Style>
+
+    <Style
+        x:Key="ItemCaption"
+        BasedOn="{StaticResource BaseLabelStyle}"
+        TargetType="Label">
+        <Setter Property="FontSize" Value="Caption" />
+    </Style>
+
+    <Style
+        x:Key="ItemBody"
+        BasedOn="{StaticResource BaseLabelStyle}"
+        TargetType="Label">
+        <Setter Property="FontSize" Value="Body" />
+    </Style>
+
 </ResourceDictionary>

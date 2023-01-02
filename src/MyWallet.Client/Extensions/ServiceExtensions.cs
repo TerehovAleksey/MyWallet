@@ -43,6 +43,8 @@ public static class ServiceExtensions
         builder.Services.AddTransient<CurrencyPageViewModel>();
         builder.Services.AddTransient<CategoriesPageViewModel>();
         builder.Services.AddTransient<CategoryPageViewModel>();
+        builder.Services.AddTransient<NotificationsPageViewModel>();
+        builder.Services.AddTransient<RecordsPageViewModel>();
         
         //Widgets
         builder.Services.AddSingleton<WidgetContainerViewModel>();
@@ -69,9 +71,13 @@ public static class ServiceExtensions
         builder.Services.AddTransient<SettingsPage>();
         builder.Services.AddTransient<CurrenciesPage>();
         builder.Services.AddTransient<CurrencyPage>();
+        builder.Services.AddTransient<NotificationsPage>();
+        builder.Services.AddTransient<RecordsPage>();
 
         //Dialogs
         builder.Services.AddTransient<MessageDialog>();
+        builder.Services.AddTransient<InputDialog>();
+        builder.Services.AddTransient<RadioDialog>();
         builder.Services.AddTransient<WidgetSettingsDialog>();
         
         //WidgetTabs

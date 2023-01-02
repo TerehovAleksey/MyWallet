@@ -6,7 +6,6 @@
     <Style x:Key="BaseRegularLabelTextStyle" TargetType="Label">
         <Setter Property="LineBreakMode" Value="TailTruncation" />
         <Setter Property="FontAutoScalingEnabled" Value="False" />
-        <Setter Property="FontFamily" Value="RegularFont" />
     </Style>
 
     <Style
@@ -37,7 +36,6 @@
     <Style x:Key="BaseMediumLabelTextStyle" TargetType="Label">
         <Setter Property="LineBreakMode" Value="TailTruncation" />
         <Setter Property="FontAutoScalingEnabled" Value="False" />
-        <Setter Property="FontFamily" Value="MediumFont" />
         <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 

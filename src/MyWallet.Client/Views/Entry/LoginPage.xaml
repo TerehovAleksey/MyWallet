@@ -30,7 +30,7 @@
                 HorizontalOptions="Start"
                 IsVisible="{OnPlatform WinUI=false}"
                 Source="back_dark.png"
-                Style="{StaticResource IconButtonStyle}"
+                Style="{DynamicResource IconButtonStyle}"
                 VerticalOptions="Center"
                 WidthRequest="42" />
             <ScrollView Grid.Row="1">
@@ -49,7 +49,11 @@
                             HeightRequest="120"
                             Source="mail_wallet.png"
                             WidthRequest="120" />
-                        <Label Style="{StaticResource CaptionTextStyle}" Text="{Binding Caption}" />
+                        <Label
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            Style="{DynamicResource CardCaption}"
+                            Text="{Binding Caption}" />
                         <common:InputText
                             Title="{x:Static res:Strings.Email}"
                             Placeholder="{x:Static res:Strings.EmailPlaceholder}"
@@ -67,20 +71,22 @@
                             Value="{Binding PasswordConfirm}" />
                         <Button
                             Command="{Binding LoginCommand}"
-                            Style="{StaticResource PrimaryButton}"
+                            Style="{DynamicResource PrimaryButton}"
                             Text="{Binding ButtonTitle}" />
                         <Button
                             Command="{Binding RememberPasswordCommand}"
+                            FontAttributes="None"
                             IsVisible="{Binding IsRegister, Converter={StaticResource BoolInvertConverter}}"
-                            Style="{StaticResource TransparentButton}"
+                            Style="{DynamicResource TransparentButton}"
                             Text="{x:Static res:Strings.ForgotPassword}"
-                            TextColor="{StaticResource LinkTextColor}" />
+                            TextColor="{DynamicResource TextLinkColor}" />
                     </VerticalStackLayout>
                     <Button
                         Grid.Row="1"
                         Command="{Binding SwitchCommand}"
-                        Style="{StaticResource TransparentButton}"
+                        Style="{DynamicResource TransparentButton}"
                         Text="{Binding SwitchTitle}"
+                        TextColor="{DynamicResource TextDarkGrayColor}"
                         VerticalOptions="End" />
                 </Grid>
             </ScrollView>

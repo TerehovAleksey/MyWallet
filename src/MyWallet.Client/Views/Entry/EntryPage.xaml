@@ -26,7 +26,7 @@
             <Style x:Key="RegisterLabel" TargetType="Label">
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="TextColor" Value="{DynamicResource LightTextColor}" />
+                <Setter Property="TextColor" Value="{DynamicResource TextLightColor}" />
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="TextTransform" Value="Uppercase" />
             </Style>
@@ -58,9 +58,12 @@
                 <VerticalStackLayout Grid.Row="1" Spacing="10">
                     <Label
                         Margin="20,0"
+                        FontAttributes="Bold"
                         FontSize="18"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
                         LineBreakMode="WordWrap"
-                        Style="{DynamicResource CaptionTextStyle}"
+                        Style="{DynamicResource CardCaption}"
                         Text="{x:Static res:Strings.SignUpMessage}" />
                     <Border BackgroundColor="{DynamicResource BackgroundLightColor}" Stroke="{DynamicResource GoogleColor}">
                         <Border.GestureRecognizers>
@@ -124,11 +127,11 @@
                         LineBreakMode="WordWrap">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="{x:Static res:Strings.AlreadyHaveAnAccount}" TextColor="{DynamicResource DarkTextColor}" />
+                                <Span Text="{x:Static res:Strings.AlreadyHaveAnAccount}" TextColor="{DynamicResource TextDarkColor}" />
                                 <Span
                                     FontAttributes="Bold"
                                     Text="{x:Static res:Strings.LogIn}"
-                                    TextColor="{DynamicResource LinkTextColor}" />
+                                    TextColor="{DynamicResource TextLinkColor}" />
                             </FormattedString>
                         </Label.FormattedText>
                         <Label.GestureRecognizers>
@@ -144,20 +147,20 @@
                     <Label
                         HorizontalTextAlignment="Center"
                         LineBreakMode="WordWrap"
-                        TextColor="{DynamicResource DarkTextColor}">
+                        TextColor="{DynamicResource TextDarkColor}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span FontSize="12" Text="{x:Static res:Strings.EntryPageTextPart1}" />
                                 <Span
                                     FontSize="12"
                                     Text="{x:Static res:Strings.TermsOfServices}"
-                                    TextColor="{DynamicResource LinkTextColor}"
+                                    TextColor="{DynamicResource TextLinkColor}"
                                     TextDecorations="Underline" />
                                 <Span FontSize="12" Text="{x:Static res:Strings.EntryPageTextPart2}" />
                                 <Span
                                     FontSize="12"
                                     Text="{x:Static res:Strings.PrivacyPolicy}"
-                                    TextColor="{DynamicResource LinkTextColor}"
+                                    TextColor="{DynamicResource TextLinkColor}"
                                     TextDecorations="Underline" />
                                 <Span FontSize="12" Text="{x:Static res:Strings.EntryPageTextPart3}" />
                             </FormattedString>

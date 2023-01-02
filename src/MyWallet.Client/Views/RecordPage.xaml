@@ -19,7 +19,7 @@
             Margin="0"
             Command="{Binding SaveAndReturnCommand}"
             Source="check.png"
-            Style="{StaticResource IconButtonStyle}" />
+            Style="{DynamicResource IconButtonStyle}" />
 
     </base:PageBase.PageIcons>
 
@@ -34,10 +34,7 @@
 
                 <!--  Account  -->
                 <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
-                    <Label
-                        Margin="0,0,0,5"
-                        Style="{StaticResource RegularGray12TextStyle}"
-                        Text="Счёт" />
+                    <Label Style="{DynamicResource InputCaption}" Text="Счёт" />
                     <Picker
                         Title="{OnPlatform Android=Выберете счёт}"
                         HorizontalOptions="FillAndExpand"
@@ -47,10 +44,7 @@
 
                 <!--  Categories  -->
                 <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
-                    <Label
-                        Margin="0,0,0,5"
-                        Style="{StaticResource RegularGray12TextStyle}"
-                        Text="Категория" />
+                    <Label Style="{DynamicResource InputCaption}" Text="Категория" />
                     <Picker
                         Title="{OnPlatform Android=Выберете категорию}"
                         HorizontalOptions="FillAndExpand"
@@ -60,10 +54,7 @@
 
                 <!--  SubCategories  -->
                 <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
-                    <Label
-                        Margin="0,0,0,5"
-                        Style="{StaticResource RegularGray12TextStyle}"
-                        Text="Подкатегория" />
+                    <Label Style="{DynamicResource InputCaption}" Text="Подкатегория" />
                     <Picker
                         Title="{OnPlatform Android=Выберете подкатегорию}"
                         HorizontalOptions="FillAndExpand"
@@ -85,19 +76,13 @@
 
                 <!--  Date  -->
                 <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
-                    <Label
-                        Margin="0,0,0,5"
-                        Style="{StaticResource RegularGray12TextStyle}"
-                        Text="Дата" />
+                    <Label Style="{DynamicResource InputCaption}" Text="Дата" />
                     <DatePicker Date="{Binding RecordDate, Mode=TwoWay}" />
                 </VerticalStackLayout>
 
                 <!--  Time  -->
                 <VerticalStackLayout Padding="0" HorizontalOptions="Fill">
-                    <Label
-                        Margin="0,0,0,5"
-                        Style="{StaticResource RegularGray12TextStyle}"
-                        Text="Время" />
+                    <Label Style="{DynamicResource InputCaption}" Text="Время" />
                     <TimePicker Time="{Binding RecordTime, Mode=TwoWay}" />
                 </VerticalStackLayout>
 

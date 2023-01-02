@@ -4,6 +4,7 @@ namespace MyWallet.Client;
 
 public partial class App : Application, IDisposable
 {
+    private bool disposed = false;
     private readonly IStorageService _storageService;
     private readonly IAppService _appService;
 
@@ -117,8 +118,26 @@ public partial class App : Application, IDisposable
         OnAppStateChanged(isAuth);     
     }
 
+    ~App()
+    {
+        Dispose(disposing: false);
+    }
+
     public void Dispose()
     {
-        _appService.OnAppStateChanged -= OnAppStateChanged;
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void Dispose(bool disposing)
+    {
+        if (!disposed)
+        {
+            if (disposing)
+            {
+                _appService.OnAppStateChanged -= OnAppStateChanged;
+            }
+        }
+        disposed = true;
     }
 }

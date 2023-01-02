@@ -7,4 +7,5 @@ public interface ICurrencyService
     public Task CreateUserCurrencyAsync(CurrencyDto currency);
     public Task<CurrencyRates> GetCurrencyRates(string targetSymbol, bool onlySaveToCache = false);
     public Task UpdateCurrencyRate(string mainSymbol, string targetSymbol, decimal value);
+    public Task<string> GetMainCurrencySymbol();
 }

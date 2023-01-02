@@ -5,17 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:common="clr-namespace:MyWallet.Client.ViewControls.Common"
     x:DataType="common:InputText">
-    <Label
-        x:Name="TitleLabel"
-        Margin="0,0,0,5"
-        Style="{StaticResource RegularGray12TextStyle}" />
 
+    <Label x:Name="TitleLabel" Style="{DynamicResource InputCaption}" />
     <Entry
         x:Name="Entry"
         ClearButtonVisibility="WhileEditing"
-        PlaceholderColor="{StaticResource GrayTextColor}"
+        PlaceholderColor="{StaticResource TextGrayColor}"
         TextChanged="Entry_TextChanged"
-        TextColor="{StaticResource DarkTextColor}" />
+        TextColor="{StaticResource TextDarkColor}" />
     <Grid
         x:Name="ErrorFooter"
         Padding="5,0"

@@ -1,13 +1,9 @@
-using System.Diagnostics;
-
 namespace MyWallet.Client.ViewControls.Dialog;
 
 public partial class WidgetSettingsDialog : VerticalStackLayout, IDialog
 {
-    private TimePeriod[] _timePeriodsEnums;
-    private string[] _timePeriods;
-    //private TimePeriod _period;
-    private string _period;
+    private readonly TimePeriod[] _timePeriodsEnums;
+    private readonly string[] _timePeriods;
 
     private DialogParameters? _parameters;
     public DialogParameters? Parameters
@@ -15,18 +11,10 @@ public partial class WidgetSettingsDialog : VerticalStackLayout, IDialog
         get => _parameters;
         set
         {
-            if (_parameters != value)
+            if (value != null && _parameters != value)
             {
                 _parameters = value;
-
-                // ссылка должна поменяться
-                //_period = _parameters!.Get<TimePeriod>("TimePeriod");
-                _period = _parameters!.Get<string>("TimePeriod");
-
-                Debug.Write($"--->Hash 2: {_period.GetHashCode()}");
-
-               // var index = Array.FindIndex(_timePeriods, x => x == Enum.GetName(_period));
-                var index = Array.FindIndex(_timePeriods, x => x == _period);
+                var index = Array.FindIndex(_timePeriods, x => x == _parameters.Get<string>("TimePeriod"));
                 TimePeriodPicker.SelectedIndex = index;
             }
         }
@@ -47,13 +35,15 @@ public partial class WidgetSettingsDialog : VerticalStackLayout, IDialog
 
         _timePeriodsEnums = Enum.GetValues<TimePeriod>();
         _timePeriods = Enum.GetNames<TimePeriod>();
-        TimePeriodPicker.ItemsSource = _timePeriodsEnums.Select(x => x.ToDisplayString()).ToArray();
+        TimePeriodPicker.ItemsSource = _timePeriodsEnums.Select(x => x.ToShortDisplayString()).ToArray();
     }
 
     private void TimePeriodPicker_SelectedIndexChanged(object sender, EventArgs e)
     {
         var index = (sender as Picker)!.SelectedIndex;
-        //_period = _timePeriodsEnums[index];
-        _period = _timePeriods[index];
+        if(_parameters is not null)
+        {
+            _parameters["TimePeriod"] = _timePeriods[index];
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace MyWallet.Client.Models.Settings;
 
-public record WidgetSettings(Widgets Widgets, TimePeriod TimePeriod = TimePeriod.Days7);
+public record WidgetSettings(Guid Id, WidgetType WidgetType, WidgetFilter Filter);
+public record WidgetFilter(TimePeriod TimePeriod = TimePeriod.Days7);
 
 public enum TimePeriod
 {

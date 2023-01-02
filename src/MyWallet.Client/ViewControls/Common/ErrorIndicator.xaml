@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:res="clr-namespace:MyWallet.Client.Resources"
-    BackgroundColor="{StaticResource BackgroundColor}"
+    BackgroundColor="{DynamicResource BackgroundColor}"
     HorizontalOptions="Fill"
     IsVisible="False"
     VerticalOptions="Fill">
@@ -13,44 +13,29 @@
         Padding="48,12"
         HorizontalOptions="Center"
         VerticalOptions="Center">
-        <Border
-            BackgroundColor="{StaticResource BackgroundLightColor}"
-            HeightRequest="160"
-            StrokeShape="RoundRectangle 80"
-            WidthRequest="160">
-            <Image
-                x:Name="ErrorIcon"
-                Aspect="AspectFit"
-                HeightRequest="86"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                WidthRequest="86" />
+        <Border Style="{DynamicResource PageNotificationImageBorder}">
+            <Image x:Name="ErrorIcon" Style="{DynamicResource PageNotificationImage}" />
         </Border>
 
         <Label
             Margin="0,12,0,0"
-            FontSize="18"
+            FontAttributes="Bold"
             HorizontalOptions="Center"
-            HorizontalTextAlignment="Center"
-            Style="{StaticResource BaseMediumLabelTextStyle}"
-            Text="{x:Static res:Strings.ErrorMessageTitle}"
-            TextColor="{StaticResource DarkTextColor}" />
+            Style="{DynamicResource Medium}"
+            Text="{x:Static res:Strings.ErrorMessageTitle}" />
 
         <Label
             x:Name="ErrorTextLabel"
             FontSize="14"
             HorizontalOptions="Center"
             HorizontalTextAlignment="Center"
-            LineBreakMode="WordWrap"
-            Style="{StaticResource BaseRegularLabelTextStyle}"
-            TextColor="{StaticResource GrayTextColor}" />
+            LineBreakMode="WordWrap" />
 
         <Button
             x:Name="RefreshButton"
             Margin="0,20,0,0"
             Clicked="RefreshButton_Clicked"
-            HeightRequest="36"
-            Style="{StaticResource AccentButton}"
+            Style="{DynamicResource AccentButton}"
             Text="{x:Static res:Strings.GoBack}"
             WidthRequest="140" />
     </VerticalStackLayout>

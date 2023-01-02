@@ -8,4 +8,12 @@
         <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 
+    <Style x:Key="PageNotificationImage" TargetType="Image">
+        <Setter Property="Aspect" Value="AspectFit" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HeightRequest" Value="86" />
+        <Setter Property="WidthRequest" Value="86" />
+    </Style>
+
 </ResourceDictionary>

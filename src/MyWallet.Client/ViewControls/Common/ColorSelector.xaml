@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Grid
+    x:Class="MyWallet.Client.ViewControls.Common.ColorSelector"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MyWallet.Client.ViewControls.Common"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
+    x:DataType="local:ColorSelector"
+    BackgroundColor="{DynamicResource BackgroundLightColor}"
+    HeightRequest="56"
+    ZIndex="100">
+
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <Label
+        Grid.Row="0"
+        Margin="0,0,0,5"
+        Style="{StaticResource RegularGray12TextStyle}"
+        Text="{x:Static res:Strings.Color}" />
+
+    <!--  Selected Color  -->
+    <Grid
+        Grid.Row="1"
+        BackgroundColor="{DynamicResource BackgroundLightColor}"
+        ColumnDefinitions="*,50"
+        HeightRequest="36"
+        VerticalOptions="Start">
+        <Border
+            x:Name="SelectedColor"
+            Grid.Column="0"
+            StrokeShape="RoundRectangle 5"
+            StrokeThickness="0" />
+        <Border
+            Grid.Column="1"
+            BackgroundColor="Transparent"
+            Stroke="Transparent">
+            <Image
+                Aspect="AspectFit"
+                HeightRequest="20"
+                Source="down.png" />
+        </Border>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OpenCollection_Tapped" />
+        </Grid.GestureRecognizers>
+    </Grid>
+
+    <!--  List of colors  -->
+    <Grid
+        Grid.Row="1"
+        Margin="0,0,50,0"
+        MaximumHeightRequest="400">
+        <ScrollView
+            x:Name="Selector"
+            IsVisible="false"
+            VerticalOptions="FillAndExpand">
+            <Border
+                BackgroundColor="{DynamicResource BackgroundCardColor}"
+                StrokeShape="RoundRectangle 5"
+                StrokeThickness="0">
+                <CollectionView x:Name="Collection" BackgroundColor="{DynamicResource BackgroundCardColor}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="2" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                BackgroundColor="{Binding .}"
+                                HeightRequest="36"
+                                Stroke="{Binding .}"
+                                StrokeShape="RoundRectangle 5"
+                                StrokeThickness="0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="SelectColor_Tapped" />
+                                </Border.GestureRecognizers>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Border>
+
+        </ScrollView>
+    </Grid>
+
+</Grid>

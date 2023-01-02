@@ -8,11 +8,10 @@ public partial class MessageDialog : VerticalStackLayout, IDialog
         get => _parameters;
         set
         {
-            if (_parameters != value)
+            if (value != null && _parameters != value)
             {
                 _parameters = value;
-                var message = _parameters!.Get<string>("Message");
-                TextLabel.Text = message;
+                TextLabel.Text = _parameters!.Get<string>("Message");
             }
         }
     }

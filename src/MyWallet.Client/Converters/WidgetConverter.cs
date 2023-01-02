@@ -22,18 +22,12 @@ public class WidgetConverter : IValueConverter
     {
         if (viewModel is WidgetLastRecordsViewModel)
         {
-            return new WidgetLastRecords
-            {
-                BindingContext = viewModel
-            };
+            return new WidgetLastRecords(viewModel);
         }
 
         if (viewModel is WidgetCashFlowViewModel)
         {
-            return new WidgetCashFlow
-            {
-                BindingContext = viewModel
-            };
+            return new WidgetCashFlow(viewModel);
         }
 
         throw new NotImplementedException(viewModel.GetType().Name);

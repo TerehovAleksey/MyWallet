@@ -3,7 +3,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Style x:Key="FabButtonStyle" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="{StaticResource AccentColor}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundAccentColor}" />
         <Setter Property="HeightRequest" Value="60" />
         <Setter Property="WidthRequest" Value="60" />
         <Setter Property="CornerRadius" Value="30" />
@@ -22,36 +22,15 @@
         </Setter>
     </Style>
 
-    <!--  Buttons Styles  -->
 
-    <Style x:Key="RegularButton" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="BorderWidth" Value="1.1" />
-        <Setter Property="BorderColor" Value="{DynamicResource GrayColor}" />
-        <Setter Property="CornerRadius" Value="10" />
-        <Setter Property="TextColor" Value="{DynamicResource DarkTextColor}" />
-        <Setter Property="TextTransform" Value="Uppercase" />
-        <Setter Property="FontFamily" Value="MediumFont" />
-        <Setter Property="FontSize" Value="12" />
-    </Style>
-
-    <Style x:Key="AccentRoundedButton" TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource AccentColor}" />
-        <Setter Property="HorizontalOptions" Value="Center" />
-        <Setter Property="BorderWidth" Value="0" />
-        <Setter Property="CornerRadius" Value="16" />
-        <Setter Property="FontFamily" Value="MediumFont" />
-        <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
-        <Setter Property="FontSize" Value="12" />
-    </Style>
-
+    <!--  Filled buttons  -->
     <Style x:Key="PrimaryButton" TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
+        <Setter Property="Background" Value="{DynamicResource BackgroundPrimaryColor}" />
         <Setter Property="HorizontalOptions" Value="Fill" />
-        <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+        <Setter Property="FontSize" Value="Body" />
+        <Setter Property="TextColor" Value="{DynamicResource TextLightColor}" />
         <Setter Property="TextTransform" Value="Uppercase" />
-        <Setter Property="HeightRequest" Value="46" />
-        <Setter Property="FontFamily" Value="MediumFont" />
+        <Setter Property="HeightRequest" Value="36" />
         <Setter Property="BorderWidth" Value="0" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
@@ -75,14 +54,14 @@
         x:Key="DangerButton"
         BasedOn="{StaticResource PrimaryButton}"
         TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource DangerColor}" />
+        <Setter Property="Background" Value="{DynamicResource BackgroundDangerColor}" />
     </Style>
 
     <Style
         x:Key="AccentButton"
         BasedOn="{StaticResource PrimaryButton}"
         TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource AccentColor}" />
+        <Setter Property="Background" Value="{DynamicResource BackgroundAccentColor}" />
     </Style>
 
     <Style
@@ -90,18 +69,23 @@
         BasedOn="{StaticResource PrimaryButton}"
         TargetType="Button">
         <Setter Property="Background" Value="{DynamicResource BackgroundCardColor}" />
-        <Setter Property="TextColor" Value="{DynamicResource LinkTextColor}" />
-        <Setter Property="Margin" Value="10,-10,10,10" />
+        <Setter Property="TextColor" Value="{DynamicResource TextLinkColor}" />
+        <Setter Property="Margin" Value="12,-10,12,10" />
         <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="BorderWidth" Value=".5" />
+        <Setter Property="BorderColor" Value="{DynamicResource GrayDarkColor}" />
     </Style>
 
+    <!--  Transparent buttons  -->
     <Style x:Key="TransparentButton" TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="HeightRequest" Value="46" />
+        <Setter Property="HeightRequest" Value="36" />
         <Setter Property="HorizontalOptions" Value="Fill" />
         <Setter Property="BorderWidth" Value="0" />
-        <Setter Property="TextColor" Value="{DynamicResource DarkTextColor}" />
-        <Setter Property="FontFamily" Value="RegularFont" />
+        <Setter Property="FontSize" Value="Small" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextTransform" Value="Uppercase" />
+        <Setter Property="TextColor" Value="{DynamicResource TextDarkColor}" />
         <Setter Property="LineBreakMode" Value="TailTruncation" />
     </Style>
 
@@ -109,20 +93,37 @@
         x:Key="LinkButton"
         BasedOn="{StaticResource TransparentButton}"
         TargetType="Button">
-        <Setter Property="TextColor" Value="{DynamicResource LinkTextColor}" />
-        <Setter Property="TextTransform" Value="Uppercase" />
-        <Setter Property="FontSize" Value="12" />
-        <Setter Property="FontFamily" Value="MediumFont" />
+        <Setter Property="TextColor" Value="{DynamicResource TextLinkColor}" />
     </Style>
 
     <Style
         x:Key="DangerLinkButton"
         BasedOn="{StaticResource TransparentButton}"
         TargetType="Button">
-        <Setter Property="TextColor" Value="{DynamicResource DangerColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource TextDangerColor}" />
+    </Style>
+
+    <!--  Other buttons  -->
+
+    <Style x:Key="AccentRoundedButton" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource BackgroundAccentColor}" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="TextColor" Value="{StaticResource TextLightColor}" />
+        <Setter Property="FontSize" Value="Caption" />
+    </Style>
+
+    <!--  Buttons Styles  -->
+
+    <Style x:Key="RegularButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderWidth" Value="1.1" />
+        <Setter Property="BorderColor" Value="{DynamicResource GrayColor}" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="TextColor" Value="{DynamicResource TextDarkColor}" />
         <Setter Property="TextTransform" Value="Uppercase" />
-        <Setter Property="FontSize" Value="12" />
-        <Setter Property="FontFamily" Value="MediumFont" />
+        <Setter Property="FontSize" Value="Caption" />
     </Style>
 
     <!--  Icon Styles  -->

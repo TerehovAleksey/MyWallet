@@ -1,7 +1,8 @@
 ﻿namespace MyWallet.Client.UI;
 
-public enum Widgets
+public enum WidgetType
 {
+    None,
     LastRecords,
     CashFlow
 }

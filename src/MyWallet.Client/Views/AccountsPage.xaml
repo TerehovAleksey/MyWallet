@@ -51,8 +51,11 @@
                                     Grid.Column="1"
                                     HorizontalOptions="Start"
                                     VerticalOptions="Center">
-                                    <Label Style="{DynamicResource MediumDark14TextStyle}" Text="{Binding Name}" />
-                                    <Label Style="{DynamicResource RegularDark12TextStyle}" Text="{Binding Status}" />
+                                    <Label
+                                        Style="{DynamicResource ItemBody}"
+                                        Text="{Binding Name}"
+                                        TextColor="{DynamicResource TextDarkGrayColor}" />
+                                    <Label Style="{DynamicResource ItemCaption}" Text="{Binding Status}" />
                                 </VerticalStackLayout>
                                 <BoxView
                                     Grid.Row="1"
@@ -64,7 +67,7 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </ScrollView>
-            <Button Command="{Binding OpenAccountPageCommand}" Style="{StaticResource FabButtonStyle}" />
+            <Button Command="{Binding OpenAccountPageCommand}" Style="{DynamicResource FabButtonStyle}" />
         </Grid>
 
     </base:PageBase.PageContent>

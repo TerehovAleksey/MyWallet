@@ -32,23 +32,21 @@
                             Grid.Row="1"
                             Padding="30,10"
                             FontAttributes="Bold"
-                            FontFamily="RegularFont"
                             FontSize="24"
                             HorizontalOptions="FillAndExpand"
                             HorizontalTextAlignment="Center"
                             LineBreakMode="WordWrap"
                             Text="{Binding Title}"
-                            TextColor="{DynamicResource DarkTextColor}" />
+                            TextColor="{DynamicResource TextDarkColor}" />
                         <Label
                             Grid.Row="2"
                             Padding="20,10"
-                            FontFamily="RegularFont"
                             FontSize="18"
                             HorizontalOptions="FillAndExpand"
                             HorizontalTextAlignment="Center"
                             LineBreakMode="WordWrap"
                             Text="{Binding Description}"
-                            TextColor="{DynamicResource GrayTextColor}" />
+                            TextColor="{DynamicResource TextGrayColor}" />
                     </Grid>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
@@ -59,22 +57,21 @@
             HorizontalOptions="Center"
             IndicatorColor="{DynamicResource LightGrayColor}"
             IndicatorSize="10"
-            SelectedIndicatorColor="{DynamicResource AccentColor}"
+            SelectedIndicatorColor="{DynamicResource TextAccentColor}"
             VerticalOptions="Center" />
         <Button
             Grid.Row="2"
             Margin="0,0,0,50"
             BackgroundColor="Transparent"
-            BorderColor="{DynamicResource AccentColor}"
+            BorderColor="{DynamicResource TextAccentColor}"
             BorderWidth="1"
             Command="{Binding OpenEntryPageCommand}"
             CornerRadius="5"
             FontAttributes="Bold"
-            FontFamily="RegularFont"
             HeightRequest="40"
             HorizontalOptions="Center"
             Text="{x:Static res:Strings.StartNow}"
-            TextColor="{DynamicResource AccentColor}"
+            TextColor="{DynamicResource TextAccentColor}"
             TextTransform="Uppercase"
             VerticalOptions="Center"
             WidthRequest="210" />

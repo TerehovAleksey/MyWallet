@@ -6,6 +6,7 @@
     xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
     xmlns:common="clr-namespace:MyWallet.Client.ViewControls.Common"
     xmlns:converters="clr-namespace:MyWallet.Client.Converters"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
     xmlns:m="clr-namespace:MyWallet.Client.Models"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.MenuPages.Settings"
     x:DataType="vm:CurrencyPageViewModel"
@@ -24,29 +25,29 @@
                 Command="{Binding DeleteAndReturnCommand}"
                 IsVisible="{Binding IsNewCurrency, Converter={StaticResource BoolInvertConverter}}"
                 Source="trash.png"
-                Style="{StaticResource IconButtonStyle}" />
+                Style="{DynamicResource IconButtonStyle}" />
             <ImageButton
                 Margin="0"
                 Command="{Binding SaveAndReturnCommand}"
                 Source="check.png"
-                Style="{StaticResource IconButtonStyle}" />
+                Style="{DynamicResource IconButtonStyle}" />
         </HorizontalStackLayout>
     </base:PageBase.PageIcons>
     <base:PageBase.PageContent>
         <common:EditPageContainer>
-            <VerticalStackLayout Style="{StaticResource InputContainer}">
+            <VerticalStackLayout Style="{DynamicResource InputContainer}">
                 <!--  Currency  -->
-                <VerticalStackLayout x:Name="CurrencyPickerLayout" Style="{StaticResource InputGroup}">
-                    <Label Style="{StaticResource InputLabel}" Text="Тип" />
+                <VerticalStackLayout x:Name="CurrencyPickerLayout" Style="{DynamicResource InputGroup}">
+                    <Label Style="{DynamicResource InputCaption}" Text="{x:Static res:Strings.Type}" />
                     <Picker
                         x:Name="CurrencyPicker"
-                        Title="{OnPlatform Android=Выберете валюту}"
+                        Title="{OnPlatform Android={x:Static res:Strings.SelectCurrency}}"
                         HorizontalOptions="FillAndExpand"
                         IsEnabled="{Binding IsNewCurrency}"
                         ItemsSource="{Binding Currencies}"
                         SelectedItem="{Binding SelectedCurrency}" />
                 </VerticalStackLayout>
-                <BoxView Style="{StaticResource SeparatorStyle}" />
+                <BoxView Style="{DynamicResource SeparatorStyle}" />
                 <!--  Rates  -->
                 <Grid ColumnDefinitions="*,20,*">
                     <common:InputText
@@ -62,11 +63,11 @@
                 <Button
                     Command="{Binding RefreshRatesCommand}"
                     HorizontalOptions="End"
-                    Style="{StaticResource AccentButton}"
-                    Text="Обновить" />
+                    Style="{DynamicResource AccentButton}"
+                    Text="{x:Static res:Strings.Refresh}" />
                 <!--  Symbol  -->
                 <common:InputText
-                    Title="Код"
+                    Title="{x:Static res:Strings.Code}"
                     IsReadOnly="True"
                     Value="{Binding CurrencySymbol}" />
             </VerticalStackLayout>

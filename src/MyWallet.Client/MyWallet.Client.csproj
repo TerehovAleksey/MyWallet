@@ -76,6 +76,7 @@
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Include="Resources\Images\svg\edit.svg" TintColor="#a3a3a3" />
+		<MauiImage Include="Resources\Images\svg\down.svg" TintColor="#a3a3a3" />
 		
 		<!-- Menu Images -->
 		<MauiImage Include="Resources\Images\Menu\menu_home.svg" TintColor="#ec407a" />
@@ -141,6 +142,7 @@
 	  <None Remove="Resources\Images\account_type_11_account_with_overdraft.png" />
 	  <None Remove="Resources\Images\back.png" />
 	  <None Remove="Resources\Images\back_dark.png" />
+	  <None Remove="Resources\Images\bell.png" />
 	  <None Remove="Resources\Images\check.png" />
 	  <None Remove="Resources\Images\close.png" />
 	  <None Remove="Resources\Images\cog.png" />
@@ -174,6 +176,7 @@
 		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="MonkeyCache.FileStore" Version="2.0.0-beta" />
+		<PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -181,6 +184,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="EntryShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\Styles\Borders.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Buttons.xaml">
@@ -192,7 +198,7 @@
 	  <MauiXaml Update="Resources\Styles\Colors.LightTheme.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Resources\Styles\Colors.xaml">
+	  <MauiXaml Update="Resources\Styles\Entry.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Shadows.xaml">
@@ -208,6 +214,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Texts.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ViewControls\Common\ColorSelector.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ViewControls\Common\EditPageContainer.xaml">
@@ -293,6 +302,10 @@
 	    <SubType>Designer</SubType>
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\MenuPages\RecordsPage.xaml">
+	    <SubType>Designer</SubType>
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -352,6 +365,10 @@
 	  </Compile>
 	  <Compile Update="Views\MenuPages\Settings\UserPage.xaml.cs">
 	    <DependentUpon>UserPage.xaml</DependentUpon>
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="Views\MenuPages\RecordsPage.xaml.cs">
+	    <DependentUpon>RecordsPage.xaml</DependentUpon>
 	    <SubType>Code</SubType>
 	  </Compile>
 	</ItemGroup>

@@ -2,6 +2,7 @@ namespace MyWallet.Client.ViewControls.Dialog;
 
 public partial class DialogContainer : Grid, IDisposable
 {
+    private bool disposed = false;
     private readonly DialogService _dialogService;
     private TaskCompletionSource<bool> _tcs = new(false);
 
@@ -62,5 +63,26 @@ public partial class DialogContainer : Grid, IDisposable
         IsVisible = false;
     }
 
-    public void Dispose() => Unsubscribe();
+    ~DialogContainer()
+    {
+        Dispose(disposing: false);
+    }
+
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void Dispose(bool disposing)
+    {
+        if (!disposed)
+        {
+            if (disposing)
+            {
+                Unsubscribe();
+            }
+        }
+        disposed = true;
+    }
 }

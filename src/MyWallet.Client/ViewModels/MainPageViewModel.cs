@@ -5,7 +5,6 @@ public partial class MainPageViewModel : ViewModelBase
     private readonly IDataService _dataService;
 
     public WidgetContainerViewModel Widgets { get; }
-
     public ObservableCollection<Account> Accounts { get; } = new();
     public ObservableCollection<object> SelectedAccounts { get; } = new();
 
@@ -13,18 +12,9 @@ public partial class MainPageViewModel : ViewModelBase
     {
         _dataService = dataService;
         Widgets = widgetContainer;
+        Widgets.CurrentAccounts = SelectedAccounts;
         Title = Strings.Home;
         OneTimeInitialized = false;
-
-        SelectedAccounts.CollectionChanged += SelectedAccounts_CollectionChanged;
-    }
-
-    private void SelectedAccounts_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-    {
-        if (IsInitialized)
-        {
-            //
-        }
     }
 
     public override Task InitializeAsync()
@@ -32,28 +22,38 @@ public partial class MainPageViewModel : ViewModelBase
         return IsBusyFor(async () =>
         {
             var accounts = await _dataService.Account.GetAccountsAsync();
-            Accounts.AddRange(accounts, true);
-            SelectedAccounts.AddRange(accounts, true);
+            var currentAccounts = accounts.Where(a => !a.IsDisabled && !a.IsArchived);
+
+            Accounts.AddRange(currentAccounts, true);
 
             await Widgets.LoadingWidgetsAsync();
+
+            //TODO: SelectedAccounts надо сохранять и получать
+            SelectedAccounts.AddRange(currentAccounts, true);
         });
     }
 
     [RelayCommand]
-    private Task OpenNotificationsPage() => DialogService.ShowInDevelopmentMessage();
-
+    private Task Navigate(string path) => NavigationService.GoToAsync(path);
+    
     [RelayCommand]
-    private Task OpenAccountsPage() => NavigationService.GoToAsync("accounts");
-
+    private Task InDevelopment(string path) => DialogService.ShowInDevelopmentMessage();
+    
+    // [RelayCommand]
+    // private Task OpenNotificationsPage() => DialogService.ShowInDevelopmentMessage();
+    //
+    // [RelayCommand]
+    // private Task OpenAccountsPage() => NavigationService.GoToAsync("accounts");
+    //
+    // [RelayCommand]
+    // private Task OpenRecordPage() => NavigationService.GoToAsync("record");
+    //
+    // [RelayCommand]
+    // private Task OpenRecordsPage() => NavigationService.GoToAsync("records");
+    //
+    // [RelayCommand]
+    // private Task OpenWidgetTabs() => AppService.Dialog.ShowInDevelopmentMessage();
+    //
     [RelayCommand]
-    private Task OpenRecordPage() => NavigationService.GoToAsync("record");
-
-    [RelayCommand]
-    private Task OpenWidgetTabs() => NavigationService.GoToAsync(nameof(WidgetTabs));
-
-    protected override void Dispose(bool disposing)
-    {
-        SelectedAccounts.CollectionChanged -= SelectedAccounts_CollectionChanged;
-        base.Dispose(disposing);
-    }
+    private Task OpenAdjustWizard() => AppService.Dialog.ShowInDevelopmentMessage();
 }

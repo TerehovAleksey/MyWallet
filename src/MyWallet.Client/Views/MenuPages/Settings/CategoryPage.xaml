@@ -19,6 +19,7 @@
                 BackgroundColor="{DynamicResource BackgroundLightColor}"
                 Grid.ColumnDefinitions="*,60"
                 Grid.RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                <!--  Image  -->
                 <Border
                     Grid.Row="0"
                     Grid.Column="0"
@@ -35,7 +36,9 @@
                     Grid.Row="0"
                     Grid.Column="1"
                     Padding="5"
+                    BackgroundColor="Transparent"
                     HeightRequest="30"
+                    StrokeThickness="0"
                     WidthRequest="30">
                     <Image Source="edit.png" />
                     <Border.GestureRecognizers>
@@ -47,6 +50,7 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Style="{DynamicResource SeparatorStyle}" />
+                <!--  Name  -->
                 <VerticalStackLayout
                     Grid.Row="2"
                     Grid.Column="0"
@@ -60,14 +64,16 @@
                         TextColor="{DynamicResource DarkTextColor}" />
                     <Label
                         HorizontalOptions="Start"
-                        Text="{Binding Category.Name}"
+                        Text="{Binding Name}"
                         TextColor="{DynamicResource GrayTextColor}" />
                 </VerticalStackLayout>
                 <Border
                     Grid.Row="2"
                     Grid.Column="1"
                     Padding="5"
+                    BackgroundColor="Transparent"
                     HeightRequest="30"
+                    StrokeThickness="0"
                     WidthRequest="30">
                     <Image Source="edit.png" />
                     <Border.GestureRecognizers>
@@ -79,8 +85,9 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Style="{DynamicResource SeparatorStyle}" />
+                <!--  Nature  -->
                 <VerticalStackLayout
-                    x:Name="row"
+                    x:Name="Row"
                     Grid.Row="4"
                     Grid.Column="0"
                     Margin="10,0,0,0"
@@ -100,7 +107,9 @@
                     Grid.Row="4"
                     Grid.Column="1"
                     Padding="5"
+                    BackgroundColor="Transparent"
                     HeightRequest="30"
+                    StrokeThickness="0"
                     WidthRequest="30">
                     <Image Source="edit.png" />
                     <Border.GestureRecognizers>
@@ -112,11 +121,12 @@
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Style="{DynamicResource SeparatorStyle}" />
+                <!--  Show  -->
                 <VerticalStackLayout
                     Grid.Row="6"
                     Grid.Column="0"
                     Margin="10,0,0,0"
-                    HeightRequest="{Binding Source={x:Reference row}, Path=Width}"
+                    HeightRequest="{Binding Source={x:Reference Row}, Path=Width}"
                     HorizontalOptions="StartAndExpand">
                     <Label
                         FontAttributes="Bold"
@@ -129,6 +139,7 @@
                     Grid.Row="6"
                     Grid.Column="1"
                     HorizontalOptions="Start"
+                    IsToggled="{Binding Category.IsVisible}"
                     VerticalOptions="Center" />
                 <common:PageMenu
                     Title="{x:Static res:Strings.Subcategories}"

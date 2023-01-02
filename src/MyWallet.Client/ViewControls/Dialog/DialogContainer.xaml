@@ -27,9 +27,7 @@
                 x:Name="TitleLabel"
                 Grid.Row="0"
                 Margin="10"
-                HorizontalOptions="Start"
-                Style="{DynamicResource CaptionTextStyle}"
-                Text="Настройка виджета" />
+                Style="{DynamicResource CardCaption}" />
             <Border
                 x:Name="DialogContent"
                 Grid.Row="1"
@@ -37,16 +35,21 @@
                 HorizontalOptions="FillAndExpand"
                 Stroke="{DynamicResource BackgroundCardColor}"
                 StrokeThickness="-1" />
-            <Grid Grid.Row="2" ColumnDefinitions="*,Auto,Auto">
+            <Grid
+                Grid.Row="2"
+                Margin="0,0,0,10"
+                ColumnDefinitions="*,Auto,Auto">
                 <Button
                     x:Name="CancelButton"
                     Grid.Column="1"
                     Clicked="ButtonCancel_Clicked"
+                    FontAttributes="None"
                     Style="{DynamicResource LinkButton}" />
                 <Button
                     x:Name="OkButton"
                     Grid.Column="2"
                     Clicked="OkButton_OnClicked"
+                    FontAttributes="None"
                     Style="{DynamicResource LinkButton}" />
             </Grid>
         </Grid>

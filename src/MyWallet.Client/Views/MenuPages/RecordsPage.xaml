@@ -1,14 +1,24 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 
-<ContentPage
+<base:PageBase
     x:Class="MyWallet.Client.Views.MenuPages.RecordsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <ContentPage.Content>
-        <Grid>
-            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                <Label Text="В разработке" />
-            </VerticalStackLayout>
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
+    xmlns:menuPages="clr-namespace:MyWallet.Client.ViewModels.MenuPages"
+    DisplayMode="NavigationBar"
+    PageMode="Navigate"
+    x:DataType="menuPages:RecordsPageViewModel"
+    PageTitle="{Binding Title}">
+
+    <base:PageBase.PageContent>
+        <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+            <Label Text="{x:Static res:Strings.InDeveloping}" 
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
         </Grid>
-    </ContentPage.Content>
-</ContentPage>
+    </base:PageBase.PageContent>
+
+</base:PageBase>

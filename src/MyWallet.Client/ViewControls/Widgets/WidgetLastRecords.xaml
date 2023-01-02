@@ -7,7 +7,8 @@
     xmlns:converters="clr-namespace:MyWallet.Client.Converters"
     xmlns:m="clr-namespace:MyWallet.Client.Models"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.Widget"
-    x:DataType="vm:WidgetLastRecordsViewModel">
+    x:DataType="vm:WidgetLastRecordsViewModel"
+    VerticalOptions="FillAndExpand">
 
     <controls:Widget.Resources>
         <converters:RecordIsIncomeToColorConverter x:Key="RecordIsIncomeToColorConverter" />
@@ -17,7 +18,7 @@
     <!--  Content  -->
     <CollectionView
         Margin="0,10,0,0"
-        ItemsSource="{Binding Records}"
+        ItemsSource="{Binding TopRecords}"
         SelectionMode="None">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="m:Record">
@@ -45,10 +46,17 @@
                     <VerticalStackLayout
                         Grid.Row="0"
                         Grid.Column="1"
-                        Margin="10,0,0,0"
+                        Margin="0"
                         HorizontalOptions="Start">
-                        <Label Style="{StaticResource MediumDark14TextStyle}" Text="{Binding Subcategory}" />
-                        <Label Style="{StaticResource RegularGray12TextStyle}" Text="{Binding Account}" />
+                        <Label
+                            LineBreakMode="TailTruncation"
+                            Style="{StaticResource ItemCaption}"
+                            Text="{Binding Subcategory}"
+                            TextColor="{DynamicResource TextDarkGrayColor}" />
+                        <Label
+                            LineBreakMode="TailTruncation"
+                            Style="{StaticResource ItemCaption}"
+                            Text="{Binding Account}" />
                     </VerticalStackLayout>
                     <VerticalStackLayout
                         Grid.Row="0"
@@ -57,12 +65,12 @@
                         VerticalOptions="Center">
                         <Label
                             HorizontalOptions="End"
-                            Style="{StaticResource CaptionTextStyle}"
+                            Style="{StaticResource ItemBody}"
                             Text="{Binding .}"
                             TextColor="{Binding IsIncome, Converter={StaticResource RecordIsIncomeToColorConverter}}" />
                         <Label
                             HorizontalOptions="End"
-                            Style="{StaticResource RegularGray12TextStyle}"
+                            Style="{StaticResource ItemCaption}"
                             Text="{Binding DateOfRecord, Converter={StaticResource DateTimeToDayConverter}}" />
                     </VerticalStackLayout>
                     <BoxView

@@ -3,11 +3,13 @@
     x:Class="MyWallet.Client.ViewControls.Widgets.Widget"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.Widget"
+    xmlns:converters="clr-namespace:MyWallet.Client.Converters"
     xmlns:res="clr-namespace:MyWallet.Client.Resources"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels.Widget"
     x:DataType="vm:IWidgetViewModel">
 
     <ContentView.Resources>
+        <converters:StringNotEmptyToVisibleConverter x:Key="StringNotEmptyToVisibleConverter" />
         <Style x:Key="CardStyle" TargetType="Border">
             <Setter Property="Margin" Value="10,0" />
             <Setter Property="Padding" Value="5,0,5,5" />
@@ -20,8 +22,9 @@
     <ContentView.ControlTemplate>
         <ControlTemplate>
             <Border
+                BindingContext="{Binding Source={RelativeSource TemplatedParent}, Path=BindingContext}"
                 HorizontalOptions="FillAndExpand"
-                Style="{StaticResource CardStyle}"
+                Style="{DynamicResource CardStyle}"
                 VerticalOptions="FillAndExpand">
                 <VerticalStackLayout
                     Padding="10,5,10,5"
@@ -33,7 +36,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
                         <!--  Header  -->
                         <Grid Grid.Row="0">
@@ -41,10 +44,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Label
-                                HorizontalOptions="Start"
-                                Style="{DynamicResource CaptionTextStyle}"
-                                Text="{TemplateBinding Title}" />
+                            <Label Style="{DynamicResource CardCaption}" Text="{Binding Title}" />
                             <ImageButton
                                 x:Name="FilterButton"
                                 Grid.Column="1"
@@ -57,29 +57,38 @@
                         <!--  Description  -->
                         <Label
                             Grid.Row="1"
-                            Style="{DynamicResource RegularGray12TextStyle}"
-                            Text="Последние 7 дней"
+                            IsVisible="{Binding Description, Converter={StaticResource StringNotEmptyToVisibleConverter}}"
+                            Style="{DynamicResource ItemCaption}"
+                            Text="{Binding Description}"
+                            TextColor="{DynamicResource TextGrayColor}"
                             TextTransform="Uppercase" />
 
                         <!--  Content  -->
-                        <ContentPresenter Grid.Row="2" Margin="0,10,0,0" />
+                        <ContentPresenter
+                            Grid.Row="2"
+                            Margin="0,10,0,0"
+                            Padding="10" />
 
                         <!--  Divider  -->
                         <BoxView
                             Grid.Row="3"
                             Margin="0,10"
-                            Style="{StaticResource SeparatorStyle}" />
+                            Style="{DynamicResource SeparatorStyle}" />
 
                         <!--  Footer  -->
-                        <Button
-                            x:Name="LinkButton"
+                        <Border
                             Grid.Row="4"
-                            Clicked="LinkButton_Clicked"
-                            HeightRequest="30"
-                            HorizontalOptions="Start"
-                            Style="{StaticResource LinkButton}"
-                            Text="{x:Static res:Strings.ShowMore}"
-                            VerticalOptions="Center" />
+                            BackgroundColor="Transparent"
+                            StrokeThickness="0">
+                            <Button
+                                x:Name="LinkButton"
+                                Clicked="LinkButton_Clicked"
+                                FontAttributes="None"
+                                HorizontalOptions="Start"
+                                Style="{DynamicResource LinkButton}"
+                                Text="{x:Static res:Strings.ShowMore}"
+                                VerticalOptions="Center" />
+                        </Border>
                     </Grid>
                 </VerticalStackLayout>
             </Border>

@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
     xmlns:controls="clr-namespace:MyWallet.Client.ViewControls"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
     xmlns:widgets="clr-namespace:MyWallet.Client.ViewControls.Widgets"
     x:DataType="vm:MainPageViewModel"
@@ -15,9 +16,10 @@
     <base:PageBase.PageIcons>
 
         <ImageButton
-            Command="{Binding OpenNotificationsPageCommand}"
+            Command="{Binding NavigateCommand}"
+            CommandParameter="notifications"
             Source="notifications.png"
-            Style="{StaticResource IconButtonStyle}" />
+            Style="{DynamicResource IconButtonStyle}" />
 
     </base:PageBase.PageIcons>
 
@@ -34,12 +36,15 @@
                     <controls:MainAccounts />
                     <widgets:WidgetContainer BindingContext="{Binding Widgets}" />
                     <Button
-                        Command="{Binding OpenWidgetTabsCommand}"
-                        Style="{StaticResource AddWidgetButton}"
-                        Text="Добавить виджеты" />
+                        Command="{Binding InDevelopmentCommand}"
+                        Style="{DynamicResource AddWidgetButton}"
+                        Text="{x:Static res:Strings.AddMoreCards}" />
                 </VerticalStackLayout>
             </ScrollView>
-            <Button Command="{Binding OpenRecordPageCommand}" Style="{StaticResource FabButtonStyle}" />
+            <Button
+                Command="{Binding NavigateCommand}"
+                CommandParameter="record"
+                Style="{DynamicResource FabButtonStyle}" />
         </Grid>
 
     </base:PageBase.PageContent>

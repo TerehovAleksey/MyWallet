@@ -5,6 +5,9 @@ public partial class WidgetCashFlowViewModel : BaseWidgetViewModel
     private readonly IDataService _dataService;
 
     [ObservableProperty]
+    private string _currencySymbol = string.Empty;
+
+    [ObservableProperty]
     private decimal _total;
     
     [ObservableProperty]
@@ -19,16 +22,25 @@ public partial class WidgetCashFlowViewModel : BaseWidgetViewModel
     [ObservableProperty]
     private decimal _expensesProgress;
 
-    public WidgetCashFlowViewModel(IDialogService dialogService, IDataService dataService) : base(dialogService)
+    public string TotalString => $"{Total} {_currencySymbol}";
+    public string IncomeString => $"{Income} {_currencySymbol}";
+    public string ExpensesString => $"-{Expenses} {_currencySymbol}";
+
+    public WidgetCashFlowViewModel(IAppService appService, IDataService dataService) : base(appService)
     {
         _dataService = dataService;
+        Title = Strings.CashFlow;
     }
 
     public override async Task LoadingAsync()
     {
-        var records = await _dataService.Record.GetRecordsAsync();
-        Income = records.Where(x => x.IsIncome).Sum(x => x.Value);
-        Expenses = records.Where(x => !x.IsIncome).Sum(x => x.Value);
+        CurrencySymbol = await _dataService.Currency.GetMainCurrencySymbol();
+    }
+
+    protected override void OnRecordsSet()
+    {
+        Income = FilteredRecords.Where(x => x.IsIncome).Sum(x => x.Value);
+        Expenses = FilteredRecords.Where(x => !x.IsIncome).Sum(x => x.Value);
         Total = Income - Expenses;
 
         if (Income > Expenses)
@@ -36,10 +48,23 @@ public partial class WidgetCashFlowViewModel : BaseWidgetViewModel
             IncomeProgress = 1;
             ExpensesProgress = Expenses / Income;
         }
-        else
+        else if (Income < Expenses)
         {
             ExpensesProgress = 1;
             IncomeProgress = Income / Expenses;
         }
+        else if (Income == 0 && Expenses == 0)
+        {
+            ExpensesProgress = 0;
+            IncomeProgress = 0;
+        }
+        else
+        {
+            ExpensesProgress = 1;
+            IncomeProgress = 1;
+        }
+        OnPropertyChanged(nameof(TotalString));
+        OnPropertyChanged(nameof(IncomeString));
+        OnPropertyChanged(nameof(ExpensesString));
     }
 }

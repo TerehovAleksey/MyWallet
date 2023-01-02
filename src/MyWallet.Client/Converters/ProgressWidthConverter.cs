@@ -6,9 +6,13 @@ public class ProgressWidthConverter : IMultiValueConverter
     {
         if (values.Length == 2 && values[0] != null && values[1] != null)
         {
-            return (double)values[0] * (double)(decimal)values[1];
+            var result = (double)values[0] * (double)(decimal)values[1];
+            if (result > 0)
+            {
+                return result;
+            }
         }
-        
+
         return 0;
     }
 

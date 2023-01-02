@@ -4,7 +4,7 @@ public partial class MainPage : PageBase
 {
     public MainPage(MainPageViewModel viewModel)
     {
-        BindingContext = viewModel;
         InitializeComponent();
+        BindingContext = viewModel;
     }
 }

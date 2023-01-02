@@ -1,11 +1,10 @@
-﻿using System.Diagnostics;
-
-namespace MyWallet.Client.ViewControls.Widgets;
+﻿namespace MyWallet.Client.ViewControls.Widgets;
 
 public partial class WidgetCashFlow : Widget
 {
-    public WidgetCashFlow()
+    public WidgetCashFlow(IWidgetViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = viewModel;
     }
 }

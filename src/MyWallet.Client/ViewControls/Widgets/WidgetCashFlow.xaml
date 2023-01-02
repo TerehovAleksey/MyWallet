@@ -17,21 +17,23 @@
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto">
         <Label
             Grid.Row="0"
+            FontAttributes="Bold"
             HorizontalOptions="Start"
-            Style="{DynamicResource CaptionTextStyle}"
-            Text="{Binding Total}" />
+            Style="{DynamicResource ItemBody}"
+            Text="{Binding TotalString}"
+            TextColor="{DynamicResource TextDarkGrayColor}" />
         <Label
             Grid.Row="1"
             Margin="0,10,0,0"
             HorizontalOptions="Start"
-            Style="{DynamicResource RegularGray12TextStyle}"
+            Style="{DynamicResource ItemCaption}"
             Text="{x:Static res:Strings.Income}" />
         <Label
             Grid.Row="1"
             Margin="0,10,0,0"
             HorizontalOptions="End"
-            Style="{DynamicResource MediumDark14TextStyle}"
-            Text="{Binding Income}" />
+            Style="{DynamicResource ItemBody}"
+            Text="{Binding IncomeString}" />
         <Border
             Grid.Row="2"
             Margin="0,5,0,0"
@@ -41,7 +43,7 @@
             StrokeShape="RoundRectangle 5"
             StrokeThickness="0">
             <Border
-                Background="{DynamicResource PrimaryColor}"
+                Background="{DynamicResource BackgroundPrimaryColor}"
                 HeightRequest="20"
                 HorizontalOptions="Start"
                 StrokeShape="RoundRectangle 5">
@@ -57,14 +59,14 @@
             Grid.Row="3"
             Margin="0,10,0,0"
             HorizontalOptions="Start"
-            Style="{DynamicResource RegularGray12TextStyle}"
+            Style="{DynamicResource ItemCaption}"
             Text="{x:Static res:Strings.Expenses}" />
         <Label
             Grid.Row="3"
             Margin="0,10,0,0"
             HorizontalOptions="End"
-            Style="{DynamicResource MediumDark14TextStyle}"
-            Text="{Binding Expenses}" />
+            Style="{DynamicResource ItemBody}"
+            Text="{Binding ExpensesString}" />
         <Border
             Grid.Row="4"
             Margin="0,5,0,0"
@@ -73,7 +75,7 @@
             StrokeShape="RoundRectangle 5"
             StrokeThickness="0">
             <Border
-                Background="{DynamicResource DangerColor}"
+                Background="{DynamicResource BackgroundDangerColor}"
                 HeightRequest="20"
                 HorizontalOptions="Start"
                 StrokeShape="RoundRectangle 5">

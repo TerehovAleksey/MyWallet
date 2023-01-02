@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<base:PageBase
+    x:Class="MyWallet.Client.Views.NotificationsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
+    xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
+    x:DataType="vm:NotificationsPageViewModel"
+    BackgroundColor="{DynamicResource BackgroundColor}"
+    DisplayMode="NavigationBar"
+    PageMode="Navigate"
+    PageTitle="{Binding Title}">
+
+    <base:PageBase.PageContent>
+        <Grid>
+            <VerticalStackLayout Spacing="20">
+                <Border Style="{DynamicResource PageNotificationImageBorder}">
+                    <Image Source="bell.png" Style="{DynamicResource PageNotificationImage}" />
+                </Border>
+                <Label
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    Style="{DynamicResource Medium}"
+                    Text="{x:Static res:Strings.NoAnyNotifications}" />
+                <Label
+                    HorizontalOptions="Center"
+                    Style="{DynamicResource Default}"
+                    Text="{x:Static res:Strings.NiceDay}" />
+            </VerticalStackLayout>
+        </Grid>
+    </base:PageBase.PageContent>
+
+</base:PageBase>

@@ -8,4 +8,5 @@ public interface IAppService
     public IDialogService Dialog { get; }
     public INavigationService Navigation { get; }
     public IStorageService Storage { get; }
+    public ISettingsService Settings { get; }
 }

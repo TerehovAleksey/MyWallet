@@ -9,10 +9,7 @@ public static class ListExtensions
             collection.Clear();
         }
 
-        if (newItems is not null)
-        {
-            newItems.ForEach(collection.Add);
-        }      
+        newItems?.ForEach(collection.Add);      
     }
 
     public static void ForEach<T>(this IEnumerable<T> enumeration, Action<T> action)

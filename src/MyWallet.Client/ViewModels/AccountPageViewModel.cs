@@ -33,21 +33,17 @@ public partial class AccountPageViewModel : ViewModelBase
     private bool _accountArchived;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(AccountColor))]
-    private string? _accountColorString = "#a2a2a2";
-
-    public Color AccountColor => Color.FromArgb(_accountColorString ?? "#a2a2a2");
+    private Color _accountColor = Color.FromArgb("#a2a2a2");
 
     public Account? Account { get; set; }
 
     public ObservableCollection<AccountType> AccountTypes { get; } = new();
     public ObservableCollection<CurrencyDto> Currencies { get; } = new();
-    public ObservableCollection<string> Colors { get; } = new();
 
     public AccountPageViewModel(IAppService appService, IDataService dataService) : base(appService)
     {
         _dataService = dataService;
-        Title = "Новый счёт";
+        Title = Strings.NewAccount;
     }
 
     public override Task InitializeAsync() =>
@@ -59,10 +55,8 @@ public partial class AccountPageViewModel : ViewModelBase
             var currencies = await _dataService.Currency.GetUserCurrencyAsync();
             Currencies.AddRange(currencies.Select(x => new CurrencyDto(x.Symbol, x.Description)));
 
-            Colors.AddRange(UserColors.GetColors());
-
             IsNewAccount = Account == null;
-            Title = IsNewAccount ? "Новый счёт" : "Изменить счёт";
+            Title = IsNewAccount ? Strings.NewAccount : Strings.EditAccount;
 
             if (Account is not null)
             {
@@ -74,40 +68,41 @@ public partial class AccountPageViewModel : ViewModelBase
                 AccountDisabled = Account.IsDisabled;
                 AccountType = AccountTypes.FirstOrDefault(x => x.Name == Account.AccountType);
                 AccountCurrency = Currencies.FirstOrDefault(x => x.Symbol == Account.CurrencySymbol);
-                AccountColorString = Colors.FirstOrDefault(x => x == Account.ColorString);
+                AccountColor = Color.FromArgb(Account.ColorString);
             }
         });
 
     [RelayCommand]
     private async Task SaveAndReturn()
     {
+        var colorString = AccountColor.ToArgbHex();
+
         if (_isNewAccount)
         {
             // Создание
-            if (AccountType is not null && AccountCurrency is not null && !string.IsNullOrEmpty(AccountName) &&
-                !string.IsNullOrEmpty(AccountColorString))
+            if (AccountType is not null && AccountCurrency is not null && !string.IsNullOrEmpty(AccountName))
             {
                 await IsBusyFor(async () =>
                 {
                     await _dataService.Account.CreateAccountAsync(new AccountCreate(AccountName, AccountNumber, AccountType.Id, AccountValue,
-                        AccountCurrency.Symbol, AccountColorString));
+                        AccountCurrency.Symbol, colorString));
                     await NavigationService.GoBackAsync();
                 });
             }
         }
-        else if (Account is not null && AccountType is not null && !string.IsNullOrEmpty(AccountColorString))
+        else if (Account is not null && AccountType is not null)
         {
             // Редактирование
             await IsBusyFor(async () =>
             {
                 await _dataService.Account.UpdateAccountAsync(new AccountUpdate(Account.Id, AccountName, AccountNumber, AccountType.Id,
-                    AccountColorString, AccountDisabled, AccountArchived));
+                    colorString, AccountDisabled, AccountArchived));
                 await NavigationService.GoBackAsync();
             });
         }
         else
         {
-            await DialogService.ShowMessageAsync("Ошибка", "Не все поля правильно заполнены", "Понятно");
+            await DialogService.ShowMessageAsync("Ошибка", "Не все поля правильно заполнены");
         }
     }
 

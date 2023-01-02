@@ -60,6 +60,15 @@ namespace MyWallet.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account name.
+        /// </summary>
+        internal static string AccountName {
+            get {
+                return ResourceManager.GetString("AccountName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
         internal static string Accounts {
@@ -74,6 +83,24 @@ namespace MyWallet.Client.Resources {
         internal static string AccountsDescription {
             get {
                 return ResourceManager.GetString("AccountsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accounts settings.
+        /// </summary>
+        internal static string AccountsSettings {
+            get {
+                return ResourceManager.GetString("AccountsSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add more cards.
+        /// </summary>
+        internal static string AddMoreCards {
+            get {
+                return ResourceManager.GetString("AddMoreCards", resourceCulture);
             }
         }
         
@@ -105,11 +132,56 @@ namespace MyWallet.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Archive.
+        /// </summary>
+        internal static string Archive {
+            get {
+                return ResourceManager.GetString("Archive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bank account number.
+        /// </summary>
+        internal static string BankAccountNumber {
+            get {
+                return ResourceManager.GetString("BankAccountNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Budgets.
         /// </summary>
         internal static string Budgets {
             get {
                 return ResourceManager.GetString("Budgets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card configuration.
+        /// </summary>
+        internal static string CardConfiguration {
+            get {
+                return ResourceManager.GetString("CardConfiguration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash flow.
+        /// </summary>
+        internal static string CashFlow {
+            get {
+                return ResourceManager.GetString("CashFlow", resourceCulture);
             }
         }
         
@@ -146,6 +218,51 @@ namespace MyWallet.Client.Resources {
         internal static string ChangePassword {
             get {
                 return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose a color.
+        /// </summary>
+        internal static string ChooseAColor {
+            get {
+                return ResourceManager.GetString("ChooseAColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose an account currency.
+        /// </summary>
+        internal static string ChooseAnAccountCurrency {
+            get {
+                return ResourceManager.GetString("ChooseAnAccountCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose an account type.
+        /// </summary>
+        internal static string ChooseAnAccountType {
+            get {
+                return ResourceManager.GetString("ChooseAnAccountType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Code.
+        /// </summary>
+        internal static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color.
+        /// </summary>
+        internal static string Color {
+            get {
+                return ResourceManager.GetString("Color", resourceCulture);
             }
         }
         
@@ -204,6 +321,15 @@ namespace MyWallet.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Currency.
+        /// </summary>
+        internal static string Currency {
+            get {
+                return ResourceManager.GetString("Currency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Currency rates.
         /// </summary>
         internal static string CurrencyRates {
@@ -218,6 +344,24 @@ namespace MyWallet.Client.Resources {
         internal static string DateOfBirth {
             get {
                 return ResourceManager.GetString("DateOfBirth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 30 days.
+        /// </summary>
+        internal static string Days30 {
+            get {
+                return ResourceManager.GetString("Days30", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 7 days.
+        /// </summary>
+        internal static string Days7 {
+            get {
+                return ResourceManager.GetString("Days7", resourceCulture);
             }
         }
         
@@ -258,11 +402,29 @@ namespace MyWallet.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit account.
+        /// </summary>
+        internal static string EditAccount {
+            get {
+                return ResourceManager.GetString("EditAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit category.
         /// </summary>
         internal static string EditCategory {
             get {
                 return ResourceManager.GetString("EditCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit currency.
+        /// </summary>
+        internal static string EditCurrency {
+            get {
+                return ResourceManager.GetString("EditCurrency", resourceCulture);
             }
         }
         
@@ -321,6 +483,24 @@ namespace MyWallet.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter name....
+        /// </summary>
+        internal static string EnterNameDots {
+            get {
+                return ResourceManager.GetString("EnterNameDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter number....
+        /// </summary>
+        internal static string EnterNumberDots {
+            get {
+                return ResourceManager.GetString("EnterNumberDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter password....
         /// </summary>
         internal static string EnterPasswordDots {
@@ -357,6 +537,15 @@ namespace MyWallet.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Something went wrong. If the problem persists, please contact support via email.
         /// </summary>
         internal static string ErrorMessagePart1 {
@@ -384,11 +573,29 @@ namespace MyWallet.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exclude from stats.
+        /// </summary>
+        internal static string ExcludeFromStats {
+            get {
+                return ResourceManager.GetString("ExcludeFromStats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expenses.
         /// </summary>
         internal static string Expenses {
             get {
                 return ResourceManager.GetString("Expenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        internal static string Filter {
+            get {
+                return ResourceManager.GetString("Filter", resourceCulture);
             }
         }
         
@@ -474,6 +681,33 @@ namespace MyWallet.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to In developing....
+        /// </summary>
+        internal static string InDeveloping {
+            get {
+                return ResourceManager.GetString("InDeveloping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initial value.
+        /// </summary>
+        internal static string InitialValue {
+            get {
+                return ResourceManager.GetString("InitialValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inverse rate.
+        /// </summary>
+        internal static string InverseRate {
+            get {
+                return ResourceManager.GetString("InverseRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invite friends.
         /// </summary>
         internal static string InviteFriends {
@@ -483,11 +717,74 @@ namespace MyWallet.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last 12 weeks.
+        /// </summary>
+        internal static string Last12Weeks {
+            get {
+                return ResourceManager.GetString("Last12Weeks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last 1 year.
+        /// </summary>
+        internal static string Last1Year {
+            get {
+                return ResourceManager.GetString("Last1Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last 30 days.
+        /// </summary>
+        internal static string Last30Days {
+            get {
+                return ResourceManager.GetString("Last30Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last 5 years.
+        /// </summary>
+        internal static string Last5Years {
+            get {
+                return ResourceManager.GetString("Last5Years", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last 6 month.
+        /// </summary>
+        internal static string Last6Month {
+            get {
+                return ResourceManager.GetString("Last6Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last 7 days.
+        /// </summary>
+        internal static string Last7Days {
+            get {
+                return ResourceManager.GetString("Last7Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last name.
         /// </summary>
         internal static string LastName {
             get {
                 return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last records overview.
+        /// </summary>
+        internal static string LastRecordsOverview {
+            get {
+                return ResourceManager.GetString("LastRecordsOverview", resourceCulture);
             }
         }
         
@@ -537,11 +834,65 @@ namespace MyWallet.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 6 month.
+        /// </summary>
+        internal static string Month6 {
+            get {
+                return ResourceManager.GetString("Month6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New account.
+        /// </summary>
+        internal static string NewAccount {
+            get {
+                return ResourceManager.GetString("NewAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New currency.
+        /// </summary>
+        internal static string NewCurrency {
+            get {
+                return ResourceManager.GetString("NewCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Have a nice day!.
+        /// </summary>
+        internal static string NiceDay {
+            get {
+                return ResourceManager.GetString("NiceDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You don&apos;t have any notifications..
+        /// </summary>
+        internal static string NoAnyNotifications {
+            get {
+                return ResourceManager.GetString("NoAnyNotifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No currency selected.
+        /// </summary>
+        internal static string NoCurrencySelected {
+            get {
+                return ResourceManager.GetString("NoCurrencySelected", resourceCulture);
             }
         }
         
@@ -569,6 +920,33 @@ namespace MyWallet.Client.Resources {
         internal static string NoInternetMessagePart2 {
             get {
                 return ResourceManager.GetString("NoInternetMessagePart2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        internal static string Notifications {
+            get {
+                return ResourceManager.GetString("Notifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not specified.
+        /// </summary>
+        internal static string NotSpecified {
+            get {
+                return ResourceManager.GetString("NotSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        internal static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
             }
         }
         
@@ -645,6 +1023,15 @@ namespace MyWallet.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rate.
+        /// </summary>
+        internal static string Rate {
+            get {
+                return ResourceManager.GetString("Rate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Records.
         /// </summary>
         internal static string Records {
@@ -654,11 +1041,47 @@ namespace MyWallet.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        internal static string Refresh {
+            get {
+                return ResourceManager.GetString("Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select currency.
+        /// </summary>
+        internal static string SelectCurrency {
+            get {
+                return ResourceManager.GetString("SelectCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select gender.
         /// </summary>
         internal static string SelectGender {
             get {
                 return ResourceManager.GetString("SelectGender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select period.
+        /// </summary>
+        internal static string SelectPeriod {
+            get {
+                return ResourceManager.GetString("SelectPeriod", resourceCulture);
             }
         }
         
@@ -870,6 +1293,51 @@ namespace MyWallet.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This month.
+        /// </summary>
+        internal static string ThisMonth {
+            get {
+                return ResourceManager.GetString("ThisMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This week.
+        /// </summary>
+        internal static string ThisWeek {
+            get {
+                return ResourceManager.GetString("ThisWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This year.
+        /// </summary>
+        internal static string ThisYear {
+            get {
+                return ResourceManager.GetString("ThisYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Today.
+        /// </summary>
+        internal static string Today {
+            get {
+                return ResourceManager.GetString("Today", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        internal static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User devices.
         /// </summary>
         internal static string UserDevices {
@@ -924,11 +1392,38 @@ namespace MyWallet.Client.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 12 week.
+        /// </summary>
+        internal static string Week12 {
+            get {
+                return ResourceManager.GetString("Week12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome back!.
         /// </summary>
         internal static string WelcomeBack {
             get {
                 return ResourceManager.GetString("WelcomeBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 year.
+        /// </summary>
+        internal static string Year1 {
+            get {
+                return ResourceManager.GetString("Year1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5 years.
+        /// </summary>
+        internal static string Year5 {
+            get {
+                return ResourceManager.GetString("Year5", resourceCulture);
             }
         }
     }

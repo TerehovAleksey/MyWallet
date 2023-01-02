@@ -3,27 +3,23 @@
     x:Class="MyWallet.Client.ViewControls.Dialog.WidgetSettingsDialog"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:res="clr-namespace:MyWallet.Client.Resources"
+    BackgroundColor="{DynamicResource BackgroundCardColor}"
     Spacing="20">
 
     <VerticalStackLayout
-        Grid.Column="0"
         Padding="0"
+        BackgroundColor="{DynamicResource BackgroundCardColor}"
         HorizontalOptions="Fill">
-        <Label
-            Margin="0,0,0,5"
-            Style="{StaticResource RegularGray12TextStyle}"
-            Text="Выбрать период" />
+        <Label Style="{StaticResource InputCaption}" Text="{x:Static res:Strings.SelectPeriod}" />
         <Picker x:Name="TimePeriodPicker" SelectedIndexChanged="TimePeriodPicker_SelectedIndexChanged" />
     </VerticalStackLayout>
 
     <VerticalStackLayout
-        Grid.Column="0"
         Padding="0"
+        BackgroundColor="{DynamicResource BackgroundCardColor}"
         HorizontalOptions="Fill">
-        <Label
-            Margin="0,0,0,5"
-            Style="{StaticResource RegularGray12TextStyle}"
-            Text="Фильтр" />
+        <Label Style="{StaticResource InputCaption}" Text="{x:Static res:Strings.Filter}" />
         <Picker x:Name="FilterPicker" />
     </VerticalStackLayout>
 

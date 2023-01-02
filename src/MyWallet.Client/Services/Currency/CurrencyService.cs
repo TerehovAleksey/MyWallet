@@ -52,6 +52,11 @@ public class CurrencyService : RestServiceBase, ICurrencyService
         await StorageService.SaveToCache($"{mainSymbol}_to_{targetSymbol}_rate", rate, TimeSpan.FromDays(30));
     }
 
+    public async Task<string> GetMainCurrencySymbol()
+    {
+        var currncies = await GetUserCurrencyAsync().ConfigureAwait(false);
+        return currncies.First(c=>c.IsMain).Symbol;
+    }
 
     private async Task<CurrencyDto> GetMainCurrencyAsync()
     {

@@ -1,31 +1,12 @@
-﻿namespace MyWallet.Client.ViewModels.MenuPages.Settings;
+﻿using MenuItem = MyWallet.Client.UI.MenuItem;
+
+namespace MyWallet.Client.ViewModels.MenuPages.Settings;
 
 public partial class CurrenciesPageViewModel : ViewModelBase
 {
     private readonly ICurrencyService _currencyService;
 
-    private UserCurrencyDto? _selectedCurrency;
-
-    public UserCurrencyDto? SelectedCurrency
-    {
-        get => _selectedCurrency;
-        set
-        {
-            if (value == null && _selectedCurrency == value)
-            {
-                return;
-            }
-
-            _selectedCurrency = value;
-            OnPropertyChanged();
-            NavigationService.GoToAsync("currency", new Dictionary<string, object>
-            {
-                { "UserCurrency", value }
-            });
-        }
-    }
-
-    public ObservableCollection<UserCurrencyDto> UserCurrencies { get; } = new();
+    public ObservableCollection<MenuItem> MenuItems { get; } = new();
 
     public CurrenciesPageViewModel(IAppService appService, ICurrencyService currencyService) : base(appService)
     {
@@ -36,11 +17,26 @@ public partial class CurrenciesPageViewModel : ViewModelBase
 
     public override Task InitializeAsync() => IsBusyFor(async () =>
     {
-        _selectedCurrency = null;
         var currencies = await _currencyService.GetUserCurrencyAsync();
-        UserCurrencies.AddRange(currencies, true);
+        var menuItems = currencies
+            .Select(c => new MenuItem
+            {
+                Title = c.Symbol,
+                Description = c.Description,
+                Link = $"currency?symbol={c.Symbol}",
+                HasSeparator = true,
+            });
+        MenuItems.AddRange(menuItems, true);
     });
 
+    [RelayCommand]
+    private async Task Navigate(string link)
+    {
+        if (!string.IsNullOrEmpty(link))
+        {
+            await AppService.Navigation.GoToAsync(link);
+        }
+    }
 
     [RelayCommand]
     private Task FabButton() => NavigationService.GoToAsync("currency");

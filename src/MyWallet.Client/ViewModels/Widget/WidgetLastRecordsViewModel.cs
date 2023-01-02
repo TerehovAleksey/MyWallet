@@ -2,18 +2,15 @@
 
 public class WidgetLastRecordsViewModel : BaseWidgetViewModel
 {
-    private readonly IDataService _dataService;
+    public ObservableCollection<Record> TopRecords { get; } = new();
 
-    public ObservableCollection<Record> Records { get; } = new();
-
-    public WidgetLastRecordsViewModel(IDialogService dialogService, IDataService dataService) : base(dialogService)
+    public WidgetLastRecordsViewModel(IAppService appService) : base(appService)
     {
-        _dataService = dataService;
+        Title = Strings.LastRecordsOverview;
     }
 
-    public override async Task LoadingAsync()
+    protected override void OnRecordsSet()
     {
-        var records = await _dataService.Record.GetRecordsAsync();
-        Records.AddRange(records.Take(10), true);
+        TopRecords.AddRange(FilteredRecords.Take(10), true);
     }
 }
