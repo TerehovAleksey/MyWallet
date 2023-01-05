@@ -12,6 +12,7 @@ public interface ICategoryService
     public Task<bool> DeleteSubcategoryAsync(Guid id);
     public Task<bool> UpdateCategoryAsync(CategoryUpdateDto category); 
     public Task<bool> UpdateSubcategoryAsync(CategoryDto category);
+    public Task<IEnumerable<CategoryTypeDto>> GetCategoryTypesAsync();
 
     public Task InitCategoriesForUser(Guid userId);
 }

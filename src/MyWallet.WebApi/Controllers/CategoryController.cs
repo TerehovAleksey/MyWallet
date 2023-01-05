@@ -66,7 +66,7 @@
         /// <summary>
         /// Получение подкатегории по ID
         /// </summary>
-        /// <param name="categoryId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("sub")]
         [ProducesResponseType(typeof(CategoryDto), StatusCodes.Status200OK)]
@@ -199,6 +199,24 @@
             }
 
             return NotFound();
+        }
+
+        /// <summary>
+        /// Получение типов категорий
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("types")]
+        [ProducesResponseType(typeof(IEnumerable<CategoryTypeDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> GetCategoryTypesAsync()
+        {
+            var user = await GetUserAsync();
+            if (user is not null)
+            {
+                var result = await _categoryService.GetCategoryTypesAsync();
+                return Ok(result);
+            }
+            return Unauthorized();
         }
     }
 }
