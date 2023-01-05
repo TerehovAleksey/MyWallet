@@ -35,25 +35,22 @@
             Style="{DynamicResource ItemBody}"
             Text="{Binding IncomeString}" />
         <Border
+            x:Name="IncomeContainer"
             Grid.Row="2"
             Margin="0,5,0,0"
             BackgroundColor="{DynamicResource GrayColor}"
             HeightRequest="20"
             HorizontalOptions="Fill"
+            PropertyChanged="IncomeContainer_PropertyChanged"
             StrokeShape="RoundRectangle 5"
             StrokeThickness="0">
             <Border
+                x:Name="IncomeProgress"
                 Background="{DynamicResource BackgroundPrimaryColor}"
                 HeightRequest="20"
                 HorizontalOptions="Start"
-                StrokeShape="RoundRectangle 5">
-                <Border.WidthRequest>
-                    <MultiBinding Converter="{StaticResource ProgressWidthConverter}">
-                        <Binding Path="Width" Source="{RelativeSource AncestorType={x:Type Border}, AncestorLevel=1}" />
-                        <Binding Path="IncomeProgress" />
-                    </MultiBinding>
-                </Border.WidthRequest>
-            </Border>
+                StrokeShape="RoundRectangle 5"
+                WidthRequest="5" />
         </Border>
         <Label
             Grid.Row="3"
@@ -68,24 +65,21 @@
             Style="{DynamicResource ItemBody}"
             Text="{Binding ExpensesString}" />
         <Border
+            x:Name="ExpenseContainer"
             Grid.Row="4"
             Margin="0,5,0,0"
             BackgroundColor="{DynamicResource GrayColor}"
             HeightRequest="20"
+            PropertyChanged="ExpenseContainer_PropertyChanged"
             StrokeShape="RoundRectangle 5"
             StrokeThickness="0">
             <Border
+                x:Name="ExpenseProgress"
                 Background="{DynamicResource BackgroundDangerColor}"
                 HeightRequest="20"
                 HorizontalOptions="Start"
-                StrokeShape="RoundRectangle 5">
-                <Border.WidthRequest>
-                    <MultiBinding Converter="{StaticResource ProgressWidthConverter}">
-                        <Binding Path="Width" Source="{RelativeSource AncestorType={x:Type Border}, AncestorLevel=1}" />
-                        <Binding Path="ExpensesProgress" />
-                    </MultiBinding>
-                </Border.WidthRequest>
-            </Border>
+                StrokeShape="RoundRectangle 5"
+                WidthRequest="5" />
         </Border>
     </Grid>
 </controls:Widget>

@@ -8,4 +8,13 @@
         <Setter Property="StrokeShape" Value="RoundRectangle 80" />
     </Style>
 
+    <Style x:Key="CardStyle" TargetType="Border">
+        <Setter Property="Margin" Value="10,0" />
+        <Setter Property="Padding" Value="5,0,5,5" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundCardColor}" />
+        <Setter Property="Stroke" Value="{DynamicResource GrayDarkColor}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 5" />
+        <Setter Property="StrokeThickness" Value=".5" />
+    </Style>
+
 </ResourceDictionary>

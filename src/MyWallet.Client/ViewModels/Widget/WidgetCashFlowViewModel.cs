@@ -2,6 +2,8 @@
 
 public partial class WidgetCashFlowViewModel : BaseWidgetViewModel
 {
+    public event Action<string, decimal> OnProgressChanged;
+
     private readonly IDataService _dataService;
 
     [ObservableProperty]
@@ -66,5 +68,7 @@ public partial class WidgetCashFlowViewModel : BaseWidgetViewModel
         OnPropertyChanged(nameof(TotalString));
         OnPropertyChanged(nameof(IncomeString));
         OnPropertyChanged(nameof(ExpensesString));
+        OnProgressChanged?.Invoke("Income", IncomeProgress);
+        OnProgressChanged?.Invoke("Expenses", ExpensesProgress);
     }
 }

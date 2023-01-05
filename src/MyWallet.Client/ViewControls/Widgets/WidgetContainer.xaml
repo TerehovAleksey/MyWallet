@@ -21,7 +21,7 @@
             <Border
                 Margin="0,0,0,10"
                 BackgroundColor="{DynamicResource BackgroundColor}"
-                Content="{Binding ., Converter={StaticResource WidgetConverter}}"
+                Content="{Binding ., Converter={StaticResource WidgetConverter}, Mode=OneWay}"
                 VerticalOptions="FillAndExpand" />
         </DataTemplate>
     </CollectionView.ItemTemplate>

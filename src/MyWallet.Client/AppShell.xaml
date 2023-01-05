@@ -35,8 +35,14 @@
                     WidthRequest="30" />
             </Border>
             <VerticalStackLayout Grid.Column="1" HorizontalOptions="Start">
-                <Label x:Name="FlyoutUserTitle" Style="{DynamicResource ItemCaption}" />
-                <Label Style="{DynamicResource ItemBody}" Text="My Wallet" />
+                <Label
+                    x:Name="FlyoutUserTitle"
+                    Style="{DynamicResource ItemCaption}"
+                    TextColor="{DynamicResource TextLightColor}" />
+                <Label
+                    Style="{DynamicResource ItemBody}"
+                    Text="My Wallet"
+                    TextColor="{DynamicResource TextLightColor}" />
             </VerticalStackLayout>
         </Grid>
     </Shell.FlyoutHeader>

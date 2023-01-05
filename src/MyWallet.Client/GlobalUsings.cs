@@ -35,6 +35,7 @@ global using MyWallet.Client.Services.Widget;
 global using MyWallet.Client.UI;
 global using MyWallet.Client.ViewControls.Dialog;
 global using MyWallet.Client.ViewControls.Widgets;
+global using MyWallet.Client.ViewControls.Cards;
 global using MyWallet.Client.ViewModels.Widget;
 global using MyWallet.Client.ViewModels;
 global using MyWallet.Client.ViewModels.Base;

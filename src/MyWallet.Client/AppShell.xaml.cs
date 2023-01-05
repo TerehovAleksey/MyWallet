@@ -3,9 +3,11 @@
 public partial class AppShell : Shell
 {
     private readonly IAuthService _authService;
+    private readonly IAppService _appService;
 
     public AppShell()
     {
+        _appService = ServiceHelpers.GetService<IAppService>();
         _authService = ServiceHelpers.GetService<IDataService>().Auth;
         RegisterRouting();
         InitializeComponent();
@@ -14,13 +16,21 @@ public partial class AppShell : Shell
 
     protected override async void OnAppearing()
     {
-        var user = await _authService.GetUserDataAsync();
-        var userTitle = $"{user.FirstName} {user.LastName}".Trim();
-        if (string.IsNullOrEmpty(userTitle))
+        try
         {
-            userTitle = user.Email;
+            var user = await _authService.GetUserDataAsync();
+            var userTitle = $"{user.FirstName} {user.LastName}".Trim();
+            if (string.IsNullOrEmpty(userTitle))
+            {
+                userTitle = user.Email;
+            }
+            FlyoutUserTitle.Text = userTitle;
         }
-        FlyoutUserTitle.Text = userTitle;
+        catch (UnauthorizedAccessException)
+        {
+            _appService.SetAppState(false);
+        }
+        
     }
 
     private static void RegisterRouting()

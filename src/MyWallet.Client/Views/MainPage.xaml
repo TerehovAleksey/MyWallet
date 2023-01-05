@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:base="clr-namespace:MyWallet.Client.Views.Base"
+    xmlns:cards="clr-namespace:MyWallet.Client.ViewControls.Cards"
     xmlns:controls="clr-namespace:MyWallet.Client.ViewControls"
     xmlns:res="clr-namespace:MyWallet.Client.Resources"
     xmlns:vm="clr-namespace:MyWallet.Client.ViewModels"
@@ -24,7 +25,6 @@
     </base:PageBase.PageIcons>
 
     <base:PageBase.PageContent>
-
         <Grid>
             <ScrollView>
                 <VerticalStackLayout
@@ -34,6 +34,7 @@
                     Spacing="10"
                     VerticalOptions="FillAndExpand">
                     <controls:MainAccounts />
+                    <!--<cards:Card />-->
                     <widgets:WidgetContainer BindingContext="{Binding Widgets}" />
                     <Button
                         Command="{Binding InDevelopmentCommand}"
@@ -46,7 +47,6 @@
                 CommandParameter="record"
                 Style="{DynamicResource FabButtonStyle}" />
         </Grid>
-
     </base:PageBase.PageContent>
 
 </base:PageBase>

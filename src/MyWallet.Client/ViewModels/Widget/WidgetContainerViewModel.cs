@@ -10,7 +10,7 @@ public class WidgetContainerViewModel
     //все записи
     private IEnumerable<Record> _records = new List<Record>();
 
-    public ObservableCollection<IWidgetViewModel> Widgets { get; }
+    public ObservableCollection<IWidgetViewModel> Widgets { get; } = new();
 
     //текущие счета
     public ObservableCollection<object>? CurrentAccounts { get; set; }
@@ -24,8 +24,6 @@ public class WidgetContainerViewModel
     {
         _settingsService = settingsService;
         _dataService = dataService;
-
-        Widgets = new ObservableCollection<IWidgetViewModel>();
     }
 
     public async Task LoadingWidgetsAsync()
@@ -46,8 +44,8 @@ public class WidgetContainerViewModel
         foreach (var setting in widgetSettings)
         {
             var widget = WidgetFabric.CreateWidget(setting);
-            RecordsUpdated += widget.SetRecords;
             Widgets.Add(widget);
+            RecordsUpdated += widget.SetRecords;
         }
 
         // синхронная инициализация вижджета
@@ -69,7 +67,7 @@ public class WidgetContainerViewModel
     }
 
     // выбираем записи для текущих счетов
-    private void Filter()
+    public void Filter()
     {
         if (CurrentAccounts is not null)
         {

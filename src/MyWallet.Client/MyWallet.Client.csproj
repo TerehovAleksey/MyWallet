@@ -145,6 +145,7 @@
 	  <None Remove="Resources\Images\bell.png" />
 	  <None Remove="Resources\Images\check.png" />
 	  <None Remove="Resources\Images\close.png" />
+	  <None Remove="Resources\Images\close_gray.png" />
 	  <None Remove="Resources\Images\cog.png" />
 	  <None Remove="Resources\Images\coins.png" />
 	  <None Remove="Resources\Images\dots.png" />
@@ -214,6 +215,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Texts.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ViewControls\Cards\Card.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ViewControls\Common\ColorSelector.xaml">

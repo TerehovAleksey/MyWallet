@@ -55,7 +55,8 @@ public abstract class RestServiceBase
 
         //Если Unauthorized, то пытаемся обновить токен
 
-        if (tryRefresh && httpResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        if (tryRefresh && httpResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized &&
+            !resource.Contains("refresh") && !resource.Contains("login") && !resource.Contains("logout"))
         {
             var refreshSuccess = await TryRefreshTokenAsync()
                 .ConfigureAwait(false);
@@ -108,7 +109,8 @@ public abstract class RestServiceBase
         }
 
         //Если Unauthorized, то пытаемся обновить токен
-        else if (tryRefresh && httpResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        else if (tryRefresh && httpResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized &&
+            !resource.Contains("refresh") && !resource.Contains("login") && !resource.Contains("logout"))
         {
             var refreshSuccess = await TryRefreshTokenAsync()
                 .ConfigureAwait(false);
@@ -166,7 +168,8 @@ public abstract class RestServiceBase
         }
 
         //Если Unauthorized, то пытаемся обновить токен
-        else if (tryRefresh && httpResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+        else if (tryRefresh && httpResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized && 
+            !resource.Contains("refresh") && !resource.Contains("login") && !resource.Contains("logout"))
         {
             var refreshSuccess = await TryRefreshTokenAsync()
                 .ConfigureAwait(false);
