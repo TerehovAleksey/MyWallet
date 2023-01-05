@@ -150,6 +150,12 @@ public class CategoryService : ICategoryService
         return result;
     }
 
+    public async Task<IEnumerable<CategoryTypeDto>> GetCategoryTypesAsync()
+    {
+        var result = _context.CategoryTypes.AsNoTracking();
+        return await _mapper.ProjectTo<CategoryTypeDto>(result).ToListAsync();
+    }
+
     public async Task InitCategoriesForUser(Guid userId)
     {
         var types = await _context.CategoryTypes.Select(x => new { x.Id, x.Name }).ToListAsync();
