@@ -36,8 +36,8 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Login([FromBody] UserForAuthDto userForAuthentication)
     {
         // устройство, с которого логинятся
-        var clientInfo = GetClientInfo();
-        if (string.IsNullOrWhiteSpace(clientInfo.DeviceName))
+        var (DeviceName, Ip) = GetClientInfo();
+        if (string.IsNullOrWhiteSpace(DeviceName))
         {
             return Unauthorized(ErrorMessage.Create(Strings.UnknownDevice));
         }
@@ -75,7 +75,7 @@ public class UserController : ControllerBase
         var accessTokenExpiryTime = DateTime.UtcNow.AddMinutes(_tokenService.AccessTokenExpiration);
         var refreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(_tokenService.RefreshTokenExpiration);
 
-        await _userService.UpdateOrCreateDeviceAsync(user.Id, clientInfo.DeviceName, clientInfo.Ip, refreshToken, refreshTokenExpiryTime);
+        await _userService.UpdateOrCreateDeviceAsync(user.Id, DeviceName, Ip, refreshToken, refreshTokenExpiryTime);
 
         await _userManager.UpdateAsync(user);
         await _userManager.ResetAccessFailedCountAsync(user);
@@ -185,16 +185,16 @@ public class UserController : ControllerBase
             return Unauthorized();
         }
 
-        var username = principal?.Identity?.Name ?? string.Empty;
-        var user = await _userManager.FindByEmailAsync(username);
-        if (user == null)
+        // получение устройства пользователя
+        var (DeviceName, Ip) = GetClientInfo();
+        if (string.IsNullOrWhiteSpace(DeviceName))
         {
             return Unauthorized();
         }
 
-        // получение устройства пользователя
-        var (DeviceName, Ip) = GetClientInfo();
-        if (string.IsNullOrWhiteSpace(DeviceName))
+        var username = principal?.Identity?.Name ?? string.Empty;
+        var user = await _userManager.FindByEmailAsync(username);
+        if (user == null)
         {
             return Unauthorized();
         }
